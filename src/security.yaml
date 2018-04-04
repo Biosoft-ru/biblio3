@@ -1,7 +1,7 @@
 security:
   roles:
     Administrator: {}
+    Annotator: {}
     Guest: {}
     SystemDeveloper: {}
-    User: {}
   groups: {}

@@ -7,7 +7,7 @@ biblio3:
       entities: []
   application:
   - _welcome_
-  - testtable
+  - publications
   scripts:
   - Post-db
   - dictionaries

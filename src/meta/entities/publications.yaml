@@ -1,0 +1,151 @@
+publications:
+  type: table
+  displayName: Publications
+  order: '10'
+  primaryKey: ID
+  scheme:
+    columns:
+    - ID:
+        type: KEYTYPE
+        autoIncrement: true
+        primaryKey: true
+    - ref:
+        type: VARCHAR(100)
+        canBeNull: true
+    - PMID:
+        type: BIGINT UNSIGNED
+        canBeNull: true
+    - authors:
+        type: TEXT
+        canBeNull: true
+    - affiliation:
+        type: TEXT
+        canBeNull: true
+    - title:
+        type: TEXT
+        canBeNull: true
+    - source:
+        type: VARCHAR(100)
+        canBeNull: true
+    - journalTitle:
+        type: VARCHAR(100)
+        canBeNull: true
+    - year:
+        type: INT UNSIGNED
+        canBeNull: true
+    - month:
+        type: VARCHAR(10)
+        canBeNull: true
+    - volume:
+        type: INT UNSIGNED
+        canBeNull: true
+    - issue:
+        type: VARCHAR(24)
+        canBeNull: true
+    - pageFrom:
+        type: VARCHAR(24)
+        canBeNull: true
+    - pageTo:
+        type: VARCHAR(24)
+        canBeNull: true
+    - language:
+        type: VARCHAR(3)
+        canBeNull: true
+    - publicationType:
+        type: VARCHAR(50)
+        canBeNull: true
+    - abstract:
+        type: TEXT
+        canBeNull: true
+    - PMCID:
+        type: BIGINT UNSIGNED
+        canBeNull: true
+    - url:
+        type: VARCHAR(100)
+        canBeNull: true
+    - status:
+        type: VARCHAR(30)
+        canBeNull: true
+    - importance:
+        type: INT
+        defaultValue: '3'
+        canBeNull: true
+    - keyWords:
+        type:  TEXT
+        canBeNull: true
+    - comment:
+        type:  TEXT
+        canBeNull: true
+  queries:
+  - Compact view:
+      type: 1D
+      roles: [Administrator, Annotator]
+      operations:
+      - Delete
+      - Edit
+      - Insert
+      - Filter
+      code: |2-
+          SELECT
+            p.ID AS "___ID",
+            p.ref AS "Reference",
+            IFNULL(p.year, '&nbsp;') AS "Year",
+            IFNULL(p.language , '&nbsp;') AS "Lang.",
+            p.importance AS "Imp.",
+            CONCAT(
+              IFNULL( CONCAT(p.authors, '<br>'), ' '),
+              IFNULL( CONCAT('<b>', p.title, '</b><br>'),  ' '),
+              IFNULL( CONCAT('<i>', p.source, '</i></br>'), ''),
+              IFNULL( CONCAT('PMID: ', '<a href="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&list_uids=',
+                              TO_CHAR(p.pmid), '&dopt=Abstract" target="blanck">', TO_CHAR(p.pmid), '</a>'), ' '),
+              IFNULL( CONCAT('<br>URL: <a href=', p.url, '>', p.url, '</a>'), ' ')
+                 ) AS "Description"
+          FROM publications p
+          ORDER BY p.ref
+  - Detailed view:
+      type: 1D
+      roles: [Administrator, Annotator]
+      operations:
+      - Delete
+      - Edit
+      - Insert
+      - Filter
+      code: |2-
+          SELECT
+            p.ID AS "___ID",
+            CONCAT('<b>', p.ref, '</b><br>',
+                   'Importance: ', p.importance,
+                    IFNULL( CONCAT('; ', p.publicationType), ''),
+                    IFNULL( CONCAT('; ',  p.language), ''), '.<br><br>',
+                    IFNULL( CONCAT(p.authors, '<br>'), ''),
+                    IFNULL( CONCAT('<b>', p.title, '</b><br>'),   ''),
+                    IFNULL( CONCAT('<i>', p.source, '</i><br>'), ''),
+
+                    IFNULL( CONCAT('<br>Key words: ', p.keyWords, '<br>'), ''),
+                    IFNULL( CONCAT('<br>', p.abstract, '<br><br>'), '<br><br>'),
+                    IFNULL( CONCAT('PMID: ', '<a href="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&list_uids=',
+                            TO_CHAR(p.PMID), '&dopt=Abstract" target="blanck">', TO_CHAR(p.PMID), '</a><br>'), ''),
+                    IFNULL( CONCAT('URL: <a href=', p.url, '>', p.url, '</a><br>'), '')
+            ) AS "Publication"
+          FROM publications p
+          ORDER BY p.ref
+  operations:
+  - TestOperation:
+      type: Groovy
+      roles: Administrator
+      file: test/TestOperation.groovy
+  - Delete:
+      records: 2
+      roles: Administrator
+      code: com.developmentontheedge.be5.operations.SilentDeleteOperation
+  - Edit:
+      records: 1
+      roles: Administrator
+      code: com.developmentontheedge.be5.operations.SilentEditOperation
+  - Insert:
+      roles: Administrator
+      code: com.developmentontheedge.be5.operations.SilentInsertOperation
+  - Filter:
+      roles: Administrator
+      layout: '{"type":"modalForm"}'
+      code: com.developmentontheedge.be5.operations.FilterOperation
