@@ -4,15 +4,11 @@ connectionProfiles:
       connectionUrl: jdbc:h2:~/biblio3
       username: sa
       password: ''
-    test_local:
-      connectionUrl: jdbc:postgresql://localhost:5432/testbe5app
-      username: test
-      password: test
     uuinnk_local:
-      connectionUrl: jdbc:postgresql://localhost:5432/testbe5app
+      connectionUrl: jdbc:postgresql://localhost:5432/biblio3
       username: postgres
       password: pg
-    biblio3:
+    uuinnk_biblio2:
       connectionUrl: jdbc:mysql://localhost:3306/biblio2
       username: root
       password:
