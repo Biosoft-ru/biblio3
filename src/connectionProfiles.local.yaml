@@ -12,3 +12,8 @@ connectionProfiles:
       connectionUrl: jdbc:postgresql://localhost:5432/testbe5app
       username: postgres
       password: pg
+    biblio3:
+      connectionUrl: jdbc:mysql://localhost:3306/biblio2
+      username: root
+      password:
+      tomcatManagerReloadUrlTemplate: http://localhost:8080/manager/text/reload?path=/{projectName}
