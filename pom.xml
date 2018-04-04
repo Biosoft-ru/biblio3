@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
  <groupId>test</groupId>
- <artifactId>testBe5app</artifactId>
- <version>0.0.2</version>
+ <artifactId>biblio3</artifactId>
+ <version>0.0.1</version>
  <packaging>${packaging.type}</packaging>
 
  <modelVersion>4.0.0</modelVersion>

@@ -1,7 +1,7 @@
 connectionProfiles:
   profiles:
     test_h2:
-      connectionUrl: jdbc:h2:~/testBe5app
+      connectionUrl: jdbc:h2:~/biblio3
       username: sa
       password: ''
     test_local:
