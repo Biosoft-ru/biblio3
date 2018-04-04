@@ -1,5 +1,5 @@
 {
-  "name": "testBe5App",
+  "name": "biblio3",
   "version": "1.0.0",
   "main": "src/frontend/scripts/main.js",
   "scripts": {
@@ -56,7 +56,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/DevelopmentOnTheEdge/biblio3.git"
+    "url": "https://github.com/Biosoft-ru/biblio3.git"
   },
   "jest": {
     "moduleNameMapper": {
