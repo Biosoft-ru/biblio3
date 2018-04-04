@@ -1,5 +1,10 @@
 ru:
   entities:
+  - index:
+    - topics: page
+      entries:
+      - title: biblio3
+      - description: biblio3 application
   - _homepage_:
     - topics: displayName
       entries:
