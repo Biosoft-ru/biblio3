@@ -3,6 +3,7 @@ package operations.test
 import com.developmentontheedge.be5.operation.OperationStatus
 import com.developmentontheedge.be5.test.SqlMockOperationTest
 import com.developmentontheedge.beans.json.JsonFactory
+import org.junit.Ignore
 import org.junit.Test
 
 import static org.junit.Assert.assertEquals
@@ -10,6 +11,7 @@ import static org.junit.Assert.assertEquals
 class TestOperation extends SqlMockOperationTest
 {
     @Test
+    @Ignore
     void test()
     {
         Object first = generateOperation("testtable", "Test 1D", "TestOperation", "").getFirst()
