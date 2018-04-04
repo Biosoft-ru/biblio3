@@ -84,6 +84,8 @@ publications:
       - Delete
       - Edit
       - Insert
+      - InsertPublicationByPMID
+      - FillFromMedline
       - Filter
       code: |2-
           SELECT
@@ -109,6 +111,8 @@ publications:
       - Delete
       - Edit
       - Insert
+      - InsertPublicationByPMID
+      - FillFromMedline
       - Filter
       code: |2-
           SELECT
@@ -130,10 +134,15 @@ publications:
           FROM publications p
           ORDER BY p.ref
   operations:
-  - TestOperation:
+  - InsertPublicationByPMID:
       type: Groovy
       roles: Administrator
-      file: test/TestOperation.groovy
+      file: publications/InsertPublicationByPMID.groovy
+  - FillFromMedline:
+      records: 2
+      type: Groovy
+      roles: Administrator
+      file: publications/FillFromMedline.groovy
   - Delete:
       records: 2
       roles: Administrator
