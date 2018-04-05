@@ -1,0 +1,58 @@
+attachments:
+  type: collection
+  displayName: Attachments
+  primaryKey: ID
+  scheme:
+    columns:
+    - ID:
+        type: KEYTYPE
+        autoIncrement: true
+        primaryKey: true
+    - publicationID:
+        type: KEYTYPE
+    - name:
+        type: VARCHAR(100)
+    - public:
+        type: BOOL
+        defaultValue: '''yes'''
+    - mimeType:
+        type: VARCHAR(50)
+        canBeNull: true
+        defaultValue: '''application/octet-stream'''
+    - data:
+        type: MEDIUMBLOB
+        canBeNull: true
+    indices:
+    - IDX_ATTACHMENT_PUBLICATION_ID:
+        columns: publicationID
+  queries:
+  - Attachments:
+      type: 1D
+      roles: [Administrator, Annotator]
+      operations:
+      - Delete
+      - Insert
+      - Filter
+      code: |2-
+          SELECT
+             IF( a.data IS NULL, a.name,
+                 CONCAT( '<a href="api/download?_t_=attachments&ID=', a.ID, '">',
+                         a.name, '</a>' ) ) AS "Name",
+             LENGTH( data ) AS "Size",
+             public AS "Public",
+             a.mimeType AS "MIME Type"
+          FROM attachments a
+  operations:
+  - Delete:
+      records: 2
+      roles: Administrator
+      code: com.developmentontheedge.be5.operations.SilentDeleteOperation
+  - Insert:
+      roles: Administrator
+      type: Groovy
+      roles: Administrator
+      file: attachments/AddFile.groovy
+  - Filter:
+      roles: Administrator
+      layout: '{"type":"modalForm"}'
+      code: com.developmentontheedge.be5.operations.FilterOperation

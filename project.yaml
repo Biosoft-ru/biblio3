@@ -7,6 +7,7 @@ biblio3:
       entities: []
   application:
   - _welcome_
+  - attachments
   - publications
   scripts:
   - Post-db
