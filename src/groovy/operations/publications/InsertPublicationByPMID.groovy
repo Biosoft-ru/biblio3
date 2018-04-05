@@ -39,7 +39,8 @@ class InsertPublicationByPMID extends GOperationSupport
         //prop.setAttribute(TAG_LIST_ATTR, vc.toArray(new String[0]))
 
         dps.add("categoryID", "Category") {
-            TAG_LIST_ATTR = helper.getTagsFromSelectionView("categories")
+            TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories",
+                    "Selection view for entity", [entity: getInfo().getEntityName()])
         }
 
         return dpsHelper.setValues(dps, presetValues)

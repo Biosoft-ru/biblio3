@@ -101,7 +101,17 @@ publications:
               IFNULL( CONCAT('PMID: ', '<a href="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&list_uids=',
                               TO_CHAR(p.pmid), '&dopt=Abstract" target="blanck">', TO_CHAR(p.pmid), '</a>'), ' '),
               IFNULL( CONCAT('<br>URL: <a href=', p.url, '>', p.url, '</a>'), ' ')
-                 ) AS "Description"
+            ) AS "Description",
+            IFNULL(p.comment, ' ') AS "Comment",
+            CONCAT(
+              IFNULL( '<sql default="Нажмите">
+                SELECT CONCAT('<a href="api/download?_t_=attachments&ID=', a.id, '">', a.name, '</a>(',  IFNULL(LENGTH(a.data), '0'), ')' )
+                FROM attachments a
+                WHERE a.publicationID = <var:___ID/>
+                </sql>' , '&nbsp;'
+              ),
+              CONCAT('<div class="text-center"><a href="#!table/attachments/Attachments/publicationID=', p.id, '">Edit</a></div>')
+            ) AS "Text"
           FROM publications p
           ORDER BY p.ref
   - Detailed view:
@@ -117,7 +127,7 @@ publications:
       code: |2-
           SELECT
             p.ID AS "___ID",
-            CONCAT('<b>', p.ref, '</b><br>',
+            CONCAT(IFNULL(CONCAT('<b>', p.ref, '</b><br>'), ''),
                    'Importance: ', p.importance,
                     IFNULL( CONCAT('; ', p.publicationType), ''),
                     IFNULL( CONCAT('; ',  p.language), ''), '.<br><br>',
@@ -129,7 +139,18 @@ publications:
                     IFNULL( CONCAT('<br>', p.abstract, '<br><br>'), '<br><br>'),
                     IFNULL( CONCAT('PMID: ', '<a href="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&list_uids=',
                             TO_CHAR(p.PMID), '&dopt=Abstract" target="blanck">', TO_CHAR(p.PMID), '</a><br>'), ''),
-                    IFNULL( CONCAT('URL: <a href=', p.url, '>', p.url, '</a><br>'), '')
+                    IFNULL( CONCAT('URL: <a href=', p.url, '>', p.url, '</a><br>'), ''),
+                    IFNULL(p.comment, ''),
+                    IFNULL(CONCAT(
+                       IFNULL( '<sql default="Нажмите">
+                         SELECT CONCAT('<a href="api/download?_t_=attachments&ID=', a.id, '">', a.name, '</a>(',  IFNULL(LENGTH(a.data), '0'), ')' )
+                         FROM attachments a
+                         WHERE a.publicationID = <var:___ID/>
+                         </sql>' , '&nbsp;'
+                       )
+
+                    ), ''),
+                    IFNULL(CONCAT('<a class="d-block" href="#!table/attachments/Attachments/publicationID=', p.id, '">Edit</a>'))
             ) AS "Publication"
           FROM publications p
           ORDER BY p.ref
