@@ -4,6 +4,7 @@ package ru.biosoft.biblio;
 import java.io.InputStream;
 import java.io.Writer;
 import java.net.URL;
+import java.util.Objects;
 import java.util.StringTokenizer;
 
 import com.developmentontheedge.be5.api.services.SqlService;
@@ -31,158 +32,122 @@ public class MedlineImport
      *
      * @param id - record id in ublications table.
      */
-    public boolean fill(Writer out, String table, String id) throws Exception
+    public void fill(String table, String id) throws Exception
     {
-        out.write( "<br>Record id: " + id + ". ");
-        try
+        Objects.requireNonNull(table);
+        Objects.requireNonNull(id);
+
+        Long pmid = db.getLong("SELECT p.PMID FROM publications p WHERE p.ID= ?", id);
+
+        if( pmid == null)
         {
-            Long pmid = db.getLong("SELECT p.PMID FROM publications p WHERE p.ID= ?", id);
-
-            if( pmid == null)
-            {
-                out.write("Medline PMID is not specified, can not retrieve the data.");
-                return false;
-            }
-
-            out.write("<br>  Retrieve data for PMID=" + pmid + ": ");
-            boolean success = fill(out, table, id, pmid);
-
-
-            if( success )
-                out.write("Ok.");
-
-            return true;
+            throw new RuntimeException("Medline PMID is not specified, can not retrieve the data.");
         }
-        catch(Throwable t)
-        {
-            out.write("Error: " + t);
-            return false;
-        }
+
+        fill(table, id, pmid);
     }
 
     /**
      * Imports record with the specified PubMed/Medline identifier into Publications table.
      *
-     * @param out - output stream for logging
      * @param id - record id in ublications table.
      * @param pmid - PubMed or Medline publications identifier.
      */
-    public boolean fill(Writer out, String table, String id, Long pmid) throws Exception
+    public void fill(String table, String id, Long pmid) throws Exception
     {
-        try
-        {
 //            System.setProperty("proxySet",  proxySet );
 //            System.setProperty("proxyHost", proxyHost );
 //            System.setProperty("proxyPort", proxyPort );
 
-            URL url = new URL(medlineQuery.replace("$pmid$", "" + pmid));
-//            if( url == null )
-//            {
-//                out.write("Can not get entry with pmid '" + pmid + "' from PubMed. URL is null.");
-//                out.write("\nProxy: " + proxyHost + ": " + proxyPort + ", enabled=" + proxySet + ".");
-//                return false;
-//            }
+        URL url = new URL(medlineQuery.replace("$pmid$", "" + pmid));
 
-            Object content = url.getContent();
-            if( content == null )
-            {
-                out.write("Can not get entry with pmid '" + pmid + "' from PubMed. Content is null.");
-                return false;
-            }
-
-            InputStream is = (InputStream)content;
-            StringBuffer result = new StringBuffer();
-            byte[]  bytes = new byte[1024];
-            int len=0;
-            while( (len = is.read(bytes)) > 0 )
-            {
-                result.append( new String(bytes, 0, len) );
-            }
-            is.close();
-
-            String entry = result.toString();
-
-            // parsing result
-            String dp    = TextUtil.getField(entry, "DP  -");
-            String year  = dp.substring(0, 4);
-            String month = dp.length() > 5 ? dp.substring(5) : "";
-
-            String pages = TextUtil.getField(entry, "PG  -");
-            String pageFrom = pages;
-            String pageTo   = pages;
-            if( pages != null )
-            {
-                int delim = pages.indexOf('-');
-                if( delim == - 1 )
-                    delim = pages.indexOf(',');
-                if( delim != -1 )
-                {
-                    pageFrom = pages.substring(0, delim).trim();
-                    pageTo   = pages.substring(delim+1).trim();
-                }
-            }
-
-            // read authors
-            String prefix = "\nFAU";
-            //if( entry.indexOf(prefix) < 1)
-                prefix = "\nAU";
-
-            int from = 0;
-            int to;
-            result = new StringBuffer();
-            while( (from = entry.indexOf(prefix, from)) > 0 )
-            {
-                if( result.length() > 1 )
-                    result.append(", ");
-
-                to = entry.indexOf('\n', from+2);
-                if(to < 0)
-                    to = entry.length()-1;
-
-                result.append(entry.substring(from+7, to));
-
-                from=to;
-            }
-            String authors = result.toString();
-
-            String ref = generateReferenceId(out, authors, year, TextUtil.getField(entry, "TI  -"));
-
-
-            // generate query //IGNORE
-            String query = "UPDATE " + table + " SET " +
-                            "\n PMID="             + safeValue(entry, "PMID-") + ", " +
-                            "\n source="           + safeValue(entry, "SO  -") + "," +
-                            "\n journalTitle="     + safeValue(entry, "TA  -") + "," +
-                            "\n title="            + safeValue(entry, "TI  -") + "," +
-                            "\n volume="           + safeValue(entry, "VI  -") + "," +
-                            "\n issue="            + safeValue(entry, "IP  -") + "," +
-                            "\n language="         + safeValue(entry, "LA  -") + "," +
-                            "\n publicationType="  + safeValue(entry, "PT  -") + "," +
-                            "\n abstract="         + safeValue(entry, "AB  -") + "," +
-                            "\n affiliation="      + safeValue(entry, "AD  -") + "," +
-
-                            "\n ref='"        + safestr(ref) + "'," +
-                            "\n authors='"    + safestr(authors) + "'," +
-                            "\n year=" + year + ", month='" + month + "'," +
-                            "\n pageFrom='" + pageFrom + "', pageTo='" + pageTo + "'" +
-
-                            "\nWHERE ID=" + id;
-
-            out.write("Query: <pre>" + query + "</pre>");
-
-            db.update(query);
-            return true;
-
-        }
-        catch(Exception e)
+        Object content = url.getContent();
+        if( content == null )
         {
-            out.write("!Can not get entry with pmid '" + pmid + "' from PubMed." +
-                      "Error: <pre>");
-            e.printStackTrace(new java.io.PrintWriter(out));
-            out.write("</pre>");
+            throw new RuntimeException("Can not get entry with pmid '" + pmid + "' from PubMed. Content is null.");
         }
 
-        return false;
+        InputStream is = (InputStream)content;
+        StringBuffer result = new StringBuffer();
+        byte[]  bytes = new byte[1024];
+        int len=0;
+        while( (len = is.read(bytes)) > 0 )
+        {
+            result.append( new String(bytes, 0, len) );
+        }
+        is.close();
+
+        String entry = result.toString();
+
+        // parsing result
+        String dp    = TextUtil.getField(entry, "DP  -");
+        String year  = dp.substring(0, 4);
+        String month = dp.length() > 5 ? dp.substring(5) : "";
+
+        String pages = TextUtil.getField(entry, "PG  -");
+        String pageFrom = pages;
+        String pageTo   = pages;
+        if( pages != null )
+        {
+            int delim = pages.indexOf('-');
+            if( delim == - 1 )
+                delim = pages.indexOf(',');
+            if( delim != -1 )
+            {
+                pageFrom = pages.substring(0, delim).trim();
+                pageTo   = pages.substring(delim+1).trim();
+            }
+        }
+
+        // read authors
+        String prefix = "\nFAU";
+        //if( entry.indexOf(prefix) < 1)
+            prefix = "\nAU";
+
+        int from = 0;
+        int to;
+        result = new StringBuffer();
+        while( (from = entry.indexOf(prefix, from)) > 0 )
+        {
+            if( result.length() > 1 )
+                result.append(", ");
+
+            to = entry.indexOf('\n', from+2);
+            if(to < 0)
+                to = entry.length()-1;
+
+            result.append(entry.substring(from+7, to));
+
+            from=to;
+        }
+        String authors = result.toString();
+
+        String ref = generateReferenceId(authors, year, TextUtil.getField(entry, "TI  -"));
+
+
+        // generate query //IGNORE
+        String query = "UPDATE " + table + " SET " +
+                        "\n PMID="             + safeValue(entry, "PMID-") + ", " +
+                        "\n source="           + safeValue(entry, "SO  -") + "," +
+                        "\n journalTitle="     + safeValue(entry, "TA  -") + "," +
+                        "\n title="            + safeValue(entry, "TI  -") + "," +
+                        "\n volume="           + safeValue(entry, "VI  -") + "," +
+                        "\n issue="            + safeValue(entry, "IP  -") + "," +
+                        "\n language="         + safeValue(entry, "LA  -") + "," +
+                        "\n publicationType="  + safeValue(entry, "PT  -") + "," +
+                        "\n abstract="         + safeValue(entry, "AB  -") + "," +
+                        "\n affiliation="      + safeValue(entry, "AD  -") + "," +
+
+                        "\n ref='"        + safestr(ref) + "'," +
+                        "\n authors='"    + safestr(authors) + "'," +
+                        "\n year=" + year + ", month='" + month + "'," +
+                        "\n pageFrom='" + pageFrom + "', pageTo='" + pageTo + "'" +
+
+                        "\nWHERE ID=" + id;
+
+        //out.write("Query: <pre>" + query + "</pre>");
+
+        db.update(query);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -199,8 +164,7 @@ public class MedlineImport
         return author;
     }
 
-    public String generateReferenceId(Writer out,
-                                             String authors, String year, String title) throws Exception
+    public String generateReferenceId(String authors, String year, String title) throws Exception
     {
         StringTokenizer tokens = new StringTokenizer(authors, ",");
         int num = tokens.countTokens();
@@ -241,8 +205,7 @@ public class MedlineImport
             }
             catch(Throwable t)
             {
-                out.write("Can not generate reference id, error: " + t);
-                return "";
+                throw new RuntimeException("Can not generate reference id", t);
             }
         }
     }

@@ -1,9 +1,9 @@
 package publications
 
-import com.developmentontheedge.be5.env.Inject;
+import com.developmentontheedge.be5.env.Inject
 import com.developmentontheedge.be5.operation.GOperationSupport
 import com.developmentontheedge.be5.operation.OperationResult
-import ru.biosoft.biblio.MedlineImport;
+import ru.biosoft.biblio.MedlineImport
 
 
 class FillFromMedline extends GOperationSupport
@@ -15,13 +15,11 @@ class FillFromMedline extends GOperationSupport
     {
         def records = context.records
 
-        Writer out = new StringWriter()
         for(int i=0; i< records.length; i++)
         {
-            medlineImport.fill(out, getInfo().getEntityName(), records[i])
+            medlineImport.fill(getInfo().getEntityName(), records[i])
         }
 
-        out.flush()
-        setResult(OperationResult.finished(out.toString()))
+        setResult(OperationResult.finished())
     }
 }

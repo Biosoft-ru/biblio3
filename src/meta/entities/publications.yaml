@@ -25,7 +25,7 @@ publications:
         type: TEXT
         canBeNull: true
     - source:
-        type: VARCHAR(100)
+        type: VARCHAR(200)
         canBeNull: true
     - journalTitle:
         type: VARCHAR(100)
@@ -78,6 +78,7 @@ publications:
         canBeNull: true
   queries:
   - Compact view:
+      defaultView: true
       type: 1D
       roles: [Administrator, Annotator]
       operations:

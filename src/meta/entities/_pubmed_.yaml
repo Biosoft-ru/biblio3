@@ -1,10 +1,10 @@
-_welcome_:
+_pubmed_:
   type: table
-  displayName: Welcome
-  order: '0'
+  displayName: PubMed
+  order: '1'
   primaryKey: dummy
   queries:
   - All records:
       type: static
       roles: '@AllRoles'
-      value: welcome.be
+      value: https://www.ncbi.nlm.nih.gov/pubmed/
