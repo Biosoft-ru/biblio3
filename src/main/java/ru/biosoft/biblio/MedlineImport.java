@@ -32,7 +32,7 @@ public class MedlineImport
      *
      * @param id - record id in ublications table.
      */
-    public void fill(String table, String id) throws Exception
+    public void fill(String table, Long id) throws Exception
     {
         Objects.requireNonNull(table);
         Objects.requireNonNull(id);
@@ -53,7 +53,7 @@ public class MedlineImport
      * @param id - record id in ublications table.
      * @param pmid - PubMed or Medline publications identifier.
      */
-    public void fill(String table, String id, Long pmid) throws Exception
+    public void fill(String table, Long id, Long pmid) throws Exception
     {
 //            System.setProperty("proxySet",  proxySet );
 //            System.setProperty("proxyHost", proxyHost );

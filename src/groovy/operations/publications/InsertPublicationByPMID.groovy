@@ -7,6 +7,8 @@ import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.util.Utils
 import ru.biosoft.biblio.MedlineImport
 
+import static com.developmentontheedge.be5.api.FrontendConstants.CATEGORY_ID_PARAM
+
 
 class InsertPublicationByPMID extends GOperationSupport implements TransactionalOperation
 {
@@ -42,6 +44,7 @@ class InsertPublicationByPMID extends GOperationSupport implements Transactional
         dps.add("categoryID", "Category") {
             TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories",
                     "Selection view for entity", [entity: getInfo().getEntityName()])
+            value = context.operationParams.get(CATEGORY_ID_PARAM)
         }
 
         return dpsHelper.setValues(dps, presetValues)
@@ -52,7 +55,7 @@ class InsertPublicationByPMID extends GOperationSupport implements Transactional
     {
         String pmid = ("" + dps.getValue("PMID")).trim()
 
-        if(database.publications.count([PMID: pmid]) > 0)
+        if(database.publications.count([PMID: Long.parseLong(pmid)]) > 0)
         {
             setResult(OperationResult.error("Publication with the same PMID already exists, PMID='" + pmid + "'."))
             return
@@ -67,7 +70,7 @@ class InsertPublicationByPMID extends GOperationSupport implements Transactional
 
         if( ( pmid != null && pmid.length() > 0 ) )
         {
-            medlineImport.fill("publications", id)
+            medlineImport.fill("publications", Long.parseLong(id))
         }
 
         List<Long> categories = new ArrayList<>()
@@ -83,9 +86,10 @@ class InsertPublicationByPMID extends GOperationSupport implements Transactional
 
         db.insert("""INSERT INTO classifications (recordID, categoryID)
                      SELECT CONCAT('publications.', ${id}), c.ID FROM categories c 
-                     WHERE id IN """ + Utils.inClause(categories.size()), categories as String[])
+                     WHERE id IN """ + Utils.inClause(categories.size()), categories as Long[])
 
-        setResult(OperationResult.redirectToOperation("publications", context.queryName, "Edit", [selectedRows: id]))
+        addRedirectParams(context.operationParams)
+        //setResult(OperationResult.redirectToOperation("publications", context.queryName, "Edit", [selectedRows: id]))
     }
 
 }

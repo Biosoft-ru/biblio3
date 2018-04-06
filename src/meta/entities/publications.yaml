@@ -92,8 +92,8 @@ publications:
           SELECT
             p.ID AS "___ID",
             p.ref AS "Reference",
-            IFNULL(p.year, '&nbsp;') AS "Year",
-            IFNULL(p.language , '&nbsp;') AS "Lang.",
+            IFNULL(p.year, null) AS "Year",
+            IFNULL(p.language , '') AS "Lang.",
             p.importance AS "Imp.",
             CONCAT(
               IFNULL( CONCAT(p.authors, '<br>'), ' '),
@@ -109,7 +109,7 @@ publications:
                 SELECT CONCAT('<a href="api/download?_t_=attachments&ID=', a.id, '">', a.name, '</a>(',  IFNULL(LENGTH(a.data), '0'), ')' )
                 FROM attachments a
                 WHERE a.publicationID = <var:___ID/>
-                </sql>' , '&nbsp;'
+                </sql>' , ''
               ),
               CONCAT('<div class="text-center"><a href="#!table/attachments/Attachments/publicationID=', p.id, '">Edit</a></div>')
             ) AS "Text"
@@ -147,7 +147,7 @@ publications:
                          SELECT CONCAT('<a href="api/download?_t_=attachments&ID=', a.id, '">', a.name, '</a>(',  IFNULL(LENGTH(a.data), '0'), ')' )
                          FROM attachments a
                          WHERE a.publicationID = <var:___ID/>
-                         </sql>' , '&nbsp;'
+                         </sql>' , ''
                        )
 
                     ), ''),

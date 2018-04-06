@@ -17,7 +17,7 @@ class FillFromMedline extends GOperationSupport
 
         for(int i=0; i< records.length; i++)
         {
-            medlineImport.fill(getInfo().getEntityName(), records[i])
+            medlineImport.fill(getInfo().getEntityName(), Long.parseLong(records[i]))
         }
 
         setResult(OperationResult.finished())
