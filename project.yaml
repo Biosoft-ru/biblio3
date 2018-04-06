@@ -8,6 +8,7 @@ biblio3:
   application:
   - _welcome_
   - _pubmed_
+  - _publication_cat_
   - attachments
   - publications
   scripts:

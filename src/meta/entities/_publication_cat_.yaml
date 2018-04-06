@@ -1,0 +1,10 @@
+_publication_cat_:
+  type: table
+  displayName: Сategories for publications
+  order: '20'
+  primaryKey: dummy
+  queries:
+  - All records:
+      type: static
+      roles: '@AllRoles'
+      value: categories.redir?_qn_=All+records&entity=publications
