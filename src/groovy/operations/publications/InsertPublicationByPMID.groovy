@@ -79,8 +79,7 @@ class InsertPublicationByPMID extends GOperationSupport implements Transactional
         {
             categories.add(cat)
 
-            cat = db.getLong("SELECT c1.parentID FROM categories c1, categories c2 WHERE c1.ID = ? " +
-                                    "AND c2.ID = c1.parentID AND c2.parentID IS NOT NULL", cat)
+            cat = db.getLong("SELECT c1.parentID FROM categories c1 WHERE c1.ID = ?", cat)
         }
 
         db.insert("""INSERT INTO classifications (recordID, categoryID)
