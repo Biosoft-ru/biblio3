@@ -17,7 +17,7 @@ class InsertPublicationByPMID extends GOperationSupport implements Transactional
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
-        dpsHelper.addDpForColumns(dps, getInfo().getEntity(), ["PMID"])
+        dpsHelper.addDpForColumns(dps, getInfo().getEntity(), ["PMID"], context.getOperationParams())
 
         dps.edit("PMID") { CAN_BE_NULL = false }
 

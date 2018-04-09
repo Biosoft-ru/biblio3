@@ -10,7 +10,7 @@ class AddFile extends GOperationSupport
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
         dpsHelper.addDpForColumns(dps, getInfo().getEntity(),
-                ["publicationID", "public"], presetValues)
+                ["publicationID", "public"], context.operationParams, presetValues)
 
         dps.add("file", "Файл") {
             TYPE = Base64File
@@ -21,9 +21,7 @@ class AddFile extends GOperationSupport
 //            MESSAGE = "Если не заполнено берётся имя файла"
 //        }
 
-        dpsHelper.setValues(dps, presetValues)
-
-        return dpsHelper.setOperationParams(dps, context.getOperationParams())
+        return dps
     }
 
     @Override
