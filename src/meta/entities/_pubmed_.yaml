@@ -1,7 +1,7 @@
 _pubmed_:
   type: table
   displayName: PubMed
-  order: '1'
+  order: '30'
   primaryKey: dummy
   queries:
   - All records:
