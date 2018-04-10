@@ -6,6 +6,7 @@ biblio3:
   - core:
       entities:
       - users
+      - categories
   application:
   - _welcome_
   - _pubmed_

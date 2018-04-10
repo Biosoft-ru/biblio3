@@ -10,6 +10,9 @@ import com.developmentontheedge.be5.operation.OperationStatus
 import com.google.common.collect.ImmutableList
 import ru.biosoft.biostoreapi.DefaultConnectionProvider
 
+import static ru.biosoft.biblio.Utils.BIOSTORE_PROJECTS
+import static ru.biosoft.biblio.Utils.SERVER_NAME
+
 
 class BiostoreLogin extends Login
 {
@@ -50,8 +53,8 @@ class BiostoreLogin extends Login
                 def roles = ImmutableList.of("Annotator", RoleType.ROLE_ADMINISTRATOR)
                 userHelper.saveUser(user_name, roles, roles, meta.getLocale(null), request.getRemoteAddr(), session)
 
-                session.set("projects", projectList)
-                session.set("server-name", serverName)
+                session.set(BIOSTORE_PROJECTS, projectList)
+                session.set(SERVER_NAME, serverName)
 
                 setResult(OperationResult.finished(null, FrontendConstants.UPDATE_USER_INFO))
             }

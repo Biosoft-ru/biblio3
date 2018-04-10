@@ -1,0 +1,14 @@
+categories:
+  queries:
+  - All records:
+      type: 1D
+      roles: Administrator
+      operations:
+      - Delete
+      - Filter
+      - Insert
+  operations:
+  - Insert:
+      type: Groovy
+      roles: Administrator
+      file: categories/Insert.groovy
