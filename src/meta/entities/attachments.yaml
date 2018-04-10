@@ -48,7 +48,6 @@ attachments:
       roles: Administrator
       code: com.developmentontheedge.be5.operations.SilentDeleteOperation
   - Insert:
-      roles: Administrator
       type: Groovy
       roles: Administrator
       file: attachments/AddFile.groovy
