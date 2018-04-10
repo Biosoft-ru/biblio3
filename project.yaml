@@ -4,7 +4,8 @@ biblio3:
   projectFileStructure: {}
   modules:
   - core:
-      entities: []
+      entities:
+      - users
   application:
   - _welcome_
   - _pubmed_

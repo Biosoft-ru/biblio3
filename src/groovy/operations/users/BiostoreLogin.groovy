@@ -1,0 +1,64 @@
+package users
+
+import com.developmentontheedge.be5.api.FrontendConstants
+import com.developmentontheedge.be5.api.helpers.UserHelper
+import com.developmentontheedge.be5.env.Inject
+import com.developmentontheedge.be5.metadata.RoleType
+import com.developmentontheedge.be5.modules.core.operations.users.Login
+import com.developmentontheedge.be5.operation.OperationResult
+import com.developmentontheedge.be5.operation.OperationStatus
+import com.google.common.collect.ImmutableList
+import ru.biosoft.biostoreapi.DefaultConnectionProvider
+
+
+class BiostoreLogin extends Login
+{
+    @Inject UserHelper userHelper
+
+    private String serverName = "biblio.biouml.org";
+
+    @Override
+    Object getParameters(Map<String, Object> presetValues) throws Exception
+    {
+        super.getParameters(presetValues)
+
+        dps.edit("user_name") {CAN_BE_NULL = true}
+        dps.edit("user_pass") {CAN_BE_NULL = true}
+
+        return dps
+    }
+
+    @Override
+    void invoke(Object parameters) throws Exception
+    {
+        if(dps.getValueAsString("user_name") != null)
+        {
+            super.invoke(parameters)
+        }
+
+        if(getStatus() == OperationStatus.ERROR || dps.getValueAsString("user_name") == null)
+        {
+            DefaultConnectionProvider provider = new DefaultConnectionProvider(serverName)
+
+            def user_name = dps.getValueAsString("user_name") == null ? "" : dps.getValueAsString("user_name")
+            def user_pass = dps.getValueAsString("user_pass") == null ? "" : dps.getValueAsString("user_pass")
+
+            try
+            {
+                def projectList = provider.getProjectList(user_name, user_pass)
+
+                def roles = ImmutableList.of("Annotator", RoleType.ROLE_ADMINISTRATOR)
+                userHelper.saveUser(user_name, roles, roles, meta.getLocale(null), request.getRemoteAddr(), session)
+
+                session.set("projects", projectList)
+                session.set("server-name", serverName)
+
+                setResult(OperationResult.finished(null, FrontendConstants.UPDATE_USER_INFO))
+            }
+            catch (SecurityException e)
+            {
+                setResult(OperationResult.error(e.getMessage()))
+            }
+        }
+    }
+}
