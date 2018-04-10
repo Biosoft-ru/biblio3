@@ -58,6 +58,12 @@
   </dependency>
 
   <dependency>
+   <groupId>ru.biosoft</groupId>
+   <artifactId>biostore-api</artifactId>
+   <version>1.0.0</version>
+  </dependency>
+
+  <dependency>
    <groupId>org.eclipse.jetty</groupId>
    <artifactId>jetty-server</artifactId>
    <version>9.4.2.v20170220</version>
