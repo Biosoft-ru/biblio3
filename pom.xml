@@ -122,7 +122,7 @@
     <configuration>
      <url>${deployServerUrl}</url>
      <server>${deployServerName}</server>
-     <path>/condo-lk2</path>
+     <path>/biblio3</path>
     </configuration>
    </plugin>
    <plugin>
