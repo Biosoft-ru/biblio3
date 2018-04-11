@@ -114,6 +114,8 @@ publications:
               CONCAT('<div class="text-center"><a href="#!table/attachments/Attachments/publicationID=', p.id, '">Edit</a></div>')
             ) AS "Text"
           FROM publications p
+          INNER JOIN classifications cls ON cls.recordID = CONCAT('publications.', p.ID)
+          INNER JOIN categories cat ON cls.categoryID = cat.ID AND cat.name IN (<session:biostore_projects_sql/>)
           ORDER BY p.ref
   - Detailed view:
       type: 1D

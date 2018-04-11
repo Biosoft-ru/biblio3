@@ -9,7 +9,10 @@ import com.developmentontheedge.be5.operation.OperationResult
 import com.google.common.collect.ImmutableList
 import ru.biosoft.biostoreapi.DefaultConnectionProvider
 
+import java.util.stream.Collectors
+
 import static ru.biosoft.biblio.Utils.BIOSTORE_PROJECTS
+import static ru.biosoft.biblio.Utils.BIOSTORE_PROJECTS_SQL
 import static ru.biosoft.biblio.Utils.SERVER_NAME
 
 
@@ -50,11 +53,15 @@ class BiostoreLogin extends Login
             {
                 def projectList = provider.getProjectList(user_name, user_pass)
 
-                def roles = ImmutableList.of("Annotator", RoleType.ROLE_ADMINISTRATOR)//todo remove ROLE_ADMINISTRATOR
+                def roles = ImmutableList.of("Annotator", RoleType.ROLE_ADMINISTRATOR, RoleType.ROLE_SYSTEM_DEVELOPER)//todo remove ROLE_ADMINISTRATOR
 
                 userHelper.saveUser(user_name, roles, roles, meta.getLocale(null), request.getRemoteAddr(), session)
 
-                session.set(BIOSTORE_PROJECTS, projectList.toArray(new String[0]))
+                session.set(BIOSTORE_PROJECTS, projectList)
+                session.set(BIOSTORE_PROJECTS_SQL, projectList.stream()
+                            .map({v -> "'${v}'"})
+                            .collect(Collectors.joining(", ")))
+
                 session.set(SERVER_NAME, server_name)
 
                 setResult(OperationResult.finished(null, FrontendConstants.UPDATE_USER_INFO))
