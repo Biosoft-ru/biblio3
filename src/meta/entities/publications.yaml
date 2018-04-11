@@ -104,12 +104,19 @@ publications:
                 </sql>' , ''
               ),
               CONCAT('<div class="text-center"><a href="#!table/attachments/Attachments/publicationID=', p.id, '">Edit</a></div>')
-            ) AS "Text",
-            cat.name
+            ) AS "Text"
           FROM publications p
-          LEFT JOIN publication2project p2pr ON p2pr.publicationID = p.ID
-          INNER JOIN classifications cls ON cls.recordID = CONCAT('publications.', p.ID)
-          INNER JOIN categories cat ON cls.categoryID = cat.ID AND cat.name IN (<session:biostore_projects_sql/>)
+          <if parameter="_cat_">
+            INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', '<parameter:_cat_ />')
+            INNER JOIN categories cat ON cat.id = pcls.categoryID
+              AND cat.name IN (<session:biostore_projects_sql/>)
+            INNER JOIN publication2project p2pr
+               ON p2pr.publicationID = p.ID
+              AND p2pr.projectID = cat.name
+          </if>
+          <unless parameter="_cat_">
+            LEFT JOIN publication2project p2pr ON p2pr.publicationID = p.ID AND 1=2
+          </unless>
           ORDER BY p.ref
   - Detailed view:
       type: 1D
@@ -150,8 +157,17 @@ publications:
                     IFNULL(CONCAT('<a class="d-block" href="#!table/attachments/Attachments/publicationID=', p.id, '">Edit</a>'))
             ) AS "Publication"
           FROM publications p
-          LEFT JOIN publication2project p2pr
-                 ON p2pr.publicationID = p.ID
+          <if parameter="_cat_">
+            INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', '<parameter:_cat_ />')
+            INNER JOIN categories cat ON cat.id = pcls.categoryID
+              AND cat.name IN (<session:biostore_projects_sql/>)
+            INNER JOIN publication2project p2pr
+               ON p2pr.publicationID = p.ID
+              AND p2pr.projectID = cat.name
+          </if>
+          <unless parameter="_cat_">
+            LEFT JOIN publication2project p2pr ON p2pr.publicationID = p.ID AND 1=2
+          </unless>
           ORDER BY p.ref
   operations:
   - InsertPublicationByPMID:
