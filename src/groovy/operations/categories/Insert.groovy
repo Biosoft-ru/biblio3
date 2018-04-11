@@ -29,7 +29,7 @@ class Insert extends GOperationSupport
     {
         if(dps.getValueAsString("parentID") == database.categories.get([name: "Root"]).getValueAsString("ID"))
         {
-            def projects = (List<String>)session.get(BIOSTORE_PROJECTS)
+            def projects = (String[])session.get(BIOSTORE_PROJECTS)
             if(!projects.contains(dps.getValueAsString("name")) && dps.getValueAsString("name") != "foo")//TODO delete foo
             {
                 validator.setError(dps.getProperty("name"), "root category must be in " + projects.toString())

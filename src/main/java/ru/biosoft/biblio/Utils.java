@@ -2,7 +2,7 @@ package ru.biosoft.biblio;
 
 public class Utils
 {
-    public static final String BIOSTORE_PROJECTS = "BIOSTORE_PROJECTS";
-    public static final String SERVER_NAME = "SERVER_NAME";
+    public static final String BIOSTORE_PROJECTS = "biostore_projects";
+    public static final String SERVER_NAME = "server_name";
 
 }
