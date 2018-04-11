@@ -42,7 +42,7 @@ class InsertPublicationByPMID extends GOperationSupport implements Transactional
         //prop.setAttribute(TAG_LIST_ATTR, vc.toArray(new String[0]))
 
         dps.add("categoryID", "Category") {
-            TAG_LIST_ATTR = helper.getTagsFromSelectionView("categories", [entity: getInfo().getEntityName()])
+            TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories", "Children Of Root", [entity: getInfo().getEntityName()])
             value = context.operationParams.get(CATEGORY_ID_PARAM)
         }
 

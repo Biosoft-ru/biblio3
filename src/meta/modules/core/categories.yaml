@@ -1,5 +1,42 @@
 categories:
   queries:
+  - Children Of Root:
+      type: 1D
+      roles: Administrator
+      code: |-
+        SELECT
+            c1.ID AS "Code",
+            CONCAT(c1.entity ,': ' ,
+                COALESCE( CONCAT( c8.name ,'->' ),'' ) ,
+                COALESCE( CONCAT( c7.name ,'->' ),'' ) ,
+                COALESCE( CONCAT( c6.name ,'->' ),'' ) ,
+                COALESCE( CONCAT( c5.name ,'->' ),'' ) ,
+                COALESCE( CONCAT( c4.name ,'->' ),'' ) ,
+                COALESCE( CONCAT( c3.name ,'->' ),'' ) ,
+                COALESCE( CONCAT( c2.name ,'->' ),'' ) ,
+                c1.name
+            ) AS "Category"
+        FROM categories c1
+            LEFT JOIN categories c2 on c1.parentID = c2.ID AND c2.name != 'Root'
+            LEFT JOIN categories c3 on c2.parentID = c3.ID AND c3.name != 'Root'
+            LEFT JOIN categories c4 on c3.parentID = c4.ID AND c4.name != 'Root'
+            LEFT JOIN categories c5 on c4.parentID = c5.ID AND c5.name != 'Root'
+            LEFT JOIN categories c6 on c5.parentID = c6.ID AND c6.name != 'Root'
+            LEFT JOIN categories c7 on c6.parentID = c7.ID AND c7.name != 'Root'
+            LEFT JOIN categories c8 on c7.parentID = c8.ID AND c8.name != 'Root'
+        WHERE c1.name != 'Root'
+        <if parameter="entity">
+            AND c1.entity = '<parameter:entity />'
+        </if>
+        ORDER BY CONCAT(
+            COALESCE( CONCAT( c8.name ,'->' ),'' ) ,
+            COALESCE( CONCAT( c7.name ,'->' ),'' ) ,
+            COALESCE( CONCAT( c6.name ,'->' ),'' ) ,
+            COALESCE( CONCAT( c5.name ,'->' ),'' ) ,
+            COALESCE( CONCAT( c4.name ,'->' ),'' ) ,
+            COALESCE( CONCAT( c3.name ,'->' ),'' ) ,
+            COALESCE( CONCAT( c2.name ,'->' ),'' ) ,
+            c1.name )
   - All records:
       type: 1D
       roles: Administrator
