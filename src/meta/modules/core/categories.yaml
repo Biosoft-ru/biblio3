@@ -39,7 +39,7 @@ categories:
             c1.name )
   - All records:
       type: 1D
-      roles: Administrator
+      roles: Annotator
       operations:
       - Delete
       - Filter
@@ -47,5 +47,9 @@ categories:
   operations:
   - Insert:
       type: Groovy
-      roles: Administrator
+      roles: Annotator
       file: categories/Insert.groovy
+  - Delete:
+      records: 2
+      roles: Annotator
+      code: com.developmentontheedge.be5.operations.SilentDeleteOperation
