@@ -1,5 +1,6 @@
 package publications
 
+import com.developmentontheedge.be5.databasemodel.RecordModel
 import com.developmentontheedge.be5.env.Inject
 import com.developmentontheedge.be5.operation.GOperationSupport
 import com.developmentontheedge.be5.operation.OperationResult
@@ -54,22 +55,19 @@ class InsertPublicationByPMID extends GOperationSupport implements Transactional
     {
         String pmid = ("" + dps.getValue("PMID")).trim()
 
-        if(database.publications.count([PMID: Long.parseLong(pmid)]) > 0)
-        {
-            setResult(OperationResult.error("Publication with the same PMID already exists, PMID='" + pmid + "'."))
-            return
-        }
-
         String category = dps.getValueAsString("categoryID")
+        dps.remove("categoryID")  //remove "categoryID" to avoid exception in super.invoke()
 
-        //remove "categoryID" to avoid exception in super.invoke()
-        dps.remove("categoryID")
+        def id = Long.parseLong(database.publications.get([PMID: Long.parseLong(pmid)]).getId())
 
-        def id = database.publications.add(dps)
-
-        if( ( pmid != null && pmid.length() > 0 ) )
+        if(id == null)
         {
-            medlineImport.fill("publications", Long.parseLong(id))
+            id = database.publications.add(dps)
+
+            if( ( pmid != null && pmid.length() > 0 ) )
+            {
+                medlineImport.fill("publications", Long.parseLong(id))
+            }
         }
 
         List<Long> categories = new ArrayList<>()
