@@ -53,7 +53,7 @@ class BiostoreLogin extends Login
             {
                 def projectList = provider.getProjectList(user_name, user_pass)
 
-                def roles = ImmutableList.of("Annotator", RoleType.ROLE_ADMINISTRATOR, RoleType.ROLE_SYSTEM_DEVELOPER)//todo remove ROLE_ADMINISTRATOR
+                def roles = ImmutableList.of("Annotator")
 
                 userHelper.saveUser(user_name, roles, roles, meta.getLocale(null), request.getRemoteAddr(), session)
 
