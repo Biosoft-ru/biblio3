@@ -58,9 +58,10 @@ class InsertPublicationByPMID extends GOperationSupport implements Transactional
         String category = dps.getValueAsString("categoryID")
         dps.remove("categoryID")  //remove "categoryID" to avoid exception in super.invoke()
 
-        def id = Long.parseLong(database.publications.get([PMID: Long.parseLong(pmid)]).getId())
+        def publicationsRecord = database.publications.get([PMID: Long.parseLong(pmid)])
+        def id
 
-        if(id == null)
+        if(publicationsRecord == null)
         {
             id = database.publications.add(dps)
 
@@ -68,6 +69,10 @@ class InsertPublicationByPMID extends GOperationSupport implements Transactional
             {
                 medlineImport.fill("publications", Long.parseLong(id))
             }
+        }
+        else
+        {
+            id = Long.parseLong(publicationsRecord.getId())
         }
 
         List<Long> categories = new ArrayList<>()
