@@ -29,6 +29,7 @@ publication2project:
         canBeNull: true
     indices:
     - IDX_P2P_PUBID_PROJID:
+        unique: true
         columns:
         - publicationID
         - projectID
