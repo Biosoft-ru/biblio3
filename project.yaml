@@ -13,6 +13,7 @@ biblio3:
   - _publication_cat_
   - attachments
   - publications
+  - publication2project
   scripts:
   - Post-db
   - dictionaries

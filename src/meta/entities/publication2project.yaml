@@ -1,0 +1,39 @@
+publication2project:
+  type: table
+  displayName: publication2project
+  order: '10'
+  primaryKey: ID
+  scheme:
+    columns:
+    - ID:
+        type: KEYTYPE
+        autoIncrement: true
+        primaryKey: true
+    - publicationID:
+        type: KEYTYPE
+    - projectID:
+        type: VARCHAR(255)
+    - status:
+        type: VARCHAR(30)
+        canBeNull: true
+    - importance:
+        type: INT
+        defaultValue: '3'
+        canBeNull: true
+    - keyWords:
+        type: TEXT
+        canBeNull: true
+    - comment:
+        type: TEXT
+        canBeNull: true
+    indices:
+    - IDX_P2P_PUBID_PROJID:
+        columns:
+        - publicationID
+        - projectID
+  queries:
+  - All records:
+      type: 1D_unknown
+      roles: Administrator
+      code: |-
+        SELECT * from publication2project
