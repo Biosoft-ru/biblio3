@@ -2,7 +2,6 @@
 package ru.biosoft.biblio;
 
 import java.io.InputStream;
-import java.io.Writer;
 import java.net.URL;
 import java.util.Objects;
 import java.util.StringTokenizer;
@@ -78,6 +77,12 @@ public class MedlineImport
         is.close();
 
         String entry = result.toString();
+
+        String returnPMID = TextUtil.getField(entry, "PMID-");
+        if(returnPMID == null)
+        {
+            throw new RuntimeException(TextUtil.getField(entry, "id: " + pmid));
+        }
 
         // parsing result
         String dp    = TextUtil.getField(entry, "DP  -");
