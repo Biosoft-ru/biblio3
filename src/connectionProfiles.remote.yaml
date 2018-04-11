@@ -1,2 +1,6 @@
 connectionProfiles:
-  profiles: {}
+  profiles:
+    pg95_biblio3:
+      connectionUrl: jdbc:postgresql://pg95.dote.ru:5432/biblio3
+      username: biblio3
+      password: biblio3
