@@ -11,6 +11,7 @@ publication2project:
         primaryKey: true
     - publicationID:
         type: KEYTYPE
+        reference: publications
     - projectID:
         type: VARCHAR(255)
     - status:
@@ -33,7 +34,29 @@ publication2project:
         - projectID
   queries:
   - All records:
-      type: 1D_unknown
+      type: 1D
       roles: Administrator
+      operations:
+      - Delete
+      - Edit
+      - Insert
       code: |-
-        SELECT * from publication2project
+        SELECT
+          publicationID,
+          projectID,
+          importance,
+          keyWords,
+          comment
+        FROM publication2project
+  operations:
+  - Insert:
+      roles: Administrator
+      code: com.developmentontheedge.be5.operations.SilentInsertOperation
+  - Edit:
+      records: 1
+      roles: Administrator
+      code: com.developmentontheedge.be5.operations.SilentEditOperation
+  - Delete:
+      records: 2
+      roles: Administrator
+      code: com.developmentontheedge.be5.operations.SilentDeleteOperation
