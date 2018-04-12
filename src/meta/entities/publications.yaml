@@ -76,8 +76,7 @@ publications:
       operations:
       - Delete
       - Edit
-      - Insert
-      - InsertPublicationByPMID
+      - InsertPublication
       - FillFromMedline
       - Filter
       code: |2-
@@ -124,8 +123,7 @@ publications:
       operations:
       - Delete
       - Edit
-      - Insert
-      - InsertPublicationByPMID
+      - InsertPublication
       - FillFromMedline
       - Filter
       code: |2-
@@ -170,10 +168,10 @@ publications:
           </unless>
           ORDER BY p.ref
   operations:
-  - InsertPublicationByPMID:
+  - InsertPublication:
       type: Groovy
       roles: Annotator
-      file: publications/InsertPublicationByPMID.groovy
+      file: publications/InsertPublication.groovy
   - FillFromMedline:
       records: 2
       type: Groovy
@@ -185,11 +183,9 @@ publications:
       code: com.developmentontheedge.be5.operations.SilentDeleteOperation
   - Edit:
       records: 1
-      roles: Administrator
-      code: com.developmentontheedge.be5.operations.SilentEditOperation
-  - Insert:
-      roles: Administrator
-      code: com.developmentontheedge.be5.operations.SilentInsertOperation
+      type: Groovy
+      roles: Annotator
+      file: publications/Edit.groovy
   - Filter:
       roles: Administrator
       layout: '{"type":"modalForm"}'

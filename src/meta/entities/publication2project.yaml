@@ -1,6 +1,6 @@
 publication2project:
   type: table
-  displayName: publication2project
+  displayName: Publication2project
   order: '10'
   primaryKey: ID
   scheme:
