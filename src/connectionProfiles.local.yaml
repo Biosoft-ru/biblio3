@@ -8,6 +8,10 @@ connectionProfiles:
       connectionUrl: jdbc:postgresql://localhost:5432/biblio3
       username: postgres
       password: pg
+    uuinnk_local_home:
+      connectionUrl: jdbc:postgresql://localhost:5432/biblio3
+      username: test
+      password: test
     uuinnk_biblio2:
       connectionUrl: jdbc:mysql://localhost:3306/biblio2
       username: root
