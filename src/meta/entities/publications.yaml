@@ -75,9 +75,9 @@ publications:
       roles: Annotator
       operations:
       - Delete
-      - Edit
       - InsertPublication
       - FillFromMedline
+      - EditProjectInfo
       - Filter
       code: |-
           SELECT
@@ -105,26 +105,26 @@ publications:
               CONCAT('<div class="text-center"><a href="#!table/attachments/Attachments/publicationID=', p.id, '">Edit</a></div>')
             ) AS "Text"
           FROM publications p
+          <if parameter="_cat_">
             INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', '<parameter:_cat_ />')
             INNER JOIN categories cat ON cat.id = pcls.categoryID
               AND cat.name IN (<session:biostore_projects multiple="true"/>)
-            <if parameter="_cat_">
-              INNER JOIN publication2project p2pr
-                 ON p2pr.publicationID = p.ID
-                AND p2pr.projectID = cat.name
-            </if>
-            <unless parameter="_cat_">
-              LEFT JOIN publication2project p2pr ON p2pr.publicationID = p.ID AND 1=2
-            </unless>
+            INNER JOIN publication2project p2pr
+               ON p2pr.publicationID = p.ID
+              AND p2pr.projectID = cat.name
+          </if>
+          <unless parameter="_cat_">
+            LEFT JOIN publication2project p2pr ON p2pr.publicationID = p.ID AND 1=2
+          </unless>
           ORDER BY p.ref
   - Detailed view:
       type: 1D
       roles: Annotator
       operations:
       - Delete
-      - Edit
       - InsertPublication
       - FillFromMedline
+      - EditProjectInfo
       - Filter
       code: |-
           SELECT
@@ -181,11 +181,11 @@ publications:
       records: 2
       roles: Annotator
       code: com.developmentontheedge.be5.operations.SilentDeleteOperation
-  - Edit:
+  - EditProjectInfo:
       records: 1
       type: Groovy
       roles: Annotator
-      file: publications/Edit.groovy
+      file: publications/EditProjectInfo.groovy
   - Filter:
       roles: Administrator
       layout: '{"type":"modalForm"}'

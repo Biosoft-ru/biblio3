@@ -3,7 +3,6 @@ package publications
 import com.developmentontheedge.be5.env.Inject
 import com.developmentontheedge.be5.operation.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
-import com.developmentontheedge.be5.util.Utils
 import ru.biosoft.biblio.MedlineImport
 
 

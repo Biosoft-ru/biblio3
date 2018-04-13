@@ -48,7 +48,7 @@ class BiostoreLogin extends Login
 
             try
             {
-                def projectList = new ArrayList(provider.getProjectList(user_name, user_pass))
+                def projectList = provider.getProjectList(user_name, user_pass)
 
                 def roles = ImmutableList.of("Annotator")
 
@@ -60,8 +60,12 @@ class BiostoreLogin extends Login
             }
             catch (SecurityException e)
             {
-                setResult(OperationResult.error(e.getMessage()))
+                setResult(OperationResult.error(e))
             }
+        }
+        else
+        {
+            session.set(BIOSTORE_PROJECTS, Collections.emptyList())
         }
     }
 }
