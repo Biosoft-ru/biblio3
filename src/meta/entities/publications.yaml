@@ -108,6 +108,11 @@ publications:
             INNER JOIN classifications cls ON cls.recordID = CONCAT('publications.', p.ID)
             INNER JOIN categories cat ON cat.id = cls.categoryID
               AND cat.name IN (<session:biostore_projects multiple="true"/>)
+            <if parameter="_cat_">
+              INNER JOIN classifications pCls ON pCls.recordID = CONCAT('projectCategory.', '<parameter:_cat_ />')
+              INNER JOIN categories pCat ON pCat.id = pCls.categoryID
+                AND pCat.name IN (<session:biostore_projects multiple="true"/>)
+            </if>
           ORDER BY p.ref
   - Detailed view:
       type: 1D
