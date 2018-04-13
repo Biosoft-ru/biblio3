@@ -49,8 +49,6 @@ class BiostoreLogin extends Login
             try
             {
                 def projectList = new ArrayList(provider.getProjectList(user_name, user_pass))
-//                projectList = new ArrayList()
-//                projectList.add("foo")//todo remove
 
                 def roles = ImmutableList.of("Annotator")
 
