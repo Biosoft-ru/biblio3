@@ -12,7 +12,6 @@ import ru.biosoft.biostoreapi.DefaultConnectionProvider
 import java.util.stream.Collectors
 
 import static ru.biosoft.biblio.Utils.BIOSTORE_PROJECTS
-import static ru.biosoft.biblio.Utils.BIOSTORE_PROJECTS_SQL
 
 
 class BiostoreLogin extends Login
@@ -58,9 +57,6 @@ class BiostoreLogin extends Login
                 userHelper.saveUser(user_name, roles, roles, meta.getLocale(null), request.getRemoteAddr(), session)
 
                 session.set(BIOSTORE_PROJECTS, projectList)
-                session.set(BIOSTORE_PROJECTS_SQL, projectList.stream()
-                            .map({v -> "'${v}'"})
-                            .collect(Collectors.joining(", ")))
 
                 setResult(OperationResult.finished(null, FrontendConstants.UPDATE_USER_INFO))
             }
