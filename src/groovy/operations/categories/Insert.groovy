@@ -36,7 +36,7 @@ class Insert extends GOperationSupport implements TransactionalOperation
         if(isProjectCategory)
         {
             def projects = (List<String>)session.get(BIOSTORE_PROJECTS)
-            if(!projects.contains(name) && name != "foo")//TODO delete foo
+            if(!projects.contains(name))
             {
                 validator.setError(dps.getProperty("name"), "root category must be in " + projects.toString())
                 return
