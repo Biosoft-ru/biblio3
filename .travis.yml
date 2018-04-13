@@ -13,11 +13,11 @@ before_install:
     && mvn install -DskipTests=true -Dmaven.javadoc.skip=true
     && cd ../
   - git clone https://github.com/Biosoft-ru/exception.git
-    && cd be5
+    && cd exception
     && mvn install -DskipTests=true -Dmaven.javadoc.skip=true
     && cd ../
   - git clone https://github.com/Biosoft-ru/biostore-api.git
-    && cd be5
+    && cd biostore-api
     && mvn install -DskipTests=true -Dmaven.javadoc.skip=true
     && cd ../
 install:
