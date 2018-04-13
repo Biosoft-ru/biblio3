@@ -82,9 +82,8 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             cat = db.getLong("SELECT c1.parentID FROM categories c1 WHERE c1.ID = ?", cat)
         }
 
-        db.insert("""DELETE FROM classifications (recordID, categoryID)
-                     SELECT CONCAT('publications.', ${id}), c.ID FROM categories c 
-                     WHERE id IN """ + Utils.inClause(categories.size()), categories as Long[])
+        db.insert("""DELETE FROM classifications 
+                     WHERE categoryID IN """ + Utils.inClause(categories.size()), categories as Long[])
 
         db.insert("""INSERT INTO classifications (recordID, categoryID)
                      SELECT CONCAT('publications.', ${id}), c.ID FROM categories c 

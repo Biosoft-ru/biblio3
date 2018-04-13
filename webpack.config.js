@@ -20,7 +20,7 @@ module.exports = {
     entry: [
         'babel-polyfill',
         'react-hot-loader/patch',
-        './src/frontend/scripts/manager.js'
+        './src/frontend/scripts/initApp.js'
     ],
     devtool: process.env.WEBPACK_DEVTOOL || 'eval-source-map',
     output: {

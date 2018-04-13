@@ -28,7 +28,7 @@ if (env.min) {
 let config = {
   entry: {
     app: ['babel-polyfill', './src/frontend/scripts/initApp.js'],
-    manager: ['babel-polyfill', './src/frontend/scripts/manager.js']
+    be5: ['babel-polyfill', './src/frontend/scripts/be5.js']
   },
   output: {
     publicPath: './',
@@ -65,10 +65,10 @@ let config = {
       }
     }),
     new HtmlWebpackPlugin({
-      filename: 'manager/index.html',
+      filename: 'be5/index.html',
       fixAssets: true,
       template: './src/frontend/template.html',
-      chunks: ['commons', 'manager'],
+      chunks: ['commons', 'be5'],
       files: {
         css: ['style.css'],
         js: ['bundle.js'],
