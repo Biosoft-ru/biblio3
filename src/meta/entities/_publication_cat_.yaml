@@ -7,4 +7,4 @@ _publication_cat_:
   - All records:
       type: static
       roles: Annotator
-      value: categories.redir?_qn_=All+records&entity=publications
+      value: categories.redir?_qn_=Children+Of+Root

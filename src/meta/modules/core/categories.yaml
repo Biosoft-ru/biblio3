@@ -2,7 +2,11 @@ categories:
   queries:
   - Children Of Root:
       type: 1D
-      roles: Administrator
+      roles: Annotator
+      operations:
+      - Delete
+      - Filter
+      - Insert
       code: |-
         SELECT
             c1.ID AS "Code",
@@ -24,7 +28,7 @@ categories:
             LEFT JOIN categories c6 on c5.parentID = c6.ID AND c6.name != 'Root'
             LEFT JOIN categories c7 on c6.parentID = c7.ID AND c7.name != 'Root'
             LEFT JOIN categories c8 on c7.parentID = c8.ID AND c8.name != 'Root'
-        WHERE c1.name != 'Root'
+        WHERE c1.name != 'Root' AND c1.entity = 'publications'
         <if parameter="entity">
             AND c1.entity = '<parameter:entity />'
         </if>
@@ -37,13 +41,6 @@ categories:
             COALESCE( CONCAT( c3.name ,'->' ),'' ) ,
             COALESCE( CONCAT( c2.name ,'->' ),'' ) ,
             c1.name )
-  - All records:
-      type: 1D
-      roles: Annotator
-      operations:
-      - Delete
-      - Filter
-      - Insert
   operations:
   - Insert:
       type: Groovy
