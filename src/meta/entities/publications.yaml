@@ -109,9 +109,9 @@ publications:
             INNER JOIN categories cat ON cat.id = cls.categoryID
               AND cat.name IN (<session:biostore_projects multiple="true"/>)
             <if parameter="_cat_">
-              INNER JOIN classifications pCls ON pCls.recordID = CONCAT('projectCategory.', '<parameter:_cat_ />')
-              INNER JOIN categories pCat ON pCat.id = pCls.categoryID
-                AND pCat.name IN (<session:biostore_projects multiple="true"/>)
+              LEFT JOIN classifications pCls ON pCls.recordID = CONCAT('projectCategory.', '<parameter:_cat_ />')
+              INNER JOIN categories pCat ON (pCat.id = pCls.categoryID AND pCat.name IN (<session:biostore_projects multiple="true"/>) )
+                OR <parameter:_cat_ /> = (SELECT id FROM categories WHERE name = 'Root')
             </if>
           ORDER BY p.ref
   - Detailed view:
