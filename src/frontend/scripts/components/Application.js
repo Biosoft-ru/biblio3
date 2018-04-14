@@ -1,5 +1,5 @@
 import React from 'react';
-import {be5, Be5Menu, Document, Be5Components} from 'be5-react';
+import {be5, NavbarMenuContainer, Document, Be5Components} from 'be5-react';
 
 
 class Application extends React.Component
@@ -8,7 +8,7 @@ class Application extends React.Component
     return (
       <div>
         <Be5Components/>
-        <Be5Menu ref="menu" show={true}/>
+        <NavbarMenuContainer brand='Biblio3'/>
         <div className="container">
           <div className="row">
             <Document ref="document" frontendParams={{documentName: be5.MAIN_DOCUMENT}} />

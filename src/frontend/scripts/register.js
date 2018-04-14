@@ -21,3 +21,5 @@ import 'be5-react/src/css/menuFooter.css';
 import 'be5-react/src/css/splitPane.css';
 import 'be5-react/src/css/languageSelector.css';
 import 'be5-react/src/css/main.css';
+
+import '../css/index.css';
