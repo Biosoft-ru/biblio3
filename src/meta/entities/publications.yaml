@@ -127,19 +127,19 @@ publications:
           SELECT
             p.ID AS "___ID",
             CONCAT(IFNULL(CONCAT('<b>', p.ref, '</b><br>'), ''),
-                    IFNULL( CONCAT('Importance: ', p2pr.importance, '; '), ''),
+                    --IFNULL( CONCAT('Importance: ', p2pr.importance, '; '), ''),
                     IFNULL( CONCAT(p.publicationType), ''),
                     IFNULL( CONCAT('; ',  p.language), ''), '.<br><br>',
                     IFNULL( CONCAT(p.authors, '<br>'), ''),
                     IFNULL( CONCAT('<b>', p.title, '</b><br>'),   ''),
                     IFNULL( CONCAT('<i>', p.source, '</i><br>'), ''),
 
-                    IFNULL( CONCAT('<br>Key words: ', p2pr.keyWords, '<br>'), ''),
+                    --IFNULL( CONCAT('<br>Key words: ', p2pr.keyWords, '<br>'), ''),
                     IFNULL( CONCAT('<br>', p.abstract, '<br><br>'), '<br><br>'),
                     IFNULL( CONCAT('PMID: ', '<a href="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&list_uids=',
                             TO_CHAR(p.PMID), '&dopt=Abstract" target="blanck">', TO_CHAR(p.PMID), '</a><br>'), ''),
                     IFNULL( CONCAT('URL: <a href=', p.url, '>', p.url, '</a><br>'), ''),
-                    IFNULL(p2pr.comment, ''),
+                    --IFNULL(p2pr.comment, ''),
                     IFNULL(CONCAT(
                        IFNULL( '<sql default="Нажмите">
                          SELECT CONCAT('<a href="api/download?_t_=attachments&ID=', a.id, '">', a.name, '</a>(',  IFNULL(LENGTH(a.data), '0'), ')' )
@@ -152,17 +152,14 @@ publications:
                     IFNULL(CONCAT('<a class="d-block" href="#!table/attachments/Attachments/publicationID=', p.id, '">Edit</a>'))
             ) AS "Publication"
           FROM publications p
-          <if parameter="_cat_">
-            INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', '<parameter:_cat_ />')
-            INNER JOIN categories cat ON cat.id = pcls.categoryID
+            INNER JOIN classifications cls ON cls.recordID = CONCAT('publications.', p.ID)
+            INNER JOIN categories cat ON cat.id = cls.categoryID
               AND cat.name IN (<session:biostore_projects multiple="true"/>)
-            INNER JOIN publication2project p2pr
-               ON p2pr.publicationID = p.ID
-              AND p2pr.projectID = cat.name
-          </if>
-          <unless parameter="_cat_">
-            LEFT JOIN publication2project p2pr ON p2pr.publicationID = p.ID AND 1=2
-          </unless>
+            <if parameter="_cat_">
+              LEFT JOIN classifications pCls ON pCls.recordID = CONCAT('projectCategory.', '<parameter:_cat_ />')
+              INNER JOIN categories pCat ON (pCat.id = pCls.categoryID AND pCat.name IN (<session:biostore_projects multiple="true"/>) )
+                OR <parameter:_cat_ /> = (SELECT id FROM categories WHERE name = 'Root')
+            </if>
           ORDER BY p.ref
   operations:
   - InsertPublication:
