@@ -1,6 +1,7 @@
 context:
   services:
   - ru.biosoft.biblio.MedlineImport
+  - ru.biosoft.biblio.BiblioHelper
 config:
   com.developmentontheedge.be5.api.services.impl.LogConfigurator:
     path: '/logging.properties'

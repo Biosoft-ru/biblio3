@@ -10,7 +10,7 @@ import com.google.common.collect.ImmutableList
 import ru.biosoft.biostoreapi.DefaultConnectionProvider
 
 
-import static ru.biosoft.biblio.Utils.BIOSTORE_PROJECTS
+import static ru.biosoft.biblio.BiblioUtils.BIOSTORE_PROJECTS
 
 
 class BiostoreLogin extends Login

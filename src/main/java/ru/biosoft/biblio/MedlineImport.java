@@ -19,7 +19,7 @@ public class MedlineImport
     protected static String proxyHost = "proxy";
     protected static String proxyPort = "8080";
 
-    private SqlService db;
+    private final SqlService db;
 
     public MedlineImport(SqlService db)
     {

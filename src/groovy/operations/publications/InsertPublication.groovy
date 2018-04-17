@@ -5,7 +5,7 @@ import com.developmentontheedge.be5.env.Inject
 import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.operation.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
-import com.developmentontheedge.be5.util.Utils
+import ru.biosoft.biblio.BiblioHelper
 import ru.biosoft.biblio.MedlineImport
 
 import static com.developmentontheedge.be5.api.FrontendConstants.CATEGORY_ID_PARAM
@@ -14,6 +14,7 @@ import static com.developmentontheedge.be5.api.FrontendConstants.CATEGORY_ID_PAR
 class InsertPublication extends GOperationSupport implements TransactionalOperation
 {
     @Inject MedlineImport medlineImport
+    @Inject BiblioHelper biblioHelper
 
     def projectColumns = ["status", "importance", "keyWords", "comment"]
     RecordModel publicationRecord
@@ -117,31 +118,11 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             publicationID = Long.parseLong(publicationRecord.getId())
         }
 
-        updateCategories(category, publicationID)
+        biblioHelper.updateCategories(category, publicationID)
 
         updateProjectInfo(publicationID, projectInfo)
 
         addRedirectParams(context.operationParams)
-    }
-
-    private void updateCategories(String category, Long publicationID)
-    {
-        List<Long> categories = new ArrayList<>()
-        Long cat = category != null ? Long.parseLong(category) : null
-
-        while (cat != null) {
-            categories.add(cat)
-
-            cat = db.getLong("SELECT c1.parentID FROM categories c1 WHERE c1.ID = ?", cat)
-        }
-
-        db.insert("""DELETE FROM classifications 
-                     WHERE recordID = CONCAT('publications.', ${publicationID})
-                       AND categoryID IN """ + Utils.inClause(categories.size()), categories as Long[])
-
-        db.insert("""INSERT INTO classifications (recordID, categoryID)
-                     SELECT CONCAT('publications.', ${publicationID}), c.ID FROM categories c 
-                     WHERE id IN """ + Utils.inClause(categories.size()), categories as Long[])
     }
 
     private void updateProjectInfo(Long publicationID, GDynamicPropertySetSupport projectInfo)

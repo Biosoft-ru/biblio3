@@ -173,8 +173,10 @@ publications:
       file: publications.FillFromMedline.groovy
   - Delete:
       records: 2
+      layout: '{"type":"modalForm"}'
+      type: Groovy
       roles: Annotator
-      code: com.developmentontheedge.be5.operations.SilentDeleteOperation
+      file: publications.DeletePublication.groovy
   - EditProjectInfo:
       records: 1
       type: Groovy
