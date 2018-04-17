@@ -45,7 +45,7 @@ categories:
   - Insert:
       type: Groovy
       roles: Annotator
-      file: categories/Insert.groovy
+      file: categories.Insert.groovy
   - Delete:
       records: 2
       roles: Annotator

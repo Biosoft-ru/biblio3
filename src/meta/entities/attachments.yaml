@@ -50,7 +50,7 @@ attachments:
   - Insert:
       type: Groovy
       roles: Administrator
-      file: attachments/AddFile.groovy
+      file: attachments.AddFile.groovy
   - Filter:
       roles: Administrator
       layout: '{"type":"modalForm"}'

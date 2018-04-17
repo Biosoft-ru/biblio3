@@ -165,12 +165,12 @@ publications:
   - InsertPublication:
       type: Groovy
       roles: Annotator
-      file: publications/InsertPublication.groovy
+      file: publications.InsertPublication.groovy
   - FillFromMedline:
       records: 2
       type: Groovy
       roles: Administrator
-      file: publications/FillFromMedline.groovy
+      file: publications.FillFromMedline.groovy
   - Delete:
       records: 2
       roles: Annotator
@@ -179,7 +179,7 @@ publications:
       records: 1
       type: Groovy
       roles: Annotator
-      file: publications/EditProjectInfo.groovy
+      file: publications.EditProjectInfo.groovy
   - Filter:
       roles: Administrator
       layout: '{"type":"modalForm"}'
