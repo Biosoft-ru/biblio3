@@ -22,7 +22,7 @@ class EditProjectInfo extends GOperationSupport implements TransactionalOperatio
 
         dps.edit("projectID") {
             READ_ONLY = true
-            value = qRec.beSql("""SELECT cat.name FROM categories cat
+            value = qRec.of("""SELECT cat.name FROM categories cat
                     INNER JOIN classifications cls ON cls.recordID = CONCAT('publications.', ?)
                     INNER JOIN classifications pcls 
                        ON pcls.recordID = CONCAT('projectCategory.', cls.categoryID)
