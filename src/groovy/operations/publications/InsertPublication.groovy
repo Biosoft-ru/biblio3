@@ -2,6 +2,7 @@ package publications
 
 import com.developmentontheedge.be5.databasemodel.RecordModel
 import com.developmentontheedge.be5.env.Inject
+import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.operation.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.util.Utils
@@ -16,6 +17,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
 
     def projectColumns = ["status", "importance", "keyWords", "comment"]
     RecordModel publicationRecord
+    String projectID
 
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
@@ -54,7 +56,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
 
         if(presetValues.get("categoryID") != null)
         {
-            String projectID = qRec.of("""SELECT cat.name FROM categories cat
+            projectID = qRec.of("""SELECT cat.name FROM categories cat
                     INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', ?)
                       AND cat.ID = pcls.categoryID""", Long.parseLong((String)presetValues.get("categoryID"))).getString("name")
 
@@ -87,23 +89,26 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
     {
         String pmid = ("" + dps.getValue("PMID")).trim()
 
-        String inputType = dps.getValueAsString("inputType")
-        dps.remove("inputType")
+        String inputType = dps.remove("inputType")
+        String category = dps.remove("categoryID")
 
-        String category = dps.getValueAsString("categoryID")
-        dps.remove("categoryID")
+        def projectInfo = new GDynamicPropertySetSupport()
+        for (def columnName : projectColumns) {
+            projectInfo.add(dps.getProperty(columnName))
+            dps.remove(columnName)
+        }
 
-        def publicationID
+        Long publicationID
 
         if(publicationRecord == null)
         {
-            publicationID = database.publications.add(dps)
+            publicationID = Long.parseLong(database.publications.add(dps))
 
             if(inputType == "PubMed")
             {
                 if( ( pmid != null && pmid.length() > 0 ) )
                 {
-                    medlineImport.fill("publications", Long.parseLong(publicationID))
+                    medlineImport.fill("publications", publicationID)
                 }
             }
         }
@@ -112,11 +117,19 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             publicationID = Long.parseLong(publicationRecord.getId())
         }
 
+        updateCategories(category, publicationID)
+
+        updateProjectInfo(publicationID, projectInfo)
+
+        addRedirectParams(context.operationParams)
+    }
+
+    private void updateCategories(String category, Long publicationID)
+    {
         List<Long> categories = new ArrayList<>()
         Long cat = category != null ? Long.parseLong(category) : null
 
-        while(cat != null)
-        {
+        while (cat != null) {
             categories.add(cat)
 
             cat = db.getLong("SELECT c1.parentID FROM categories c1 WHERE c1.ID = ?", cat)
@@ -129,9 +142,20 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         db.insert("""INSERT INTO classifications (recordID, categoryID)
                      SELECT CONCAT('publications.', ${publicationID}), c.ID FROM categories c 
                      WHERE id IN """ + Utils.inClause(categories.size()), categories as Long[])
-
-        addRedirectParams(context.operationParams)
-        //setResult(OperationResult.redirectToOperation("publications", context.queryName, "Edit", [selectedRows: id]))
     }
 
+    private void updateProjectInfo(Long publicationID, GDynamicPropertySetSupport projectInfo)
+    {
+        def record = database.publication2project.get([publicationID: publicationID, projectID: projectID])
+        if(record == null)
+        {
+            projectInfo.add("publicationID"){TYPE = Long; value = publicationID}
+            projectInfo.add("projectID"){value = projectID}
+            database.publication2project.add(projectInfo)
+        }
+        else
+        {
+            database.publication2project.set(record.getId(), projectInfo)
+        }
+    }
 }
