@@ -9,7 +9,6 @@ import com.developmentontheedge.be5.operation.OperationStatus
 import com.google.common.collect.ImmutableList
 import ru.biosoft.biostoreapi.DefaultConnectionProvider
 
-import java.util.stream.Collectors
 
 import static ru.biosoft.biblio.Utils.BIOSTORE_PROJECTS
 
@@ -34,7 +33,7 @@ class BiostoreLogin extends Login
     @Override
     void invoke(Object parameters) throws Exception
     {
-        if(dps.getValueAsString("user_name") != null)
+        if(dps.getValueAsString("user_name") != null && dps.getValueAsString("user_pass") != null)
         {
             super.invoke(parameters)
         }
