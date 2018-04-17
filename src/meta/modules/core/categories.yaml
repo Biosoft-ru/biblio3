@@ -28,6 +28,8 @@ categories:
             LEFT JOIN categories c6 on c5.parentID = c6.ID AND c6.name != 'Root'
             LEFT JOIN categories c7 on c6.parentID = c7.ID AND c7.name != 'Root'
             LEFT JOIN categories c8 on c7.parentID = c8.ID AND c8.name != 'Root'
+            INNER JOIN classifications pCls ON pCls.recordID = CONCAT('projectCategory.', c1.ID)
+            INNER JOIN categories pCat ON (pCat.id = pCls.categoryID AND pCat.name IN (<session:biostore_projects multiple="true"/>) )
         WHERE c1.name != 'Root' AND c1.entity = 'publications'
         <if parameter="entity">
             AND c1.entity = '<parameter:entity />'
