@@ -45,7 +45,23 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         }
         else
         {
-            dpsHelper.addDpExcludeColumns(dps, getInfo().getEntity(), ["ID","PMID"], context.getOperationParams())
+            dpsHelper.addDpExcludeColumns(dps, getInfo().getEntity(), ["ID"], context.getOperationParams())
+
+            dps.edit("PMID") { CSS_CLASSES = "col-lg-3" }
+            dps.edit("ref") { CSS_CLASSES = "col-lg-9" }
+
+            dps.edit("authors") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
+            dps.edit("affiliation") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
+            dps.edit("title") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
+
+            dps.edit("year") { CSS_CLASSES = "col-lg-3" }
+            dps.edit("month") { CSS_CLASSES = "col-lg-3" }
+            dps.edit("volume") { CSS_CLASSES = "col-lg-3" }
+            dps.edit("issue") { CSS_CLASSES = "col-lg-3" }
+            dps.edit("pageFrom") { CSS_CLASSES = "col-lg-3" }
+            dps.edit("pageTo") { CSS_CLASSES = "col-lg-3" }
+            dps.edit("language") { CSS_CLASSES = "col-lg-3" }
+            dps.edit("publicationType") { CSS_CLASSES = "col-lg-3" }
         }
 
         dps.add("categoryID", "Category") {
@@ -69,7 +85,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             dps.edit("keyWords") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
 
             for (def columnName : projectColumns) {
-                dps.edit(columnName) { GROUP_ID = 1; GROUP_NAME = "Поля проекта " + projectID }
+                dps.edit(columnName) { GROUP_ID = 1; GROUP_NAME = "Поля для проекта " + projectID }
             }
 
             if(publicationRecord != null)

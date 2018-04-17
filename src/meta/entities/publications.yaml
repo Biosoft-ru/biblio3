@@ -9,11 +9,11 @@ publications:
         type: KEYTYPE
         autoIncrement: true
         primaryKey: true
-    - ref:
-        type: VARCHAR(100)
-        canBeNull: true
     - PMID:
         type: BIGINT UNSIGNED
+        canBeNull: true
+    - ref:
+        type: VARCHAR(100)
         canBeNull: true
     - authors:
         type: TEXT
