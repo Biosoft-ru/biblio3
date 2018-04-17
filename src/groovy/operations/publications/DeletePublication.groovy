@@ -38,7 +38,7 @@ class DeletePublication extends DeleteOperation implements TransactionalOperatio
         }
         else
         {
-            return dpsHelper.addLabelRaw(dps, "Удалить публикацию из категории <b>" + projectID + "</b>?")
+            return dpsHelper.addLabelRaw(dps, "Удалить публикации из категории <b>" + projectID + "</b>?")
         }
     }
 

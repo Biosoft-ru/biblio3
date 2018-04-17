@@ -75,7 +75,8 @@ publications:
       roles: Annotator
       operations:
       - Delete
-      - InsertPublication
+      - Insert
+      - Edit
       - FillFromMedline
       - EditProjectInfo
       - Filter
@@ -119,7 +120,8 @@ publications:
       roles: Annotator
       operations:
       - Delete
-      - InsertPublication
+      - Insert
+      - Edit
       - FillFromMedline
       - EditProjectInfo
       - Filter
@@ -162,10 +164,15 @@ publications:
             </if>
           ORDER BY p.ref
   operations:
-  - InsertPublication:
+  - Insert:
       type: Groovy
       roles: Annotator
       file: publications.InsertPublication.groovy
+  - Edit:
+      records: 1
+      type: Groovy
+      roles: Annotator
+      file: publications.EditPublication.groovy
   - FillFromMedline:
       records: 2
       type: Groovy
@@ -177,11 +184,6 @@ publications:
       type: Groovy
       roles: Annotator
       file: publications.DeletePublication.groovy
-  - EditProjectInfo:
-      records: 1
-      type: Groovy
-      roles: Annotator
-      file: publications.EditProjectInfo.groovy
   - Filter:
       roles: Administrator
       layout: '{"type":"modalForm"}'

@@ -46,7 +46,7 @@ public class BiblioHelper
                 "AND categoryID IN " + Utils.inClause(categories.size()), categories.toArray());
 
         db.insert("INSERT INTO classifications (recordID, categoryID)" +
-                "SELECT CONCAT('publications.', " + publicationID + "), c.ID FROM categories c" +
+                "SELECT CONCAT('publications.', " + publicationID + "), c.ID FROM categories c " +
                 "WHERE id IN " + Utils.inClause(categories.size()), categories.toArray());
     }
 

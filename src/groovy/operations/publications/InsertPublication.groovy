@@ -23,6 +23,9 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
+        //todo create new operation after error
+        dps = new GDynamicPropertySetSupport()
+
         dps.add("inputType", "Ввод") {
             TAG_LIST_ATTR = [["PubMed","PubMed"],["Вручную","manually"]] as String[][]
             RELOAD_ON_CHANGE = true
@@ -51,7 +54,6 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             dps.edit("ref") { CSS_CLASSES = "col-lg-9" }
 
             dps.edit("authors") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
-            dps.edit("affiliation") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
             dps.edit("title") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
 
             dps.edit("year") { CSS_CLASSES = "col-lg-3" }
@@ -66,16 +68,16 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
 
         dps.add("categoryID", "Category") {
             TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories", "Children Of Root", [entity: getInfo().getEntityName()])
-            value = context.operationParams.get(CATEGORY_ID_PARAM)
+            value = presetValues.getOrDefault("categoryID", context.operationParams.get(CATEGORY_ID_PARAM))
             RELOAD_ON_CHANGE = true
             GROUP_ID = 2; GROUP_NAME = "Категория"
         }
 
-        if(presetValues.get("categoryID") != null)
+        if(dps.getValue("categoryID") != null)
         {
             projectID = qRec.of("""SELECT cat.name FROM categories cat
                     INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', ?)
-                      AND cat.ID = pcls.categoryID""", Long.parseLong((String)presetValues.get("categoryID"))).getString("name")
+                      AND cat.ID = pcls.categoryID""", Long.parseLong(dps.getValueAsString("categoryID"))).getString("name")
 
             dpsHelper.addDpForColumns(dps, meta.getEntity("publication2project"),
                     projectColumns, context.getOperationParams())
