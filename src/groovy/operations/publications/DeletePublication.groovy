@@ -51,6 +51,8 @@ class DeletePublication extends DeleteOperation implements TransactionalOperatio
             database.publication2project.remove(["projectID": projectID, "publicationID": Long.parseLong(id)])
         }
 
+        setResult(OperationResult.finished())
+
         //todo check all classifications removed and remove
         //super.invoke(parameters)
     }
