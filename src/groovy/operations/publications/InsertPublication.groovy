@@ -50,8 +50,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         {
             dpsHelper.addDpExcludeColumns(dps, getInfo().getEntity(), ["ID"], context.getOperationParams())
 
-            dps.edit("PMID") { CSS_CLASSES = "col-lg-3" }
-            dps.edit("ref") { CSS_CLASSES = "col-lg-9" }
+            dps.edit("PMID") { HIDDEN = true }
 
             dps.edit("authors") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
             dps.edit("title") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
