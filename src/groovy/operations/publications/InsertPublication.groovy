@@ -1,13 +1,12 @@
 package publications
 
-import com.developmentontheedge.be5.databasemodel.RecordModel
 import com.developmentontheedge.be5.env.Inject
 import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.operation.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.beans.DynamicPropertySet
-import ru.biosoft.biblio.BiblioHelper
-import ru.biosoft.biblio.MedlineImport
+import ru.biosoft.biblio.services.BiblioCategoryService
+import ru.biosoft.biblio.services.MedlineImport
 
 import static com.developmentontheedge.be5.api.FrontendConstants.CATEGORY_ID_PARAM
 
@@ -15,7 +14,7 @@ import static com.developmentontheedge.be5.api.FrontendConstants.CATEGORY_ID_PAR
 class InsertPublication extends GOperationSupport implements TransactionalOperation
 {
     @Inject MedlineImport medlineImport
-    @Inject BiblioHelper biblioHelper
+    @Inject BiblioCategoryService categoryService
 
     def projectColumns = ["status", "importance", "keyWords", "comment"]
     String projectID
@@ -123,7 +122,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             }
         }
 
-        biblioHelper.addCategories(category, publicationID)
+        categoryService.addCategories(category, publicationID)
 
         projectInfo.add("publicationID"){TYPE = Long; value = publicationID}
         database.publication2project.add(projectInfo)

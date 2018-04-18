@@ -6,12 +6,12 @@ import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.operation.OperationResult
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.operations.DeleteOperation
-import ru.biosoft.biblio.BiblioHelper
+import ru.biosoft.biblio.services.BiblioCategoryService
 
 
 class DeletePublication extends DeleteOperation implements TransactionalOperation
 {
-    @Inject BiblioHelper biblioHelper
+    @Inject BiblioCategoryService categoryService
 
     String cat
     String projectID
@@ -47,7 +47,7 @@ class DeletePublication extends DeleteOperation implements TransactionalOperatio
     {
         for (String id : context.records)
         {
-            biblioHelper.deleteChildCategories(Long.parseLong(cat), Long.parseLong(id))
+            categoryService.deleteChildCategories(Long.parseLong(cat), Long.parseLong(id))
             //TODO database.publication2project.remove(["projectID": projectID, "publicationID": Long.parseLong(id)])
         }
 

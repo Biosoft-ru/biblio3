@@ -1,4 +1,4 @@
-package ru.biosoft.biblio;
+package ru.biosoft.biblio.services;
 
 import com.developmentontheedge.be5.api.services.SqlService;
 import com.developmentontheedge.be5.util.Utils;
@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BiblioHelper
+public class BiblioCategoryService
 {
     private final SqlService db;
 
-    public BiblioHelper(SqlService db)
+    public BiblioCategoryService(SqlService db)
     {
         this.db = db;
     }

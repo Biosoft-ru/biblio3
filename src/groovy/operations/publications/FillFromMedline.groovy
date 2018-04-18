@@ -3,7 +3,7 @@ package publications
 import com.developmentontheedge.be5.env.Inject
 import com.developmentontheedge.be5.operation.GOperationSupport
 import com.developmentontheedge.be5.operation.OperationResult
-import ru.biosoft.biblio.MedlineImport
+import ru.biosoft.biblio.services.MedlineImport
 
 
 class FillFromMedline extends GOperationSupport

@@ -1,5 +1,5 @@
 /** $Id: MedlineImport.java,v 1.12 2013/03/20 06:40:42 lan Exp $ */
-package ru.biosoft.biblio;
+package ru.biosoft.biblio.services;
 
 import java.io.InputStream;
 import java.net.URL;
