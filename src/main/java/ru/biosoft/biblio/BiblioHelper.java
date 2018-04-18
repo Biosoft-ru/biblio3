@@ -53,12 +53,17 @@ public class BiblioHelper
                 "AND categoryID IN " + Utils.inClause(categories.size()), categories.toArray());
     }
 
-    public void updateCategories(String category, Long publicationID)
+    public void removeCategories(String category, Long publicationID)
     {
         List<Long> categories = getParentCategories(category);
 
         db.update("DELETE FROM classifications WHERE recordID = CONCAT('publications.', " + publicationID + ")" +
                 "AND categoryID IN " + Utils.inClause(categories.size()), categories.toArray());
+    }
+
+    public void addCategories(String category, Long publicationID)
+    {
+        List<Long> categories = getParentCategories(category);
 
         db.insert("INSERT INTO classifications (recordID, categoryID)" +
                 "SELECT CONCAT('publications.', " + publicationID + "), c.ID FROM categories c " +

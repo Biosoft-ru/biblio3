@@ -1,31 +1,75 @@
 package publications
 
+import com.developmentontheedge.be5.api.FrontendConstants
+import com.developmentontheedge.be5.databasemodel.RecordModel
 import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
+import com.developmentontheedge.be5.operation.OperationResult
 import com.developmentontheedge.be5.operation.TransactionalOperation
-import groovy.transform.TypeChecked
 
 
-@TypeChecked
 class EditPublication extends InsertPublication implements TransactionalOperation
 {
+    RecordModel publication2projectRecord
+
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
-        def params = new HashMap<String, Object>(presetValues)
-        def rec = database.publications[context.records[0]]
-        params << rec.asMap()
-        params << [
-                inputType: presetValues.getOrDefault("inputType", rec.getValue("PMID") != null ? "PubMed" : "manually")
+        String cat = context.getOperationParams().get(FrontendConstants.CATEGORY_ID_PARAM)
+
+        if(cat != null) {
+            def rec = qRec.of("""SELECT cat.name FROM categories cat
+                    INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', ?)
+                      AND cat.ID = pcls.categoryID""", cat)
+            if(rec != null)projectID = rec.getString("name")
+        }
+        if(projectID == null) {
+            setResult(OperationResult.error("Перейдите в категорию"))
+            return null
+        }
+
+        def publicationRec = database.publications[context.records[0]]
+
+        publication2projectRecord = database.publication2project.get([
+                publicationID: Long.parseLong(publicationRec.getId()),
+                projectID    : projectID
+        ])
+
+        def presets = [:]
+        presets << publicationRec.asMap()
+        if(publication2projectRecord != null)presets << publication2projectRecord.asMap()
+        presets << presetValues
+        presets << [
+                inputType: presetValues.getOrDefault("inputType", publicationRec.getValue("PMID") != null ? "PubMed" : "manually")
         ]
 
-        dps = (GDynamicPropertySetSupport)super.getParameters(params)
+        dps = (GDynamicPropertySetSupport)super.getParameters(presets)
 
-        return dps//dpsHelper.setValues(dps, presetValues)
+        dps.edit("categoryID") { READ_ONLY = true }
+
+        return dps
     }
 
     @Override
     void invoke(Object parameters) throws Exception
     {
-        super.invoke(parameters)
+        if(dps.getProperty("PMID") != null && pmidExistInProject((Long)dps.getValue("PMID"), projectID))
+        {
+            validator.setError(dps.getProperty("PMID"), "Публикация с заданным PMID уже есть в категории " + projectID)
+            return
+        }
+
+        dps.remove("inputType")
+        dps.remove("categoryID")
+
+        def projectInfo = extractProjectInfo(dps)
+        projectInfo.add("publicationID"){TYPE = Long; value = context.records[0]}
+
+        database.publications.set(context.records[0], dps)
+
+        if(publication2projectRecord == null){
+            database.publication2project.add(projectInfo)
+        }else{
+            publication2projectRecord.update(projectInfo.asMap())
+        }
     }
 }

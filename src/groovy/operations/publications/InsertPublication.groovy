@@ -5,6 +5,7 @@ import com.developmentontheedge.be5.env.Inject
 import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.operation.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
+import com.developmentontheedge.beans.DynamicPropertySet
 import ru.biosoft.biblio.BiblioHelper
 import ru.biosoft.biblio.MedlineImport
 
@@ -17,7 +18,6 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
     @Inject BiblioHelper biblioHelper
 
     def projectColumns = ["status", "importance", "keyWords", "comment"]
-    RecordModel publicationRecord
     String projectID
 
     @Override
@@ -27,7 +27,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         dps = new GDynamicPropertySetSupport()
 
         dps.add("inputType", "Ввод") {
-            TAG_LIST_ATTR = [["PubMed","PubMed"],["Вручную","manually"]] as String[][]
+            TAG_LIST_ATTR = [["PubMed","PubMed"],["manually","Вручную"]] as String[][]
             RELOAD_ON_CHANGE = true
             value         = presetValues.getOrDefault("inputType", "PubMed")
         }
@@ -39,11 +39,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             dps.edit("PMID") {
                 CAN_BE_NULL = false
                 RELOAD_ON_CHANGE = true
-            }
-
-            if(presetValues.get("PMID") != null)
-            {
-                publicationRecord = database.publications.get([PMID: Long.parseLong((String)presetValues.get("PMID"))])
+                value = presetValues.get("PMID")
             }
         }
         else
@@ -78,8 +74,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
                     INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', ?)
                       AND cat.ID = pcls.categoryID""", Long.parseLong(dps.getValueAsString("categoryID"))).getString("name")
 
-            dpsHelper.addDpForColumns(dps, meta.getEntity("publication2project"),
-                    projectColumns, context.getOperationParams())
+            dpsHelper.addDpForColumns(dps, meta.getEntity("publication2project"), projectColumns, context.getOperationParams())
 
             dps.edit("status") { CSS_CLASSES = "col-lg-6" }
             dps.edit("importance") { CSS_CLASSES = "col-lg-6" }
@@ -88,14 +83,20 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             for (def columnName : projectColumns) {
                 dps.edit(columnName) { GROUP_ID = 1; GROUP_NAME = "Поля для проекта " + projectID }
             }
+        }
 
-            if(publicationRecord != null)
+        if(context.records.length == 0 && dps.getValue("PMID") != null)
+        {
+            //TODO add methods for validation with ignore Exception isValid(), rename isError to getStatus()
+            try {
+                validator.checkErrorAndCast(dps.getProperty("PMID"))
+            } catch (IllegalArgumentException ignore) {
+            }
+
+            if(!validator.isError(dps.getProperty("PMID")) && projectID != null &&
+                    pmidExistInProject((Long)dps.getValue("PMID"), projectID))
             {
-                def publication2projectRecord = database.publication2project.get([
-                        publicationID: Long.parseLong(publicationRecord.getId()),
-                        projectID    : projectID
-                ])
-                if(publication2projectRecord != null)dpsHelper.setValues(dps, publication2projectRecord)
+                validator.setError(dps.getProperty("PMID"), "Публикация с заданным PMID уже есть в категории " + projectID)
             }
         }
 
@@ -105,55 +106,49 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
     @Override
     void invoke(Object parameters) throws Exception
     {
-        String pmid = ("" + dps.getValue("PMID")).trim()
+        Long PMID = (Long)dps.getValue("PMID")
 
         String inputType = dps.remove("inputType")
         String category = dps.remove("categoryID")
 
+        def projectInfo = extractProjectInfo(dps)
+
+        Long publicationID = Long.parseLong(database.publications.add(dps))
+
+        if(inputType == "PubMed")
+        {
+            if( ( PMID != null ) )
+            {
+                medlineImport.fill("publications", publicationID)
+            }
+        }
+
+        biblioHelper.addCategories(category, publicationID)
+
+        projectInfo.add("publicationID"){TYPE = Long; value = publicationID}
+        database.publication2project.add(projectInfo)
+
+        addRedirectParams(context.operationParams)
+    }
+
+    GDynamicPropertySetSupport extractProjectInfo(DynamicPropertySet dps)
+    {
         def projectInfo = new GDynamicPropertySetSupport()
         for (def columnName : projectColumns) {
             projectInfo.add(dps.getProperty(columnName))
             dps.remove(columnName)
         }
+        projectInfo.add("projectID"){value = projectID}
 
-        Long publicationID
-
-        if(publicationRecord == null)
-        {
-            publicationID = Long.parseLong(database.publications.add(dps))
-
-            if(inputType == "PubMed")
-            {
-                if( ( pmid != null && pmid.length() > 0 ) )
-                {
-                    medlineImport.fill("publications", publicationID)
-                }
-            }
-        }
-        else
-        {
-            publicationID = Long.parseLong(publicationRecord.getId())
-        }
-
-        biblioHelper.updateCategories(category, publicationID)
-
-        updateProjectInfo(publicationID, projectInfo)
-
-        addRedirectParams(context.operationParams)
+        return projectInfo
     }
 
-    private void updateProjectInfo(Long publicationID, GDynamicPropertySetSupport projectInfo)
+    boolean pmidExistInProject(Long PMID, String projectID)
     {
-        def record = database.publication2project.get([publicationID: publicationID, projectID: projectID])
-        if(record == null)
-        {
-            projectInfo.add("publicationID"){TYPE = Long; value = publicationID}
-            projectInfo.add("projectID"){value = projectID}
-            database.publication2project.add(projectInfo)
-        }
-        else
-        {
-            database.publication2project.set(record.getId(), projectInfo)
-        }
+        return db.getLong("SELECT count(1) FROM publications p \n" +
+                "INNER JOIN classifications cls \n" +
+                "     ON cls.recordID = CONCAT('publications.', p.ID) \n" +
+                "    AND categoryID = (SELECT id FROM categories WHERE name = ?)\n" +
+                "WHERE p.PMID = ?", projectID, PMID) > 0
     }
 }
