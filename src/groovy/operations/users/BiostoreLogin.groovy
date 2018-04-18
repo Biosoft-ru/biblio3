@@ -33,8 +33,13 @@ class BiostoreLogin extends Login
     @Override
     void invoke(Object parameters) throws Exception
     {
-        if(dps.getValueAsString("user_name") != null && dps.getValueAsString("user_pass") != null)
+        if(dps.getValueAsString("user_name") != null)
         {
+            if(dps.getValueAsString("user_pass") == null)
+            {
+                validator.setError(dps.getProperty("user_pass"), "Пароль не может быть пустым")
+                return
+            }
             super.invoke(parameters)
         }
 
