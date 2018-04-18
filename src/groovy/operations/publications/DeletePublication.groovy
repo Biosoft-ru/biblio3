@@ -47,8 +47,8 @@ class DeletePublication extends DeleteOperation implements TransactionalOperatio
     {
         for (String id : context.records)
         {
-            biblioHelper.deleteCategories(cat, Long.parseLong(id))
-            database.publication2project.remove(["projectID": projectID, "publicationID": Long.parseLong(id)])
+            biblioHelper.deleteChildCategories(Long.parseLong(cat), Long.parseLong(id))
+            //TODO database.publication2project.remove(["projectID": projectID, "publicationID": Long.parseLong(id)])
         }
 
         setResult(OperationResult.finished())

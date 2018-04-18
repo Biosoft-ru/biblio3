@@ -16,7 +16,7 @@ public class BiblioHelper
         this.db = db;
     }
 
-    private List<Long> getAllCategories(String category)
+    private List<Long> getParentCategories(String category)
     {
         List<Long> categories = new ArrayList<>();
         Long cat = category != null ? Long.parseLong(category) : null;
@@ -30,9 +30,24 @@ public class BiblioHelper
         return categories;
     }
 
-    public void deleteCategories(String category, Long publicationID)
+    private List<Long> getChildCategories(Long categoryID)
     {
-        List<Long> categories = getAllCategories(category);
+        List<Long> categories = new ArrayList<>();
+        categories.add(categoryID);
+
+        //bfs
+        int i = 0;
+        do {
+            categories.addAll(db.selectListLong("SELECT id FROM categories c WHERE c.parentID = ?", categories.get(i)));
+        }
+        while (i++ < categories.size());
+
+        return categories;
+    }
+
+    public void deleteChildCategories(Long categoryID, Long publicationID)
+    {
+        List<Long> categories = getChildCategories(categoryID);
 
         db.update("DELETE FROM classifications WHERE recordID = CONCAT('publications.', " + publicationID + ")" +
                 "AND categoryID IN " + Utils.inClause(categories.size()), categories.toArray());
@@ -40,7 +55,7 @@ public class BiblioHelper
 
     public void updateCategories(String category, Long publicationID)
     {
-        List<Long> categories = getAllCategories(category);
+        List<Long> categories = getParentCategories(category);
 
         db.update("DELETE FROM classifications WHERE recordID = CONCAT('publications.', " + publicationID + ")" +
                 "AND categoryID IN " + Utils.inClause(categories.size()), categories.toArray());
