@@ -1,0 +1,10 @@
+_detailed_view_:
+  type: table
+  displayName: Detailed view
+  order: '15'
+  primaryKey: dummy
+  queries:
+  - All records:
+      type: static
+      roles: Annotator
+      value: publications.redir?_qn_=Detailed+view

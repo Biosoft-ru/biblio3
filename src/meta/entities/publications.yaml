@@ -71,6 +71,7 @@ publications:
         SELECT id AS "Code", CONCAT(ref, ' - ', PMID) AS "Name" FROM publications
   - Compact view:
       defaultView: true
+      invisible: true
       type: 1D
       roles: Annotator
       operations:
@@ -117,6 +118,7 @@ publications:
   - Detailed view:
       type: 1D
       roles: Annotator
+      invisible: true
       operations:
       - Delete
       - Insert

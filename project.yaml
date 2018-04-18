@@ -10,6 +10,8 @@ biblio3:
   application:
   - _welcome_
   - _pubmed_
+  - _compact_view_
+  - _detailed_view_
   - _publication_cat_
   - attachments
   - publications

@@ -1,0 +1,10 @@
+_compact_view_:
+  type: table
+  displayName: Compact view
+  order: '10'
+  primaryKey: dummy
+  queries:
+  - All records:
+      type: static
+      roles: Annotator
+      value: publications.redir?_qn_=Compact+view

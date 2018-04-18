@@ -6,5 +6,5 @@ _welcome_:
   queries:
   - All records:
       type: static
-      roles: '@AllRoles'
+      roles: Guest
       value: welcome.be
