@@ -15,9 +15,6 @@ import ru.biosoft.biblio.TextUtil;
 public class MedlineImport
 {
     protected static String medlineQuery ="https://www.ncbi.nlm.nih.gov/pubmed/$pmid$?report=MEDLINE&mode=text";
-    protected static String proxySet  = "true";
-    protected static String proxyHost = "proxy";
-    protected static String proxyPort = "8080";
 
     private final SqlService db;
 
@@ -54,10 +51,6 @@ public class MedlineImport
      */
     public void fill(String table, Long id, Long pmid) throws Exception
     {
-//            System.setProperty("proxySet",  proxySet );
-//            System.setProperty("proxyHost", proxyHost );
-//            System.setProperty("proxyPort", proxyPort );
-
         URL url = new URL(medlineQuery.replace("$pmid$", "" + pmid));
 
         Object content = url.getContent();
