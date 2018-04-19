@@ -18,6 +18,7 @@ biblio3:
   - publication2project
   scripts:
   - Post-db
+  - test
   - dictionaries
   includes:
   - common
