@@ -11,8 +11,8 @@ class Insert extends GOperationSupport implements TransactionalOperation
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
-        dpsHelper.addDpForColumns(dps, getInfo().getEntity(),
-                ["name", "parentID", "description"], context.operationParams, presetValues)
+        dpsHelper.addDpForColumnsWithoutTags(dps, getInfo().getEntity(),
+                ["name", "parentID", "description"], presetValues)
 
         dps.add("entity") {
             HIDDEN = true
@@ -20,6 +20,7 @@ class Insert extends GOperationSupport implements TransactionalOperation
         }
         dps.edit("parentID") {
             CAN_BE_NULL = false
+            TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories", "Children Of Root", [entity: "publications"])
         }
 
         return dps
