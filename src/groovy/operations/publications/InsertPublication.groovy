@@ -1,5 +1,6 @@
 package publications
 
+import com.developmentontheedge.be5.databasemodel.RecordModel
 import com.developmentontheedge.be5.env.Inject
 import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.operation.GOperationSupport
@@ -112,14 +113,25 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
 
         def projectInfo = extractProjectInfo(dps)
 
-        Long publicationID = Long.parseLong(database.publications.add(dps))
+        RecordModel publicationRecord
+        if(PMID != null)publicationRecord = database.publications.get([PMID: PMID])
 
-        if(inputType == "PubMed")
+        Long publicationID
+        if(publicationRecord == null)
         {
-            if( ( PMID != null ) )
+            publicationID = Long.parseLong(database.publications.add(dps))
+
+            if(inputType == "PubMed")
             {
-                medlineImport.fill("publications", publicationID)
+                if( PMID != null )
+                {
+                    medlineImport.fill("publications", publicationID)
+                }
             }
+        }
+        else
+        {
+            publicationID = Long.parseLong(publicationRecord.getId())
         }
 
         categoryService.addCategories(category, publicationID)
