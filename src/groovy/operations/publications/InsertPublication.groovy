@@ -68,7 +68,8 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             GROUP_ID = 2; GROUP_NAME = "Категория"
         }
 
-        if(dps.getValue("categoryID") != null)
+        if(dps.getValue("categoryID") != null &&
+           Long.parseLong(dps.getValueAsString("categoryID")) != db.getLong("select id from categories where name = 'Root'"))
         {
             projectID = qRec.of("""SELECT cat.name FROM categories cat
                     INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', ?)
