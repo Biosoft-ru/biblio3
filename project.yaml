@@ -19,3 +19,5 @@ biblio3:
   scripts:
   - Post-db
   - dictionaries
+  includes:
+  - common
