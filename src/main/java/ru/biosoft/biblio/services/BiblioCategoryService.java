@@ -40,7 +40,7 @@ public class BiblioCategoryService
         do {
             categories.addAll(db.selectListLong("SELECT id FROM categories c WHERE c.parentID = ?", categories.get(i)));
         }
-        while (i++ < categories.size());
+        while (++i < categories.size());
 
         return categories;
     }

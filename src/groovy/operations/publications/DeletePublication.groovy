@@ -2,6 +2,7 @@ package publications
 
 import com.developmentontheedge.be5.api.FrontendConstants
 import com.developmentontheedge.be5.env.Inject
+import com.developmentontheedge.be5.model.QRec
 import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.operation.OperationResult
 import com.developmentontheedge.be5.operation.TransactionalOperation
@@ -13,32 +14,28 @@ class DeletePublication extends DeleteOperation implements TransactionalOperatio
 {
     @Inject BiblioCategoryService categoryService
 
-    String cat
-    String projectID
+    QRec projectCategoryRec
 
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
         def dps = new GDynamicPropertySetSupport()
-        cat = context.getOperationParams().get(FrontendConstants.CATEGORY_ID_PARAM)
+        def cat = context.getOperationParams().get(FrontendConstants.CATEGORY_ID_PARAM)
 
         if(cat != null) {
-            def rec = qRec.of("""SELECT cat.name FROM categories cat
+            projectCategoryRec = qRec.of("""SELECT * FROM categories cat
                     INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', ?)
                       AND cat.ID = pcls.categoryID""", cat)
-            if(rec != null)projectID = rec.getString("name")
         }
 
-        if(projectID == null)
+        if(projectCategoryRec == null)
         {
             setResult(OperationResult.error("Перейдите в категорию"))
             return null
-//            return dpsHelper.addLabelRaw(dps, "Удалить publications из <b>всех</b> доступных категорий " +
-//                                    session.get(BiblioUtils.BIOSTORE_PROJECTS).toString() + "?")
         }
         else
         {
-            return dpsHelper.addLabelRaw(dps, "Удалить публикации из категории <b>" + projectID + "</b>?")
+            return dpsHelper.addLabelRaw(dps, "Удалить публикации из проекта <b>" + projectCategoryRec.getString("name") + "</b>?")
         }
     }
 
@@ -47,13 +44,18 @@ class DeletePublication extends DeleteOperation implements TransactionalOperatio
     {
         for (String id : context.records)
         {
-            categoryService.deleteChildCategories(Long.parseLong(cat), Long.parseLong(id))
-            //TODO database.publication2project.remove(["projectID": projectID, "publicationID": Long.parseLong(id)])
+            categoryService.deleteChildCategories(projectCategoryRec.getLong("ID"), Long.parseLong(id))
+            database.publication2project.remove([
+                    projectID    : projectCategoryRec.getString("name"),
+                    publicationID: Long.parseLong(id)
+            ])
+
+            if(db.getLong("SELECT count(1) FROM publication2project WHERE publicationID = ?", Long.parseLong(id)) == 0)
+            {
+                super.invoke(parameters)
+            }
         }
 
         setResult(OperationResult.finished())
-
-        //todo check all classifications removed and remove
-        //super.invoke(parameters)
     }
 }
