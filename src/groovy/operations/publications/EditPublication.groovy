@@ -10,6 +10,7 @@ import com.developmentontheedge.be5.operation.TransactionalOperation
 class EditPublication extends InsertPublication implements TransactionalOperation
 {
     RecordModel publication2projectRecord
+    RecordModel publicationRec
 
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
@@ -27,7 +28,7 @@ class EditPublication extends InsertPublication implements TransactionalOperatio
             return null
         }
 
-        def publicationRec = database.publications[context.records[0]]
+        publicationRec = database.publications[context.records[0]]
 
         publication2projectRecord = database.publication2project.get([
                 publicationID: Long.parseLong(publicationRec.getId()),
@@ -52,7 +53,8 @@ class EditPublication extends InsertPublication implements TransactionalOperatio
     @Override
     void invoke(Object parameters) throws Exception
     {
-        if(dps.getProperty("PMID") != null && pmidExistInProject((Long)dps.getValue("PMID"), projectID))
+        if(dps.getProperty("PMID") != null && dps.getValue("PMID") != publicationRec.getValue("PMID")
+                && pmidExistInProject((Long)dps.getValue("PMID"), projectID))
         {
             validator.setError(dps.getProperty("PMID"), "Публикация с заданным PMID уже есть в категории " + projectID)
             return
