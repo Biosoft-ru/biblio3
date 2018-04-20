@@ -18,7 +18,7 @@ class EditPublication extends InsertPublication implements TransactionalOperatio
         String cat = context.getOperationParams().get(FrontendConstants.CATEGORY_ID_PARAM)
 
         if(cat != null) {
-            def rec = qRec.of("""SELECT cat.name FROM categories cat
+            def rec = helper.qRec("""SELECT cat.name FROM categories cat
                     INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', ?)
                       AND cat.ID = pcls.categoryID""", cat)
             if(rec != null)projectID = rec.getString("name")

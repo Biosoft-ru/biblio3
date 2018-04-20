@@ -23,7 +23,7 @@ class DeletePublication extends DeleteOperation implements TransactionalOperatio
         def cat = context.getOperationParams().get(FrontendConstants.CATEGORY_ID_PARAM)
 
         if(cat != null) {
-            projectCategoryRec = qRec.of("""SELECT cat.ID, cat.name FROM categories cat
+            projectCategoryRec = helper.qRec("""SELECT cat.ID, cat.name FROM categories cat
                     INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', ?)
                       AND cat.ID = pcls.categoryID""", cat)
         }
