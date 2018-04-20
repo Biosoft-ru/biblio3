@@ -5,6 +5,7 @@ biblio3:
   modules:
   - core:
       entities:
+      - _categoriesService_
       - users
       - categories
   application:

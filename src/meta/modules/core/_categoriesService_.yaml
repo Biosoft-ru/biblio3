@@ -1,0 +1,26 @@
+_categoriesService_:
+  type: table
+  displayName: Category service queries
+  primaryKey: _dummy_
+  queries:
+  - getRootCategory:
+      type: 1D_unknown
+      code: |-
+        SELECT c.ID, c.name FROM categories c
+        WHERE c.entity = '<parameter:entity />' AND (c.parentID IS NULL OR c.parentID = 0)
+          AND name == 'Root'
+  - getCategoryNavigation:
+      type: 1D_unknown
+      code: |-
+        SELECT DISTINCT c1.ID, c1.name, c1.parentId from categories c1
+        LEFT JOIN categories c2 on c2.parentID = c1.ID
+        LEFT JOIN categories c3 on c3.parentID = c2.ID
+        LEFT JOIN categories c4 on c4.parentID = c3.ID
+        LEFT JOIN categories c5 on c5.parentID = c4.ID
+        LEFT JOIN categories c6 on c6.parentID = c5.ID
+        LEFT JOIN categories c7 on c7.parentID = c6.ID
+        LEFT JOIN categories c8 on c8.parentID = c7.ID
+        LEFT JOIN classifications pCls ON pCls.recordID = CONCAT('projectCategory.', c1.ID)
+        LEFT JOIN categories pCat ON pCat.id = pCls.categoryID
+        WHERE <parameter:categoryID /> IN ( c1.ID, c2.ID, c3.ID, c4.ID, c5.ID, c6.ID, c7.ID, c8.ID ) OR (c1.parentID = <parameter:categoryID />)
+         AND (pCat.name IN (<session:biostore_projects multiple="true"/>) OR pCat.name == 'Root')
