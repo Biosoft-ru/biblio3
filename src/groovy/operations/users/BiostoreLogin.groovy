@@ -11,12 +11,11 @@ import ru.biosoft.biostoreapi.DefaultConnectionProvider
 
 
 import static ru.biosoft.biblio.BiblioUtils.BIOSTORE_PROJECTS
+import static ru.biosoft.biblio.BiblioUtils.BIOSTORE_SERVER_NAME
 
 
 class BiostoreLogin extends Login
 {
-    private String serverName = "biblio.biouml.org"
-
     @Inject UserHelper userHelper
 
     @Override
@@ -45,7 +44,7 @@ class BiostoreLogin extends Login
 
         if(getStatus() == OperationStatus.ERROR || dps.getValueAsString("user_name") == null)
         {
-            DefaultConnectionProvider provider = new DefaultConnectionProvider(serverName)
+            DefaultConnectionProvider provider = new DefaultConnectionProvider(BIOSTORE_SERVER_NAME)
 
             def user_name = dps.getValueAsString("user_name") == null ? "" : dps.getValueAsString("user_name")
             def user_pass = dps.getValueAsString("user_pass") == null ? "" : dps.getValueAsString("user_pass")

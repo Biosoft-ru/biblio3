@@ -1,4 +1,6 @@
 context:
+  components:
+  - pubMedInfo: ru.biosoft.biblio.components.PubMedInfo
   services:
   - ru.biosoft.biblio.services.MedlineImport
   - ru.biosoft.biblio.services.BiblioCategoryService
