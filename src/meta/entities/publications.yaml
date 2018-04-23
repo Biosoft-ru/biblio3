@@ -165,6 +165,22 @@ publications:
                 OR <parameter:_cat_ /> = (SELECT id FROM categories WHERE name = 'Root')
             </if>
           ORDER BY p.ref
+  - PubMedInfo Data:
+      type: 1D_unknown
+      invisible: true
+      roles: Annotator
+      code: |-
+          SELECT
+            p.ID AS "publicationID",
+            p.PMID,
+            p2p.projectID,
+            p2p.status,
+            p2p.importance,
+            p2p.keyWords,
+            p2p.comment
+          FROM publications p
+          INNER JOIN publication2project p2p ON p2p.publicationID = p.ID
+          WHERE p2p.projectID IN <parameter:projects multiple="true" refColumn="p2p.projectID"/>
   operations:
   - Insert:
       type: Groovy
