@@ -29,6 +29,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         dps.add("inputType", "Ввод") {
             TAG_LIST_ATTR = [["PubMed","PubMed"],["manually","Вручную"]] as String[][]
             RELOAD_ON_CHANGE = true
+            CSS_CLASSES   = "col-lg-4"
             value         = presetValues.getOrDefault("inputType", "PubMed")
         }
 
@@ -59,6 +60,10 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             dps.edit("pageTo") { CSS_CLASSES = "col-lg-3" }
             dps.edit("language") { CSS_CLASSES = "col-lg-3" }
             dps.edit("publicationType") { CSS_CLASSES = "col-lg-3" }
+
+            dps.edit("ref") { CSS_CLASSES = "col-lg-4" }
+            dps.edit("PMCID") { CSS_CLASSES = "col-lg-4" }
+            dps.moveTo("PMCID",3)
         }
 
         dps.add("categoryID", "Category") {
