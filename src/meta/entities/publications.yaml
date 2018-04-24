@@ -173,14 +173,16 @@ publications:
           SELECT
             p.ID AS "publicationID",
             p.PMID,
-            p2p.projectID,
+            cls.categoryID AS "categoryID",
+            p2p.projectID AS "projectName",
             p2p.status,
             p2p.importance,
             p2p.keyWords,
             p2p.comment
           FROM publications p
           INNER JOIN publication2project p2p ON p2p.publicationID = p.ID
-          WHERE p2p.projectID IN <parameter:projects multiple="true" refColumn="p2p.projectID"/>
+          INNER JOIN classifications cls ON cls.recordID = CONCAT('publication2project.', p2p.ID)
+          WHERE p2p.projectID IN <parameter:projects multiple="true" refColumn="publication2project.projectID"/>
   operations:
   - Insert:
       type: Groovy

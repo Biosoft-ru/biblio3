@@ -5,10 +5,14 @@ import com.developmentontheedge.be5.api.Request;
 import com.developmentontheedge.be5.api.Response;
 import com.developmentontheedge.be5.api.helpers.OperationHelper;
 import com.developmentontheedge.be5.env.Injector;
+import com.developmentontheedge.beans.DynamicPropertySet;
 import ru.biosoft.biostoreapi.DefaultConnectionProvider;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class PubMedInfo implements Component
@@ -39,19 +43,44 @@ public class PubMedInfo implements Component
         }
     }
 
-    private Object getData(List<String> projects)
+    private Map<Long, PublicationProject> getData(List<String> projects)
     {
-        List<PublicationProject> publicationProjects = new ArrayList<>();
-        //QRec dps = operationHelper.readOneRecord("publications", "PubMedInfo Data", Collections.singletonMap("projects", projects));
-        //dps.getValueAsLong()
+        Map<Long, PublicationProject> publicationProjects = new HashMap<>();
+        List<DynamicPropertySet> list = operationHelper.readAsRecordsFromQuery(
+                "publications", "PubMedInfo Data", Collections.singletonMap("projects", projects));
+
+        for (DynamicPropertySet dps : list)
+        {
+            Long pmid = dps.getValueAsLong("PMID");
+            PublicationProject publicationProject;
+
+            if(publicationProjects.containsKey(pmid))
+            {
+                publicationProject = publicationProjects.get(pmid);
+            }
+            else
+            {
+                publicationProject = new PublicationProject(dps.getValueAsLong("publicationID"), new ArrayList<>());
+                publicationProjects.put(pmid, publicationProject);
+            }
+
+            publicationProject.projects.add(new Project(
+                    dps.getValueAsLong("categoryID"),
+                    dps.getValueAsString("projectName"),
+                    dps.getValueAsString("status"),
+                    (int)dps.getValue("importance"),
+                    dps.getValueAsString("keyWords"),
+                    dps.getValueAsString("comment")
+            ));
+        }
 
         return publicationProjects;
     }
 
     public class PublicationProject
     {
-        public long id;
-        public List<Project> projects;
+        public final long id;
+        public final List<Project> projects;
 
         public PublicationProject(long id, List<Project> projects)
         {
@@ -62,15 +91,17 @@ public class PubMedInfo implements Component
 
     public class Project
     {
-        public long id;
-        public String status;
-        public int importance;
-        public String keyWords;
-        public String comment;
+        public final long categoryID;
+        public final String name;
+        public final String status;
+        public final int importance;
+        public final String keyWords;
+        public final String comment;
 
-        public Project(long id, String status, int importance, String keyWords, String comment)
+        public Project(long categoryID, String name, String status, int importance, String keyWords, String comment)
         {
-            this.id = id;
+            this.categoryID = categoryID;
+            this.name = name;
             this.status = status;
             this.importance = importance;
             this.keyWords = keyWords;
