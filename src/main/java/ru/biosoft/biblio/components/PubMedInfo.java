@@ -5,14 +5,10 @@ import com.developmentontheedge.be5.api.Request;
 import com.developmentontheedge.be5.api.Response;
 import com.developmentontheedge.be5.api.helpers.OperationHelper;
 import com.developmentontheedge.be5.env.Injector;
-import com.developmentontheedge.be5.model.QRec;
 import ru.biosoft.biostoreapi.DefaultConnectionProvider;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
-
-import static ru.biosoft.biblio.BiblioUtils.BIOSTORE_SERVER_NAME;
 
 
 public class PubMedInfo implements Component
@@ -35,11 +31,11 @@ public class PubMedInfo implements Component
         {
             List<String> projects = provider.getProjectListWithToken(username, jwtoken);
 
-            res.sendAsRawJson(getData(projects));
+            res.sendAsRawJson(TypedResponse.data(getData(projects)));
         }
         catch (SecurityException e)
         {
-            res.sendError(new Error(e.getMessage()), HttpServletResponse.SC_FORBIDDEN);
+            res.sendAsRawJson(TypedResponse.error(e.getMessage()));
         }
     }
 
@@ -50,18 +46,6 @@ public class PubMedInfo implements Component
         //dps.getValueAsLong()
 
         return publicationProjects;
-    }
-
-    public class Error
-    {
-        public String type;
-        public String message;
-
-        public Error(String message)
-        {
-            this.type = "error";
-            this.message = message;
-        }
     }
 
     public class PublicationProject
