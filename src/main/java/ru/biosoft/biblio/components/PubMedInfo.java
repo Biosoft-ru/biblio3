@@ -4,7 +4,7 @@ import com.developmentontheedge.be5.api.Component;
 import com.developmentontheedge.be5.api.Request;
 import com.developmentontheedge.be5.api.Response;
 import com.developmentontheedge.be5.api.helpers.OperationHelper;
-import com.developmentontheedge.be5.env.Injector;
+import com.developmentontheedge.be5.inject.Injector;
 import com.developmentontheedge.beans.DynamicPropertySet;
 import ru.biosoft.biostoreapi.DefaultConnectionProvider;
 

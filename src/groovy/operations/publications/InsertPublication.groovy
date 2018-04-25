@@ -1,7 +1,7 @@
 package publications
 
 import com.developmentontheedge.be5.databasemodel.RecordModel
-import com.developmentontheedge.be5.env.Inject
+import com.developmentontheedge.be5.inject.Inject
 import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.operation.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation

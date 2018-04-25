@@ -2,7 +2,7 @@ package users
 
 import com.developmentontheedge.be5.api.FrontendConstants
 import com.developmentontheedge.be5.api.helpers.UserHelper
-import com.developmentontheedge.be5.env.Inject
+import com.developmentontheedge.be5.inject.Inject
 import com.developmentontheedge.be5.modules.core.operations.users.Login
 import com.developmentontheedge.be5.operation.OperationResult
 import com.developmentontheedge.be5.operation.OperationStatus
