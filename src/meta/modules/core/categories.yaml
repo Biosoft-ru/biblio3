@@ -31,9 +31,6 @@ categories:
             INNER JOIN classifications pCls ON pCls.recordID = CONCAT('projectCategory.', c1.ID)
             INNER JOIN categories pCat ON (pCat.id = pCls.categoryID AND pCat.name IN (<session:biostore_projects multiple="true"/>) )
         WHERE c1.name != 'Root' AND c1.entity = 'publications'
-        <if parameter="entity">
-            AND c1.entity = '<parameter:entity />'
-        </if>
         ORDER BY CONCAT(
             COALESCE( CONCAT( c8.name ,'->' ),'' ) ,
             COALESCE( CONCAT( c7.name ,'->' ),'' ) ,

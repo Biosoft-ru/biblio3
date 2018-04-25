@@ -67,7 +67,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         }
 
         dps.add("categoryID", "Category") {
-            TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories", "Children Of Root", [entity: getInfo().getEntityName()])
+            TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories", "Children Of Root")
             value = presetValues.getOrDefault("categoryID", context.operationParams.get(CATEGORY_ID_PARAM))
             RELOAD_ON_CHANGE = true
             GROUP_ID = 2; GROUP_NAME = "Категория"

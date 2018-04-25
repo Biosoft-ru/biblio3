@@ -20,7 +20,7 @@ class Insert extends GOperationSupport implements TransactionalOperation
         }
         dps.edit("parentID") {
             CAN_BE_NULL = false
-            TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories", "Children Of Root", [entity: "publications"])
+            TAG_LIST_ATTR = helper.getTagsFromSelectionView("categories", [entity: "publications"])
         }
 
         return dps
