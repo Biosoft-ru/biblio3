@@ -7,12 +7,15 @@ import com.developmentontheedge.be5.api.helpers.OperationHelper;
 import com.developmentontheedge.be5.inject.Injector;
 import com.developmentontheedge.beans.DynamicPropertySet;
 import ru.biosoft.biostoreapi.DefaultConnectionProvider;
+import ru.biosoft.biostoreapi.Project;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
 
 
 public class PubMedInfo implements Component
@@ -33,7 +36,7 @@ public class PubMedInfo implements Component
 
         try
         {
-            List<String> projects = provider.getProjectListWithToken(username, jwtoken);
+            List<Project> projects = provider.getProjectListWithToken(username, jwtoken);
 
             res.sendAsRawJson(TypedResponse.data(getData(projects)));
         }
@@ -43,11 +46,13 @@ public class PubMedInfo implements Component
         }
     }
 
-    private Map<Long, PublicationProject> getData(List<String> projects)
+    private Map<Long, PublicationProject> getData(List<Project> projects)
     {
+        List<String> projectNames = projects.stream().map(Project::getProjectName).collect(toList());
+
         Map<Long, PublicationProject> publicationProjects = new HashMap<>();
         List<DynamicPropertySet> list = operationHelper.readAsRecordsFromQuery(
-                "publications", "PubMedInfo Data", Collections.singletonMap("projects", projects));
+                "publications", "PubMedInfo Data", Collections.singletonMap("projects", projectNames));
 
         for (DynamicPropertySet dps : list)
         {
@@ -64,7 +69,7 @@ public class PubMedInfo implements Component
                 publicationProjects.put(pmid, publicationProject);
             }
 
-            publicationProject.projects.add(new Project(
+            publicationProject.projects.add(new ProjectModel(
                     dps.getValueAsLong("categoryID"),
                     dps.getValueAsString("projectName"),
                     dps.getValueAsString("status"),
@@ -80,16 +85,16 @@ public class PubMedInfo implements Component
     public class PublicationProject
     {
         public final long id;
-        public final List<Project> projects;
+        public final List<ProjectModel> projects;
 
-        public PublicationProject(long id, List<Project> projects)
+        public PublicationProject(long id, List<ProjectModel> projects)
         {
             this.id = id;
             this.projects = projects;
         }
     }
 
-    public class Project
+    public class ProjectModel
     {
         public final long categoryID;
         public final String name;
@@ -98,7 +103,7 @@ public class PubMedInfo implements Component
         public final String keyWords;
         public final String comment;
 
-        public Project(long categoryID, String name, String status, int importance, String keyWords, String comment)
+        public ProjectModel(long categoryID, String name, String status, int importance, String keyWords, String comment)
         {
             this.categoryID = categoryID;
             this.name = name;
