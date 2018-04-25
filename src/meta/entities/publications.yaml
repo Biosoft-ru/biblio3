@@ -180,8 +180,9 @@ publications:
             p2p.comment
           FROM publications p
           INNER JOIN publication2project p2p ON p2p.publicationID = p.ID
-          INNER JOIN classifications cls ON cls.recordID = CONCAT('publication2project.', p2p.ID)
-          WHERE p2p.projectID IN <parameter:projects multiple="true" refColumn="publication2project.projectID"/>
+          INNER JOIN classifications cls ON cls.recordID = CONCAT('publications.', p2p.publicationID)
+          INNER JOIN categories cat ON cat.id = cls.categoryID
+                 AND cat.name IN <parameter:projects multiple="true" refColumn="publication2project.projectID"/>
   operations:
   - Insert:
       type: Groovy
