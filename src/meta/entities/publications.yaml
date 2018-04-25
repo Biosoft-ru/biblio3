@@ -88,7 +88,6 @@ publications:
             IFNULL(p.year, null) AS "Year",
             IFNULL(p.language , '') AS "Lang.",
             PROJECT_COL(importance) AS "Imp.",
-            --p2pr.importance AS "Imp.",
             CONCAT(
               IFNULL( CONCAT(p.authors, '<br>'), ' '),
               IFNULL( CONCAT('<b>', p.title, '</b><br>'),  ' '),
