@@ -64,12 +64,6 @@
   </dependency>
 
   <dependency>
-   <groupId>org.eclipse.jetty</groupId>
-   <artifactId>jetty-server</artifactId>
-   <version>9.4.2.v20170220</version>
-  </dependency>
-
-  <dependency>
    <groupId>org.postgresql</groupId>
    <artifactId>postgresql</artifactId>
    <version>42.0.0</version>
