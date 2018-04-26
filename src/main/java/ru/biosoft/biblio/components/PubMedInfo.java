@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static java.util.stream.Collectors.toList;
 import static ru.biosoft.biblio.BiblioUtils.BIOSTORE_SERVER_NAME;
@@ -21,6 +22,8 @@ import static ru.biosoft.biblio.BiblioUtils.BIOSTORE_SERVER_NAME;
 
 public class PubMedInfo implements Component
 {
+    private static final Logger log = Logger.getLogger(PubMedInfo.class.getName());
+
     private OperationHelper operationHelper;
 
     @Override
