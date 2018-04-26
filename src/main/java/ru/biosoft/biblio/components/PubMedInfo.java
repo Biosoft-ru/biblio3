@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
+import static ru.biosoft.biblio.BiblioUtils.BIOSTORE_SERVER_NAME;
 
 
 public class PubMedInfo implements Component
@@ -30,9 +31,7 @@ public class PubMedInfo implements Component
         String jwtoken = req.getNonEmpty("jwtoken");
         String username = req.get("username");
 
-        //DefaultConnectionProvider provider = new DefaultConnectionProvider(BIOSTORE_SERVER_NAME);
-        DefaultConnectionProvider provider = new DefaultConnectionProvider(
-                "http://localhost:8080/biostore", "micro.biouml.org");
+        DefaultConnectionProvider provider = new DefaultConnectionProvider(BIOSTORE_SERVER_NAME);
 
         try
         {
