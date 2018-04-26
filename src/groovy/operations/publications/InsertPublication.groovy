@@ -123,22 +123,22 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         RecordModel publicationRecord
         if(PMID != null)publicationRecord = database.publications.get([PMID: PMID])
 
-        Long publicationID
+        String publicationID
         if(publicationRecord == null)
         {
-            publicationID = Long.parseLong(database.publications.add(dps))
+            publicationID = database.publications.add(dps)
 
             if(inputType == "PubMed")
             {
                 if( PMID != null )
                 {
-                    medlineImport.fill("publications", publicationID)
+                    medlineImport.fill("publications", Long.parseLong(publicationID))
                 }
             }
         }
         else
         {
-            publicationID = Long.parseLong(publicationRecord.getId())
+            publicationID = publicationRecord.getId()
         }
 
         categoryService.addWithParentCategories(categoryID, publicationID)
