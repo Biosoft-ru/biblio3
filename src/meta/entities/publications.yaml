@@ -76,7 +76,7 @@ publications:
       type: 1D
       roles: Annotator
       operations:
-      - +/- category
+      - AddRemoveCategory
       - Delete
       - Insert
       - Edit
@@ -122,7 +122,7 @@ publications:
       roles: Annotator
       invisible: true
       operations:
-      - +/- category
+      - AddRemoveCategory
       - Delete
       - Insert
       - Edit
@@ -206,11 +206,11 @@ publications:
       type: Groovy
       roles: Annotator
       file: publications.DeletePublication.groovy
-  - +/- category:
+  - AddRemoveCategory:
       records: 1
       type: Groovy
       roles: Annotator
-      code: publications.AddRemoveCategoryOperation.groovy
+      file: publications.AddRemoveCategory.groovy
   - Filter:
       roles: Administrator
       layout: '{"type":"modalForm"}'

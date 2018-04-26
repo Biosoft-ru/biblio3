@@ -10,7 +10,7 @@ import ru.biosoft.biblio.services.BiblioCategoryService
 import static com.developmentontheedge.be5.api.FrontendConstants.CATEGORY_ID_PARAM
 
 
-class AddRemoveCategoryOperation extends GOperationSupport
+class AddRemoveCategory extends GOperationSupport
 {
     @Inject BiblioCategoryService categoryService
 
@@ -24,8 +24,6 @@ class AddRemoveCategoryOperation extends GOperationSupport
             TYPE = Long
             TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories", "Children Of Root")
             value = presetValues.getOrDefault("categoryID", context.operationParams.get(CATEGORY_ID_PARAM))
-            RELOAD_ON_CHANGE = true
-            GROUP_ID = 2; GROUP_NAME = "Категория"
         }
 
         dps.add("operationType", "Operation") {
