@@ -16,10 +16,10 @@ public class BiblioCategoryService
         this.db = db;
     }
 
-    private List<Long> getParentCategories(String category)
+    public List<Long> getParentCategories(Long categoryID)
     {
         List<Long> categories = new ArrayList<>();
-        Long cat = category != null ? Long.parseLong(category) : null;
+        Long cat = categoryID;
 
         while (cat != null) {
             categories.add(cat);
@@ -30,7 +30,7 @@ public class BiblioCategoryService
         return categories;
     }
 
-    private List<Long> getChildCategories(Long categoryID)
+    public List<Long> getChildCategories(Long categoryID)
     {
         List<Long> categories = new ArrayList<>();
         categories.add(categoryID);
@@ -45,7 +45,7 @@ public class BiblioCategoryService
         return categories;
     }
 
-    public void deleteChildCategories(Long categoryID, Long publicationID)
+    public void removeWithChildCategories(Long categoryID, String publicationID)
     {
         List<Long> categories = getChildCategories(categoryID);
 
@@ -53,17 +53,12 @@ public class BiblioCategoryService
                 "AND categoryID IN " + Utils.inClause(categories.size()), categories.toArray());
     }
 
-    public void removeCategories(String category, Long publicationID)
+    public void addWithParentCategories(Long categoryID, String publicationID)
     {
-        List<Long> categories = getParentCategories(category);
+        List<Long> categories = getParentCategories(categoryID);
 
         db.update("DELETE FROM classifications WHERE recordID = CONCAT('publications.', " + publicationID + ")" +
                 "AND categoryID IN " + Utils.inClause(categories.size()), categories.toArray());
-    }
-
-    public void addCategories(String category, Long publicationID)
-    {
-        List<Long> categories = getParentCategories(category);
 
         db.insert("INSERT INTO classifications (recordID, categoryID)" +
                 "SELECT CONCAT('publications.', " + publicationID + "), c.ID FROM categories c " +

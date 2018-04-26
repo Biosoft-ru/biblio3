@@ -67,6 +67,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         }
 
         dps.add("categoryID", "Category") {
+            TYPE = Long
             TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories", "Children Of Root")
             value = presetValues.getOrDefault("categoryID", context.operationParams.get(CATEGORY_ID_PARAM))
             RELOAD_ON_CHANGE = true
@@ -115,7 +116,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         Long PMID = (Long)dps.getValue("PMID")
 
         String inputType = dps.remove("inputType")
-        String category = dps.remove("categoryID")
+        Long categoryID = (Long)dps.remove("categoryID")
 
         def projectInfo = extractProjectInfo(dps)
 
@@ -140,7 +141,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             publicationID = Long.parseLong(publicationRecord.getId())
         }
 
-        categoryService.addCategories(category, publicationID)
+        categoryService.addWithParentCategories(categoryID, publicationID)
 
         projectInfo.add("publicationID"){TYPE = Long; value = publicationID}
         database.publication2project.add(projectInfo)

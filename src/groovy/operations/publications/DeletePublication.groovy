@@ -44,7 +44,7 @@ class DeletePublication extends DeleteOperation implements TransactionalOperatio
     {
         for (String id : context.records)
         {
-            categoryService.deleteChildCategories(projectCategoryRec.getLong("ID"), Long.parseLong(id))
+            categoryService.removeWithChildCategories(projectCategoryRec.getLong("ID"), Long.parseLong(id))
             database.publication2project.remove([
                     projectID    : projectCategoryRec.getString("name"),
                     publicationID: Long.parseLong(id)
