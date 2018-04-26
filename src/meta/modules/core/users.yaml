@@ -1,4 +1,7 @@
 users:
+  queries:
+  - All records:
+      invisible: true
   operations:
   - Login:
       roles: Guest

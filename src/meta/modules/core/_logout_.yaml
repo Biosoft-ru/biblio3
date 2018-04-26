@@ -1,0 +1,4 @@
+_logout_:
+  queries:
+  - All records:
+      invisible: true
