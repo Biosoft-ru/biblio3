@@ -20,15 +20,16 @@ class AddRemoveCategory extends GOperationSupport
         if( context.records.length == 0 )
             return null
 
-        dps.add("categoryID", "Category") {
+        dps.add("categoryID") {
             TYPE = Long
             TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories", "Children Of Root")
             value = presetValues.getOrDefault("categoryID", context.operationParams.get(CATEGORY_ID_PARAM))
         }
 
-        dps.add("operationType", "Operation") {
-            TAG_LIST_ATTR = [ ["Add",    "add to this category and parents"],
-                              ["Remove", "remove from this category and children"] ] as String[][]
+        dps.add("operationType") {
+            TAG_LIST_ATTR = helper.localizeTags("publications", "AddRemoveCategory", [
+                    ["Add",    "Add to this category and parents"],
+                    ["Remove", "Remove from this category and children"] ] as String[][])
         }
 
         return dpsHelper.setValues(dps, presetValues)

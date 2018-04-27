@@ -37,13 +37,15 @@ ru:
       - changeDate: Дата изменения
       - 'no': нет
       - 'yes': да
-  - testtable:
+  - publications:
     - topics: operationName
       entries:
-      - TestOperation: Тестовая операция
-      - Delete: Удалить
-      - Edit: Редактировать
-      - Insert: Добавить
-    - topics: viewName
+      - FillFromMedline: Обновить из pubmed
+    - topics: '@AllQueries'
       entries:
-      - All records: Все записи
+      - categoryID: Категория
+      - operationType: Операция
+    - topics: AddRemoveCategory
+      entries:
+      - Add to this category and parents: Добавить в категорию, включая все родительские
+      - Remove from this category and children: Удалить из категории, включая все дочерние
