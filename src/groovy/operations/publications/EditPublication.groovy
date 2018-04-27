@@ -45,6 +45,7 @@ class EditPublication extends InsertPublication implements TransactionalOperatio
 
         dps = (GDynamicPropertySetSupport)super.getParameters(presets)
 
+        dps.edit("inputType")  { READ_ONLY = true }
         dps.edit("categoryID") { READ_ONLY = true }
 
         return dps
