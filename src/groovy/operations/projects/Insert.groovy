@@ -2,7 +2,9 @@ package projects
 
 import com.developmentontheedge.be5.operation.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
+import com.developmentontheedge.be5.util.Utils
 import ru.biosoft.biblio.BioStore
+import ru.biosoft.biostoreapi.Permission
 
 
 class Insert extends GOperationSupport implements TransactionalOperation
@@ -11,10 +13,14 @@ class Insert extends GOperationSupport implements TransactionalOperation
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
         dps.add("name", "Категория")
-        dps.add("permission", "Permission")
+        dps.add("permissions", "Permissions") {
+            TAG_LIST_ATTR = [[Permission.INFO, "Info"], [Permission.READ, "Read"], [Permission.WRITE, "Write"],
+                             [Permission.DELETE, "Delete"], [Permission.ADMIN, "Admin"], [Permission.ALL, "All"]] as String[][]
+            MULTIPLE_SELECTION_LIST = true
+        }
 
         dps.add("user_name", "Логин")
-        dps.add("user_pass", "Пароль")
+        dps.add("user_pass", "Пароль") { PASSWORD_FIELD = true }
 
         return dpsHelper.setValues(dps, presetValues)
     }
@@ -23,7 +29,7 @@ class Insert extends GOperationSupport implements TransactionalOperation
     void invoke(Object parameters) throws Exception
     {
         String name = dps.getValueAsString("name")
-        int permission = (int)dps.getValue("permission")
+        int permission = getPermission((Integer[]) Utils.changeTypes((String[])dps.getValue("permissions"), Integer.class))
 
         if(database.categories.count([name: name]) > 0)
         {
@@ -47,5 +53,13 @@ class Insert extends GOperationSupport implements TransactionalOperation
                 recordID  : "projectCategory." + ID,
                 categoryID: ID
         ])
+    }
+
+    private static int getPermission(Integer[] permissions)
+    {
+        int res = 0
+        for(int permission: permissions) res = res | permission
+
+        return res
     }
 }
