@@ -20,9 +20,9 @@ public class BioStore
     {
         return api.getProjectList((JWToken) UserInfoHolder.getSession().get(BIOSTORE_TOKEN));
     }
-//
-//    public static void createProject(String projectName, int permission)
-//    {
-//        api.createProject((JWToken) UserInfoHolder.getSession().get(BIOSTORE_TOKEN), projectName, permission);
-//    }
+
+    public static void createProject(String projectName, int permission)
+    {
+        //api.createProjectWithPermissions((JWToken) UserInfoHolder.getSession().get(BIOSTORE_TOKEN), projectName, permission);
+    }
 }
