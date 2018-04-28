@@ -32,6 +32,12 @@ class Insert extends GOperationSupport implements TransactionalOperation
         long parentID = Long.parseLong(dps.getValueAsString("parentID"))
         String name = dps.getValueAsString("name")
 
+        if(database.categories.count([name: name]) > 0)
+        {
+            validator.setError(dps.getProperty("name"), "already exists")
+            return
+        }
+
         boolean isProjectCategory = parentID == (Long)database.categories.get([name: "Root"]).getValue("ID")
 
         if(isProjectCategory)

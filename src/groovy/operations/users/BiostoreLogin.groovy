@@ -7,11 +7,12 @@ import com.developmentontheedge.be5.modules.core.operations.users.Login
 import com.developmentontheedge.be5.operation.OperationResult
 import com.developmentontheedge.be5.operation.OperationStatus
 import com.google.common.collect.ImmutableList
-import ru.biosoft.biostoreapi.DefaultConnectionProvider
+import ru.biosoft.biblio.BioStore
+import ru.biosoft.biostoreapi.JWToken
 
 import static java.util.stream.Collectors.toList
 import static ru.biosoft.biblio.BiblioUtils.BIOSTORE_PROJECTS
-import static ru.biosoft.biblio.BiblioUtils.BIOSTORE_SERVER_NAME
+import static ru.biosoft.biblio.BioStore.BIOSTORE_TOKEN
 
 
 class BiostoreLogin extends Login
@@ -44,14 +45,16 @@ class BiostoreLogin extends Login
 
         if(getStatus() == OperationStatus.ERROR || dps.getValueAsString("user_name") == null)
         {
-            DefaultConnectionProvider provider = new DefaultConnectionProvider(BIOSTORE_SERVER_NAME)
-
             def user_name = dps.getValueAsString("user_name") == null ? "" : dps.getValueAsString("user_name")
             def user_pass = dps.getValueAsString("user_pass") == null ? "" : dps.getValueAsString("user_pass")
 
             try
             {
-                def projects = provider.getProjectList(user_name, user_pass)
+                def token = BioStore.api.getJWToken(user_name, user_pass)
+                session[BIOSTORE_TOKEN] = token
+
+                def projects = BioStore.getProjectList()
+
                 List<String> projectNames = projects.stream().map({p -> p.getProjectName()}).collect(toList());
 
                 def roles = ImmutableList.of("Annotator")

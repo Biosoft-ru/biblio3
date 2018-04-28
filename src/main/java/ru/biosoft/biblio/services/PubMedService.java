@@ -5,8 +5,9 @@ import com.developmentontheedge.be5.api.services.Be5Caches;
 import com.developmentontheedge.beans.DynamicPropertySet;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
+import ru.biosoft.biblio.BioStore;
 import ru.biosoft.biblio.components.PubMedInfo;
-import ru.biosoft.biostoreapi.DefaultConnectionProvider;
+import ru.biosoft.biostoreapi.JWToken;
 import ru.biosoft.biostoreapi.Project;
 
 import java.util.ArrayList;
@@ -19,20 +20,18 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import static java.util.stream.Collectors.toList;
-import static ru.biosoft.biblio.BiblioUtils.BIOSTORE_SERVER_NAME;
 
 
 public class PubMedService
 {
     private static final Logger log = Logger.getLogger(PubMedInfo.class.getName());
 
-    private static final DefaultConnectionProvider provider = new DefaultConnectionProvider(BIOSTORE_SERVER_NAME);
-    private static final LoadingCache<CacheKey, List<Project>> cache = Caffeine.newBuilder()
+    private static final LoadingCache<JWToken, List<Project>> cache = Caffeine.newBuilder()
             .maximumSize(1_000)
             .expireAfterWrite(6, TimeUnit.HOURS)
             .refreshAfterWrite(10, TimeUnit.MINUTES)
             .recordStats()
-            .build(key -> provider.getProjectListWithToken(key.username, key.jwtoken));
+            .build(BioStore.api::getProjectList);
 
     private final OperationHelper operationHelper;
 
@@ -46,7 +45,7 @@ public class PubMedService
     public Map<Long, PublicationProject> getData(String jwtoken, String username)
     {
         long start = new Date().getTime();
-        List<Project> projects = cache.get(new CacheKey(username, jwtoken));
+        List<Project> projects = cache.get(new JWToken(username, jwtoken));
         long time1 = new Date().getTime() - start;
 
         long start2 = new Date().getTime();
@@ -123,38 +122,6 @@ public class PubMedService
             this.importance = importance;
             this.keyWords = keyWords;
             this.comment = comment;
-        }
-    }
-
-    class CacheKey
-    {
-        public String username;
-        public String jwtoken;
-
-        public CacheKey(String username, String jwtoken)
-        {
-            this.username = username;
-            this.jwtoken = jwtoken;
-        }
-
-        @Override
-        public boolean equals(Object o)
-        {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            CacheKey cacheKey = (CacheKey) o;
-
-            if (username != null ? !username.equals(cacheKey.username) : cacheKey.username != null) return false;
-            return jwtoken != null ? jwtoken.equals(cacheKey.jwtoken) : cacheKey.jwtoken == null;
-        }
-
-        @Override
-        public int hashCode()
-        {
-            int result = username != null ? username.hashCode() : 0;
-            result = 31 * result + (jwtoken != null ? jwtoken.hashCode() : 0);
-            return result;
         }
     }
 

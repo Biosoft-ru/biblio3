@@ -1,0 +1,17 @@
+_projects_:
+  type: table
+  displayName: Projects
+  order: '20'
+  primaryKey: dummy
+  queries:
+  - All records:
+      type: Groovy
+      roles: Annotator
+      operations:
+      - Insert
+      file: projects.AllRecords.groovy
+  operations:
+  - Insert:
+      type: Groovy
+      roles: Annotator
+      file: projects.Insert.groovy
