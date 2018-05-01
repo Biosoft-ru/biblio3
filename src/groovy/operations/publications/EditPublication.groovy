@@ -9,8 +9,8 @@ import com.developmentontheedge.be5.operation.TransactionalOperation
 
 class EditPublication extends InsertPublication implements TransactionalOperation
 {
-    RecordModel<Long> publication2projectRecord
-    RecordModel<Long> publicationRec
+    RecordModel publication2projectRecord
+    RecordModel publicationRec
 
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
