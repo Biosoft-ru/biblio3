@@ -18,6 +18,8 @@ class Insert extends GOperationSupport implements TransactionalOperation
             HIDDEN = true
             value = "publications"
         }
+
+        //todo add long type
         dps.edit("parentID") {
             CAN_BE_NULL = false
             TAG_LIST_ATTR = helper.getTagsFromSelectionView("categories", [entity: "publications"])

@@ -13,11 +13,11 @@ class FillFromMedline extends GOperationSupport
     @Override
     void invoke(Object parameters) throws Exception
     {
-        def records = context.records
+        Long[] records = context.getRecords()
 
         for(int i=0; i< records.length; i++)
         {
-            medlineImport.fill(getInfo().getEntityName(), Long.parseLong(records[i]))
+            medlineImport.fill(getInfo().getEntityName(), records[i])
         }
 
         setResult(OperationResult.finished())

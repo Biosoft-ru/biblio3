@@ -51,7 +51,7 @@ class AddRemoveCategory extends GOperationSupport
 
         if( "Add".equals( dps.getValue( "operationType" ) ) )
         {
-            categoryService.addWithParentCategories(categoryID, Long.parseLong(context.records[0]))
+            categoryService.addWithParentCategories(categoryID, (Long)context.record)
 //            db.insert("INSERT INTO classifications (recordID, categoryID)" +
 //                    "SELECT CONCAT('"+entity+".', e."+pk+"), c.ID " +
 //                    "FROM "+entity+" e, categories c " +
@@ -69,7 +69,7 @@ class AddRemoveCategory extends GOperationSupport
         }
         else
         {
-            categoryService.removeWithChildCategories(categoryID, Long.parseLong(context.records[0]))
+            categoryService.removeWithChildCategories(categoryID, (Long)context.record)
 //            db.update("DELETE FROM classifications " +
 //                    "WHERE recordID   IN " + Utils.inClause(context.records.length) +
 //                    "  AND categoryID IN " + Utils.inClause(categories.size()),

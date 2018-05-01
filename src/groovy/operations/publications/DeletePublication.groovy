@@ -42,15 +42,15 @@ class DeletePublication extends DeleteOperation implements TransactionalOperatio
     @Override
     void invoke(Object parameters) throws Exception
     {
-        for (String id : context.records)
+        for (Long id : (Long[])context.records)
         {
-            categoryService.removeWithChildCategories(projectCategoryRec.getLong("ID"), Long.parseLong(id))
+            categoryService.removeWithChildCategories(projectCategoryRec.getLong("ID"), id)
             database.publication2project.remove([
                     projectID    : projectCategoryRec.getString("name"),
-                    publicationID: Long.parseLong(id)
+                    publicationID: id
             ])
 
-            if(db.getLong("SELECT count(1) FROM publication2project WHERE publicationID = ?", Long.parseLong(id)) == 0)
+            if(db.getLong("SELECT count(1) FROM publication2project WHERE publicationID = ?", id) == 0)
             {
                 super.invoke(parameters)
             }
