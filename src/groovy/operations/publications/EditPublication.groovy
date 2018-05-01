@@ -9,8 +9,8 @@ import com.developmentontheedge.be5.operation.TransactionalOperation
 
 class EditPublication extends InsertPublication implements TransactionalOperation
 {
-    RecordModel publication2projectRecord
-    RecordModel publicationRec
+    RecordModel<Long> publication2projectRecord
+    RecordModel<Long> publicationRec
 
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
@@ -28,10 +28,10 @@ class EditPublication extends InsertPublication implements TransactionalOperatio
             return null
         }
 
-        publicationRec = database.publications[context.records[0]]
+        publicationRec = database.publications.get(Long.parseLong(context.records[0]))
 
         publication2projectRecord = database.publication2project.get([
-                publicationID: Long.parseLong(publicationRec.getId()),
+                publicationID: publicationRec.getId(),
                 projectID    : projectID
         ])
 

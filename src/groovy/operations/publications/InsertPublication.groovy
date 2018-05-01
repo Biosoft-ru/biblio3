@@ -120,10 +120,10 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
 
         def projectInfo = extractProjectInfo(dps)
 
-        RecordModel publicationRecord
+        RecordModel<Long> publicationRecord
         if(PMID != null)publicationRecord = database.publications.get([PMID: PMID])
 
-        String publicationID
+        Long publicationID
         if(publicationRecord == null)
         {
             publicationID = database.publications.add(dps)
@@ -132,7 +132,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             {
                 if( PMID != null )
                 {
-                    medlineImport.fill("publications", Long.parseLong(publicationID))
+                    medlineImport.fill("publications", publicationID)
                 }
             }
         }

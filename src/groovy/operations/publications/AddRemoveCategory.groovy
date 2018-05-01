@@ -3,8 +3,6 @@ package publications
 import com.developmentontheedge.be5.inject.Inject
 import com.developmentontheedge.be5.operation.GOperationSupport
 import com.developmentontheedge.be5.operation.OperationResult
-import com.developmentontheedge.be5.util.Utils
-import com.google.common.collect.ObjectArrays
 import ru.biosoft.biblio.services.BiblioCategoryService
 
 import static com.developmentontheedge.be5.api.FrontendConstants.CATEGORY_ID_PARAM
@@ -53,7 +51,7 @@ class AddRemoveCategory extends GOperationSupport
 
         if( "Add".equals( dps.getValue( "operationType" ) ) )
         {
-            categoryService.addWithParentCategories(categoryID, context.records[0])
+            categoryService.addWithParentCategories(categoryID, Long.parseLong(context.records[0]))
 //            db.insert("INSERT INTO classifications (recordID, categoryID)" +
 //                    "SELECT CONCAT('"+entity+".', e."+pk+"), c.ID " +
 //                    "FROM "+entity+" e, categories c " +
@@ -71,7 +69,7 @@ class AddRemoveCategory extends GOperationSupport
         }
         else
         {
-            categoryService.removeWithChildCategories(categoryID, context.records[0])
+            categoryService.removeWithChildCategories(categoryID, Long.parseLong(context.records[0]))
 //            db.update("DELETE FROM classifications " +
 //                    "WHERE recordID   IN " + Utils.inClause(context.records.length) +
 //                    "  AND categoryID IN " + Utils.inClause(categories.size()),

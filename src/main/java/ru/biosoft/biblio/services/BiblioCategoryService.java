@@ -45,7 +45,7 @@ public class BiblioCategoryService
         return categories;
     }
 
-    public void removeWithChildCategories(Long categoryID, String publicationID)
+    public void removeWithChildCategories(Long categoryID, Long publicationID)
     {
         List<Long> categories = getChildCategories(categoryID);
 
@@ -53,7 +53,7 @@ public class BiblioCategoryService
                 "AND categoryID IN " + Utils.inClause(categories.size()), categories.toArray());
     }
 
-    public void addWithParentCategories(Long categoryID, String publicationID)
+    public void addWithParentCategories(Long categoryID, Long publicationID)
     {
         List<Long> categories = getParentCategories(categoryID);
 
