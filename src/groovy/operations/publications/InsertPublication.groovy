@@ -138,7 +138,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         }
         else
         {
-            publicationID = publicationRecord.getId()
+            publicationID = publicationRecord.getPrimaryKey()
         }
 
         categoryService.addWithParentCategories(categoryID, publicationID)

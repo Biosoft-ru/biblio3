@@ -31,7 +31,7 @@ class EditPublication extends InsertPublication implements TransactionalOperatio
         publicationRec = database.publications.get(Long.parseLong(context.records[0]))
 
         publication2projectRecord = database.publication2project.get([
-                publicationID: publicationRec.getId(),
+                publicationID: publicationRec.getPrimaryKey(),
                 projectID    : projectID
         ])
 
