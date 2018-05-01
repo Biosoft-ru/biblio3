@@ -67,7 +67,7 @@ class EditPublication extends InsertPublication implements TransactionalOperatio
         def projectInfo = extractProjectInfo(dps)
         projectInfo.add("publicationID"){TYPE = Long; value = context.records[0]}
 
-        database.publications.set(context.records[0], dps)
+        database.publications.set(Long.parseLong(context.records[0]), dps)
 
         if(publication2projectRecord == null){
             database.publication2project.add(projectInfo)
