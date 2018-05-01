@@ -41,7 +41,7 @@ class Insert extends GOperationSupport implements TransactionalOperation
         BioStore.api.createProjectWithPermissions(dps.getValueAsString("user_name"), dps.getValueAsString("user_pass"),
                 name, permission)
 
-        long parentID = (Long)database.categories.get([name: "Root"]).getValue("ID")
+        long parentID = (Long)database.categories.getByColumns([name: "Root"]).getValue("ID")
 
         def ID = database.categories.add([
                 entity: 'publications',
