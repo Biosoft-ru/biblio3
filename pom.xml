@@ -266,7 +266,7 @@
       </goals>
       <phase>compile</phase>
       <configuration>
-       <mainClass>com.developmentontheedge.be5.maven.gdsl.GdslGenegator</mainClass>
+       <mainClass>com.developmentontheedge.be5.maven.gdsl.GdslGenerator</mainClass>
        <arguments>
         <argument>${project.build.directory}/generated-sources/java/</argument>
         <argument/>
