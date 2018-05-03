@@ -185,6 +185,9 @@ publications:
           INNER JOIN classifications cls ON cls.recordID = CONCAT('publications.', p2p.publicationID)
           INNER JOIN categories cat ON cat.id = cls.categoryID
                  AND cat.name IN <parameter:projects multiple="true" refColumn="publication2project.projectID"/>
+                 <if parameter="PMIDs">
+                     AND p.PMID IN <parameter:PMIDs multiple="true" refColumn="publications.PMID"/>
+                 </if>
   operations:
   - Insert:
       type: Groovy

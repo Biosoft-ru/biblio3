@@ -6,6 +6,8 @@ import com.developmentontheedge.be5.api.Response;
 import com.developmentontheedge.be5.inject.Injector;
 import ru.biosoft.biblio.services.PubMedService;
 
+import java.util.List;
+
 
 public class PubMedInfo implements Component
 {
@@ -16,10 +18,11 @@ public class PubMedInfo implements Component
 
         String jwToken = req.getNonEmpty("jwtoken");
         String username = req.get("username");
+        List<String> PMIDs = req.getList("PMIDs[]");
 
         try
         {
-            res.sendAsRawJson(TypedResponse.data(pubMedService.getData(jwToken, username)));
+            res.sendAsRawJson(TypedResponse.data(pubMedService.getData(jwToken, username, PMIDs)));
         }
         catch (SecurityException e)
         {

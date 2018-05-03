@@ -5,6 +5,7 @@ import com.developmentontheedge.be5.api.services.Be5Caches;
 import com.developmentontheedge.beans.DynamicPropertySet;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
+import com.google.common.collect.ImmutableMap;
 import ru.biosoft.biblio.BioStore;
 import ru.biosoft.biblio.components.PubMedInfo;
 import ru.biosoft.biostoreapi.JWToken;
@@ -42,7 +43,7 @@ public class PubMedService
         be5Caches.registerCache("pubMedInfo jwtoken", cache);
     }
 
-    public Map<Long, PublicationProject> getData(String jwtoken, String username)
+    public Map<Long, PublicationProject> getData(String jwtoken, String username, List<String> PMIDs)
     {
         long start = new Date().getTime();
         List<Project> projects = cache.get(new JWToken(username, jwtoken));
@@ -50,20 +51,23 @@ public class PubMedService
 
         long start2 = new Date().getTime();
 
-        Map<Long, PublicationProject> data = getData(projects);
+        Map<Long, PublicationProject> data = getData(projects, PMIDs);
 
         log.info("PubMedInfo - " + time1 + ", " + (new Date().getTime() - start2));
 
         return data;
     }
 
-    private Map<Long, PublicationProject> getData(List<Project> projects)
+    private Map<Long, PublicationProject> getData(List<Project> projects, List<String> PMIDs)
     {
         List<String> projectNames = projects.stream().map(Project::getProjectName).collect(toList());
 
         Map<Long, PublicationProject> publicationProjects = new HashMap<>();
         List<DynamicPropertySet> list = operationHelper.readAsRecordsFromQuery(
-                "publications", "PubMedInfo Data", Collections.singletonMap("projects", projectNames));
+                "publications", "PubMedInfo Data", ImmutableMap.of(
+                        "projects", projectNames,
+                        "PMIDs", PMIDs
+                ));
 
         for (DynamicPropertySet dps : list)
         {
