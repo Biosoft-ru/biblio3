@@ -53,7 +53,7 @@ publications:
         type: VARCHAR(3)
         canBeNull: true
     - publicationType:
-        type: VARCHAR(50)
+        type: VARCHAR(100)
         canBeNull: true
     - abstract:
         type: TEXT
