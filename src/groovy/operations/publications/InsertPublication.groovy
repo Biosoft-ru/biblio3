@@ -147,6 +147,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         database.publication2project.add(projectInfo)
 
         addRedirectParams(context.operationParams)
+        removeRedirectParam("pmid")
     }
 
     GDynamicPropertySetSupport extractProjectInfo(DynamicPropertySet dps)
