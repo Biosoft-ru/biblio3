@@ -18,7 +18,7 @@ public class PubMedInfo implements Component
 
         String jwToken = req.getNonEmpty("jwtoken");
         String username = req.get("username");
-        List<String> PMIDs = req.getList("PMIDs[]");
+        List<String> PMIDs = req.getList("PMIDs");
 
         try
         {
