@@ -30,7 +30,7 @@ class EditPublication extends InsertPublication implements TransactionalOperatio
 
         publicationRec = database.publications.get(context.record)
 
-        publication2projectRecord = database.publication2project.getByColumns([
+        publication2projectRecord = database.publication2project.getBy([
                 publicationID: publicationRec.getPrimaryKey(),
                 projectID    : projectID
         ])

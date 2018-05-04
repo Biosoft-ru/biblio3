@@ -43,7 +43,7 @@ class Insert extends GOperationSupport implements TransactionalOperation
 
         BioStore.loadProjectListToSession()
 
-        long parentID = (Long)database.categories.getByColumns([name: "Root"]).getValue("ID")
+        long parentID = (Long)database.categories.getBy([name: "Root"]).getValue("ID")
 
         def ID = database.categories.add([
                 entity: 'publications',

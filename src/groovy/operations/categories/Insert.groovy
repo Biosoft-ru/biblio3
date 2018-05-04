@@ -40,7 +40,7 @@ class Insert extends GOperationSupport implements TransactionalOperation
             return
         }
 
-        boolean isProjectCategory = parentID == (Long)database.categories.getByColumns([name: "Root"]).getValue("ID")
+        boolean isProjectCategory = parentID == (Long)database.categories.getBy([name: "Root"]).getValue("ID")
 
         if(isProjectCategory)
         {

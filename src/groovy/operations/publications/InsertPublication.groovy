@@ -121,7 +121,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         def projectInfo = extractProjectInfo(dps)
 
         RecordModel<Long> publicationRecord
-        if(PMID != null)publicationRecord = database.publications.getByColumns([PMID: PMID])
+        if(PMID != null)publicationRecord = database.publications.getBy([PMID: PMID])
 
         Long publicationID
         if(publicationRecord == null)
