@@ -19,9 +19,6 @@ class Insert extends GOperationSupport implements TransactionalOperation
             MULTIPLE_SELECTION_LIST = true
         }
 
-        dps.add("user_name", "Логин")
-        dps.add("user_pass", "Пароль") { PASSWORD_FIELD = true }
-
         return dpsHelper.setValues(dps, presetValues)
     }
 
@@ -37,9 +34,7 @@ class Insert extends GOperationSupport implements TransactionalOperation
             return
         }
 
-        //BioStore.createProject(name, 3)
-        BioStore.api.createProjectWithPermissions(dps.getValueAsString("user_name"), dps.getValueAsString("user_pass"),
-                name, permission)
+        BioStore.createProjectWithPermissions(name, permission)
 
         BioStore.loadProjectListToSession()
 

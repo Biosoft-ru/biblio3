@@ -35,8 +35,8 @@ public class BioStore
         return projects;
     }
 
-    public static void createProject(String projectName, int permission)
+    public static void createProjectWithPermissions(String projectName, int permission)
     {
-        //api.createProjectWithPermissions((JWToken) UserInfoHolder.getSession().get(BIOSTORE_TOKEN), projectName, permission);
+        api.createProjectWithPermissions((JWToken) UserInfoHolder.getSession().get(BIOSTORE_TOKEN), projectName, permission);
     }
 }
