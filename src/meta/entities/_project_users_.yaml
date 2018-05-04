@@ -1,0 +1,18 @@
+_project_users_:
+  type: table
+  displayName: Project users
+  order: '20'
+  primaryKey: dummy
+  queries:
+  - All records:
+      type: Groovy
+      roles: Annotator
+      invisible: true
+      operations:
+      - Insert
+      file: projectusers.AllRecords.groovy
+  operations:
+  - Insert:
+      type: Groovy
+      roles: Annotator
+      file: projectusers.Insert.groovy
