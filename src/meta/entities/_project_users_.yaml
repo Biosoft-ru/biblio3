@@ -10,9 +10,15 @@ _project_users_:
       invisible: true
       operations:
       - Insert
+      - Edit
       file: projectusers.AllRecords.groovy
   operations:
   - Insert:
       type: Groovy
       roles: Annotator
       file: projectusers.Insert.groovy
+  - Edit:
+      records: 1
+      type: Groovy
+      roles: Annotator
+      file: projectusers.Edit.groovy

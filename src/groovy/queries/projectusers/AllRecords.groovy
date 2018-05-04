@@ -16,9 +16,9 @@ class AllRecords extends TableBuilderSupport
 
         for (def projectUser : projectUsers)
         {
-            addRow(cells(projectUser.user, projectUser.role))
+            addRow(projectUser.user, cells(projectUser.user, projectUser.role))
         }
 
-        return table(columns, rows)
+        return table(columns, rows, true)
     }
 }

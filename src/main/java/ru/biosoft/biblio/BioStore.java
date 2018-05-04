@@ -50,4 +50,9 @@ public class BioStore
     {
         api.addUserToProject((JWToken) UserInfoHolder.getSession().get(BIOSTORE_TOKEN), userToAdd, projectName);
     }
+
+    public static void changeUserRoleInProject(String projectName, String userToChange, String newRole)
+    {
+        api.changeUserRoleInProject((JWToken) UserInfoHolder.getSession().get(BIOSTORE_TOKEN), projectName, userToChange, newRole);
+    }
 }
