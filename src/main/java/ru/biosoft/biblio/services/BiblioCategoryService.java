@@ -38,7 +38,7 @@ public class BiblioCategoryService
         //bfs
         int i = 0;
         do {
-            categories.addAll(db.selectListLong("SELECT id FROM categories c WHERE c.parentID = ?", categories.get(i)));
+            categories.addAll(db.selectScalarList("SELECT id FROM categories c WHERE c.parentID = ?", categories.get(i)));
         }
         while (++i < categories.size());
 
