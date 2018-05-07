@@ -12,7 +12,6 @@ import ru.biosoft.biostoreapi.JWToken;
 import ru.biosoft.biostoreapi.Project;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +52,7 @@ public class PubMedService
 
         Map<Long, PublicationProject> data = getData(projects, PMIDs);
 
-        log.info("PubMedInfo - " + time1 + ", " + (new Date().getTime() - start2));
+        log.fine("PubMedInfo - " + time1 + ", " + (new Date().getTime() - start2));
 
         return data;
     }
