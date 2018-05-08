@@ -11,6 +11,7 @@ import de.undercouch.citeproc.CSL;
 import de.undercouch.citeproc.output.Bibliography;
 import ru.biosoft.biblio.services.citeproc.PublicationProvider;
 
+import javax.inject.Inject;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
@@ -21,6 +22,9 @@ import java.io.IOException;
  */
 public class BibliographyComponent implements Component
 {
+    @Inject private DatabaseModel database;
+    @Inject private PublicationProvider publicationProvider;
+
     @Override
     public void generate(Request req, Response res, Injector injector)
     {
@@ -28,14 +32,14 @@ public class BibliographyComponent implements Component
         String publicationIDs = req.getNonEmpty("publicationIDs");
         String citationFileID     = req.getNonEmpty("citationFileID");
 
-        RecordModel record = injector.get(DatabaseModel.class).getEntity("attachments")
+        RecordModel record = database.getEntity("attachments")
                 .get(Long.parseLong(citationFileID));
 
 
         CSL csl;
         try
         {
-            csl = new CSL(injector.get(PublicationProvider.class), new String((byte[])record.getValue("data")));
+            csl = new CSL(publicationProvider, new String((byte[])record.getValue("data")));
         }
         catch (IOException e)
         {

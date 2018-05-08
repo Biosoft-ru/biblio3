@@ -6,16 +6,17 @@ import com.developmentontheedge.be5.api.Response;
 import com.developmentontheedge.be5.inject.Injector;
 import ru.biosoft.biblio.services.PubMedService;
 
+import javax.inject.Inject;
 import java.util.List;
 
 
 public class PubMedInfo implements Component
 {
+    @Inject private PubMedService pubMedService;
+
     @Override
     public void generate(Request req, Response res, Injector injector)
     {
-        PubMedService pubMedService = injector.get(PubMedService.class);
-
         String jwToken = req.getNonEmpty("jwtoken");
         String username = req.get("username");
         List<String> PMIDs = req.getList("PMIDs");
