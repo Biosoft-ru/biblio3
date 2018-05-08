@@ -24,7 +24,7 @@ public class BiblioCategoryService
         while (cat != null) {
             categories.add(cat);
 
-            cat = db.getLong("SELECT c1.parentID FROM categories c1 WHERE c1.ID = ?", cat);
+            cat = db.oneLong("SELECT c1.parentID FROM categories c1 WHERE c1.ID = ?", cat);
         }
 
         return categories;
@@ -38,7 +38,7 @@ public class BiblioCategoryService
         //bfs
         int i = 0;
         do {
-            categories.addAll(db.selectScalarList("SELECT id FROM categories c WHERE c.parentID = ?", categories.get(i)));
+            categories.addAll(db.scalarList("SELECT id FROM categories c WHERE c.parentID = ?", categories.get(i)));
         }
         while (++i < categories.size());
 

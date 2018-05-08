@@ -33,7 +33,7 @@ public class MedlineImport
         Objects.requireNonNull(table);
         Objects.requireNonNull(id);
 
-        Long pmid = db.getLong("SELECT p.PMID FROM publications p WHERE p.ID= ?", id);
+        Long pmid = db.oneLong("SELECT p.PMID FROM publications p WHERE p.ID= ?", id);
 
         if( pmid == null)
         {
@@ -193,7 +193,7 @@ public class MedlineImport
         {
             try
             {
-                if( db.getLong("SELECT COUNT(1) FROM publications p WHERE p.ref= ?", ref) == 0 )
+                if( db.oneLong("SELECT COUNT(1) FROM publications p WHERE p.ref= ?", ref) == 0 )
                 {
                     return ref;
                 }

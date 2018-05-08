@@ -50,7 +50,7 @@ class DeletePublication extends DeleteOperation implements TransactionalOperatio
                     publicationID: id
             ])
 
-            if(db.getLong("SELECT count(1) FROM publication2project WHERE publicationID = ?", id) == 0)
+            if(db.oneLong("SELECT count(1) FROM publication2project WHERE publicationID = ?", id) == 0)
             {
                 super.invoke(parameters)
             }

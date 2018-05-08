@@ -75,7 +75,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         }
 
         if(dps.getValue("categoryID") != null &&
-           Long.parseLong(dps.getValueAsString("categoryID")) != db.getLong("select id from categories where name = 'Root'"))
+           Long.parseLong(dps.getValueAsString("categoryID")) != db.oneLong("select id from categories where name = 'Root'"))
         {
             projectID = helper.qRec("""SELECT cat.name FROM categories cat
                     INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', ?)
@@ -164,7 +164,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
 
     boolean pmidExistInProject(Long PMID, String projectID)
     {
-        return db.getLong("SELECT count(1) FROM publications p \n" +
+        return db.oneLong("SELECT count(1) FROM publications p \n" +
                 "INNER JOIN classifications cls \n" +
                 "     ON cls.recordID = CONCAT('publications.', p.ID) \n" +
                 "    AND categoryID = (SELECT id FROM categories WHERE name = ?)\n" +
