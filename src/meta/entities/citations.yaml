@@ -1,0 +1,48 @@
+citations:
+  type: table
+  displayName: CSL
+  order: '21'
+  primaryKey: ID
+  scheme:
+    columns:
+    - ID:
+        type: KEYTYPE
+        autoIncrement: true
+        primaryKey: true
+    - name:
+        type: VARCHAR(100)
+    - title:
+        type: VARCHAR(100)
+        canBeNull: true
+    - inline:
+        type: VARCHAR(100)
+    - bibliography:
+        type: VARCHAR(2000)
+  queries:
+  - All records:
+      type: 1D
+      roles: Annotator
+      operations:
+      - Delete
+      - Insert
+      code: |-
+          SELECT
+            cit.ID AS "___ID",
+            cit.name AS "Name",
+            cit.title AS "Title",
+            '<quick visible="false" />' AS ";Title",
+            cit.inline AS "Inline",
+            cit.bibliography AS "Bibliography",
+            '<css class="bibliography-col"/>' AS ";Bibliography"
+          FROM citations cit
+          INNER JOIN citation2user c2u ON c2u.citationID = cit.ID
+          WHERE c2u.user_name = <session:current-user />
+  operations:
+  - Insert:
+      type: Groovy
+      roles: Annotator
+      file: citations.Insert.groovy
+  - Delete:
+      records: 2
+      roles: Administrator
+      code: com.developmentontheedge.be5.operations.SilentDeleteOperation

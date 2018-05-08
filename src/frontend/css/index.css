@@ -26,3 +26,7 @@
 .csl-entry-container {
   margin-bottom: 5px;
 }
+
+.bibliography-col{
+  min-width: 800px;
+}

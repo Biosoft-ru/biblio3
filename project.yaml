@@ -18,6 +18,8 @@ biblio3:
   - _detailed_view_
   - _publication_cat_
   - attachments
+  - citations
+  - citation2user
   - publications
   - publication2project
   scripts:

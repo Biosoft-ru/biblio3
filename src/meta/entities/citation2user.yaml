@@ -1,0 +1,22 @@
+citation2user:
+  type: collection
+  displayName: Publication2project
+  order: '10'
+  primaryKey: ID
+  scheme:
+    columns:
+    - ID:
+        type: KEYTYPE
+        autoIncrement: true
+        primaryKey: true
+    - citationID:
+        type: KEYTYPE
+        reference: citations
+    - user_name:
+        type: VARCHAR(100)
+    indices:
+    - IDX_P2P_CITID_USERID:
+        unique: true
+        columns:
+        - citationID
+        - user_name
