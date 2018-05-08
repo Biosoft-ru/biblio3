@@ -82,6 +82,7 @@ publications:
       - Edit
       - FillFromMedline
       - Filter
+      - Bibliography
       code: |-
           SELECT DISTINCT
             p.ID AS "___ID",
@@ -119,6 +120,7 @@ publications:
       - Edit
       - FillFromMedline
       - Filter
+      - Bibliography
       code: |-
           SELECT
             p.ID AS "___ID",
@@ -190,6 +192,11 @@ publications:
       type: Groovy
       roles: Annotator
       file: publications.DeletePublication.groovy
+  - Bibliography:
+      records: 2
+      type: Groovy
+      roles: Annotator
+      file: publications.Bibliography.groovy
   - AddRemoveCategory:
       records: 1
       type: Groovy

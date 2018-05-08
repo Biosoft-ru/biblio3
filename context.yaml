@@ -1,7 +1,9 @@
 context:
   components:
   - pubMedInfo: ru.biosoft.biblio.components.PubMedInfo
+  - bibliography: ru.biosoft.biblio.components.BibliographyComponent
   services:
+  - ru.biosoft.biblio.services.citeproc.PublicationProvider
   - ru.biosoft.biblio.services.MedlineImport
   - ru.biosoft.biblio.services.BiblioCategoryService
   - ru.biosoft.biblio.services.PubMedService
