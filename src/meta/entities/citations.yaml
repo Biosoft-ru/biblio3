@@ -19,6 +19,10 @@ citations:
     - bibliography:
         type: VARCHAR(2000)
   queries:
+  - '*** Selection view ***':
+      type: 1D
+      invisible: true
+      code: SELECT ID AS "Code", name AS "Name" FROM citations
   - All records:
       type: 1D
       roles: Annotator
