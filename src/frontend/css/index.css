@@ -5,3 +5,24 @@
 /*.category-navigation__not-select {*/
   /*display: none;*/
 /*}*/
+
+/* citeproc formatting */
+.csl-left-margin {
+  float: left;
+}
+.csl-right-inline {
+  margin-left: 35px;
+}
+.inline-csl-entry,
+.bibliography-csl-entry {
+  display: inline-block;
+  margin: 0px;
+  line-height: 1.4em;
+  width: -moz-available;
+  padding-left: 0;
+  text-indent: 0;
+}
+
+.csl-entry-container {
+  margin-bottom: 5px;
+}
