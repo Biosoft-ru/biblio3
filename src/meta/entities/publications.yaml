@@ -97,16 +97,7 @@ publications:
                               TO_CHAR(p.pmid), '&dopt=Abstract" target="blanck">', TO_CHAR(p.pmid), '</a>'), ' '),
               IFNULL( CONCAT('<br>URL: <a href=', p.url, '>', p.url, '</a>'), ' ')
             ) AS "Description",
-            PROJECT_COL(comment) AS "Comment",
-            CONCAT(
-              IFNULL( '<sql default="Нажмите">
-                SELECT CONCAT('<a href="api/download?_t_=attachments&ID=', a.id, '">', a.name, '</a>(',  IFNULL(LENGTH(a.data), '0'), ')' )
-                FROM attachments a
-                WHERE a.publicationID = <var:___ID/>
-                </sql>' , ''
-              ),
-              CONCAT('<div class="text-center"><a href="#!table/attachments/Attachments/publicationID=', p.id, '">Edit</a></div>')
-            ) AS "Text"
+            PROJECT_COL(comment) AS "Comment"
           FROM publications p
             INNER JOIN classifications cls ON cls.recordID = CONCAT('publications.', p.ID)
             INNER JOIN categories cat ON cat.id = cls.categoryID
@@ -144,17 +135,7 @@ publications:
                     IFNULL( CONCAT('PMID: ', '<a href="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&db=PubMed&list_uids=',
                             TO_CHAR(p.PMID), '&dopt=Abstract" target="blanck">', TO_CHAR(p.PMID), '</a><br>'), ''),
                     IFNULL( CONCAT('URL: <a href=', p.url, '>', p.url, '</a><br>'), ''),
-                    IFNULL(PROJECT_COL(comment), ''),
-                    IFNULL(CONCAT(
-                       IFNULL( '<sql default="Нажмите">
-                         SELECT CONCAT('<a href="api/download?_t_=attachments&ID=', a.id, '">', a.name, '</a>(',  IFNULL(LENGTH(a.data), '0'), ')' )
-                         FROM attachments a
-                         WHERE a.publicationID = <var:___ID/>
-                         </sql>' , ''
-                       )
-
-                    ), ''),
-                    IFNULL(CONCAT('<a class="d-block" href="#!table/attachments/Attachments/publicationID=', p.id, '">Edit</a>'))
+                    IFNULL(PROJECT_COL(comment), '')
             ) AS "Publication"
           FROM publications p
             INNER JOIN classifications cls ON cls.recordID = CONCAT('publications.', p.ID)

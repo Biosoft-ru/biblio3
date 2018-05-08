@@ -1,5 +1,5 @@
 attachments:
-  type: collection
+  type: genericCollection
   displayName: Attachments
   primaryKey: ID
   scheme:
@@ -8,24 +8,135 @@ attachments:
         type: KEYTYPE
         autoIncrement: true
         primaryKey: true
-    - publicationID:
-        type: KEYTYPE
-    - name:
-        type: VARCHAR(100)
-    - public:
-        type: BOOL
-        defaultValue: '''yes'''
-    - mimeType:
+    - ownerID:
         type: VARCHAR(50)
+        reference:
+          to: []
+          view: ''
+    - type:
+        type: ENUM('image','map','other','plan','thumbnail')
+        defaultValue: '''image'''
+    - name:
+        type: VARCHAR(255)
+    - tag:
+        type: VARCHAR(255)
+        canBeNull: true
+    - mimeType:
+        type: VARCHAR(100)
         canBeNull: true
         defaultValue: '''application/octet-stream'''
+    - mimeCharset:
+        type: VARCHAR(100)
+        canBeNull: true
     - data:
-        type: MEDIUMBLOB
+        type: BLOB
+        canBeNull: true
+    - thumbnail:
+        type: BLOB
+        canBeNull: true
+    - ___origMessageID:
+        type: VARCHAR(255)
+        canBeNull: true
+    - loadedfromurl:
+        type: TEXT
+        canBeNull: true
+    - importID:
+        type: KEYTYPE
+        canBeNull: true
+        reference: import.id
+    - whoInserted___:
+        type: VARCHAR(100)
+        canBeNull: true
+    - whoModified___:
+        type: VARCHAR(100)
+        canBeNull: true
+    - creationDate___:
+        type: TIMESTAMP
+        canBeNull: true
+    - modificationDate___:
+        type: TIMESTAMP
         canBeNull: true
     indices:
-    - IDX_ATTACHMENT_PUBLICATION_ID:
-        columns: publicationID
+    - IDX_ATT_OWNER_ID:
+        columns: ownerID
+    - IDX_ATT_TYP_OWNER_ID:
+        columns:
+        - Type
+        - ownerID
   queries:
+  - All records:
+      type: 1D
+      roles: [Administrator, Manager]
+      operations:
+      - Add File
+      - Delete
+      code: |-
+        SELECT
+             a.ID AS "ID",
+             CASE
+        <if columnExists="attachments.smartRouteID">
+                WHEN a.smartRouteID IS NOT NULL THEN
+                  CASE
+                    WHEN a.mimeType LIKE 'image/%' THEN ( '<b>' || a.name || '</b><br /><img width="500" src="atcloud?name=' || a.smartRouteID || '"/>'                                )
+                    ELSE ( '<a hre' || 'f="' || 'atcloud?name=' || a.smartRouteID || '">' || a.name  || '<a/>'                              )
+                  END
+        </if>
+                WHEN COALESCE( LENGTH(a.data),0       ) = 0 THEN a.name
+        <if columnExists="attachments.thumbnail">
+                WHEN LENGTH(a.thumbnail) > 0 THEN
+                       ( '<b>' || a.name || '</b><br /><a hre' || 'f="' || 'viewBlob?_t_=attachments&_typeColumn_=mimeType&_charsetColumn_=mimeCharset&_filenameColumn_=name&_dataColumn_=data&ID=' || CAST (a.ID AS VARCHAR) ||
+                           '"><img border="0" src="' || 'viewBlob?_t_=attachments&_typeColumn_=''image/jpeg''&_filenameColumn_=name&_dataColumn_=thumbnail&ID=' || CAST (a.ID AS VARCHAR) || '"></a>'                           )
+        </if>
+                WHEN a.mimeType LIKE 'image/%' THEN
+                       ( '<b>' || a.name || '</b><br /><img width="500" src="' || 'viewBlob?_t_=attachments&_typeColumn_=mimeType&_charsetColumn_=mimeCharset&_filenameColumn_=name&_dataColumn_=data&ID=' || CAST (a.ID AS VARCHAR) || '">'                               )
+                ELSE ( '<a hre' || 'f="' || 'viewBlob?_t_=attachments&_typeColumn_=mimeType&_charsetColumn_=mimeCharset&_filenameColumn_=name&_dataColumn_=data&ID=' || CAST (a.ID AS VARCHAR) || '">' || a.name || '</a>'                              )
+             END
+                AS "Name",
+             a.tag AS "Tag;<blankNulls />",
+
+             LENGTH(a.data )
+                AS "Size",
+             a.mimeType
+                AS "MIME Type",
+             '<quick visible="false" />'
+                AS ";MIME Type",
+             a.mimeCharset
+                AS "Charset",
+             '<quick visible="false" />'
+                AS ";Charset",
+             <if parameter="_tcloneid_">
+             ( '<a hre' || 'f="' || 'viewBlob?_t_=attachments' || '<parameter:_tcloneid_ />' || '&_typeColumn_=mimeType&_charsetColumn_=mimeCharset&_filenameColumn_=name&_dataColumn_=data&ID=' || CAST (a.ID AS VARCHAR) || '&_download_=yes">{{{Download}}}</a>'                              )
+                      AS "Download",
+             </if>
+
+             <unless parameter="_tcloneid_">
+             CASE
+
+             <if columnExists="attachments.smartRouteID">
+                WHEN smartRouteID IS NOT NULL THEN ( '<a hre' || 'f="' || 'atcloud?name=' || a.smartRouteID || '">' || a.name  || '<a/>'                              )
+             </if>
+                WHEN 1 = 1 THEN ( '<a hre' || 'f="' || 'viewBlob?_t_=attachments&_typeColumn_=mimeType&_charsetColumn_=mimeCharset&_filenameColumn_=name&_dataColumn_=data&ID=' || CAST (a.ID AS VARCHAR) || '&_download_=yes">{{{Download}}}</a>'                                )
+
+              END
+                      AS "Download",
+             </unless>
+
+
+             ( '<a target="_new" hre' || 'f="https://docs.google.com/viewer' ||
+               CASE WHEN a.mimeType IS NOT NULL THEN ( '?mt=' || a.mimeType || '&'                                  ) ELSE '?' END ||
+               'url=' ||
+                REPLACE(
+                   REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(( @@context@@ || 'viewBlob?_t_=attachments&_typeColumn_=mimeType&_charsetColumn_=mimeCharset&_filenameColumn_=name&_dataColumn_=data&ID='                                   ),'/','%2F' ),':','%3A' ),'&','%26' ),'=','%3D' ),'?','%3F' ),
+                   'viewBlob','viewBlobOpen'
+                 ) ||
+                 CAST (a.ID AS VARCHAR) || '">{{{Open}}}</a>'                              )
+               AS "Google Docs",
+             a.creationDate___
+                AS "Created|When",
+             a.whoInserted___
+                AS "Created|Who"
+        FROM attachments<parameter:_tcloneid_ default=""/> a
+        ORDER BY a.creationDate___ DESC
   - Attachments:
       type: 1D
       roles: [Administrator, Annotator]
