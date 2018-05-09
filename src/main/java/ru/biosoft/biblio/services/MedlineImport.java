@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.StringTokenizer;
 
 import com.developmentontheedge.be5.api.services.SqlService;
-import ru.biosoft.biblio.TextUtil;
+import ru.biosoft.biblio.util.TextUtil;
 
 /**
  * Provides import of Medline records into the Publications table.

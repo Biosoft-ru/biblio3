@@ -6,7 +6,7 @@ import com.developmentontheedge.beans.DynamicPropertySet;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import com.google.common.collect.ImmutableMap;
-import ru.biosoft.biblio.BioStore;
+import ru.biosoft.biblio.util.BioStore;
 import ru.biosoft.biblio.components.PubMedInfo;
 import ru.biosoft.biostoreapi.JWToken;
 import ru.biosoft.biostoreapi.Project;

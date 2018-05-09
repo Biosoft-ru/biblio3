@@ -1,6 +1,7 @@
 package ru.biosoft.biblio;
 
 import org.junit.Test;
+import ru.biosoft.biblio.util.TextUtil;
 
 import static org.junit.Assert.*;
 

@@ -4,7 +4,7 @@ import com.developmentontheedge.be5.api.FrontendConstants
 import com.developmentontheedge.be5.query.TableBuilderSupport
 import com.developmentontheedge.be5.query.impl.TableModel
 import com.developmentontheedge.be5.util.HashUrl
-import ru.biosoft.biblio.BioStore
+import ru.biosoft.biblio.util.BioStore
 
 import static com.developmentontheedge.be5.query.impl.TableModel.*
 

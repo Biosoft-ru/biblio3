@@ -1,4 +1,4 @@
-package ru.biosoft.biblio;
+package ru.biosoft.biblio.util;
 
 import com.developmentontheedge.be5.api.helpers.UserInfoHolder;
 import ru.biosoft.biostoreapi.DefaultConnectionProvider;
@@ -9,7 +9,7 @@ import ru.biosoft.biostoreapi.ProjectUser;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-import static ru.biosoft.biblio.BiblioUtils.BIOSTORE_PROJECTS;
+import static ru.biosoft.biblio.util.BiblioUtils.BIOSTORE_PROJECTS;
 
 
 public class BioStore

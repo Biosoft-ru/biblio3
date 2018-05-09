@@ -2,7 +2,7 @@ package projectusers
 
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.operation.support.GOperationSupport
-import ru.biosoft.biblio.BioStore
+import ru.biosoft.biblio.util.BioStore
 
 
 class Insert extends GOperationSupport implements TransactionalOperation

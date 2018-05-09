@@ -3,7 +3,7 @@ package operations.publications
 import com.developmentontheedge.be5.test.SqlMockOperationTest
 import com.developmentontheedge.beans.json.JsonFactory
 import org.junit.Test
-import ru.biosoft.biblio.BiblioUtils
+import ru.biosoft.biblio.util.BiblioUtils
 
 import static org.junit.Assert.assertEquals
 

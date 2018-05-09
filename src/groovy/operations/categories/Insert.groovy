@@ -3,7 +3,7 @@ package categories
 import com.developmentontheedge.be5.operation.support.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
 
-import static ru.biosoft.biblio.BiblioUtils.BIOSTORE_PROJECTS
+import static ru.biosoft.biblio.util.BiblioUtils.BIOSTORE_PROJECTS
 
 
 class Insert extends GOperationSupport implements TransactionalOperation

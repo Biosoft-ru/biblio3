@@ -1,5 +1,5 @@
 /* $Id: TextUtil.java,v 1.1 2003/11/15 19:02:30 fedor Exp $ */
-package ru.biosoft.biblio;
+package ru.biosoft.biblio.util;
 
 
 /**

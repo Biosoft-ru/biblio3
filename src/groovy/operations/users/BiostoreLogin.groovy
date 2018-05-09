@@ -7,10 +7,10 @@ import com.developmentontheedge.be5.modules.core.operations.users.Login
 import com.developmentontheedge.be5.operation.OperationResult
 import com.developmentontheedge.be5.operation.OperationStatus
 import com.google.common.collect.ImmutableList
-import ru.biosoft.biblio.BioStore
+import ru.biosoft.biblio.util.BioStore
 
-import static ru.biosoft.biblio.BiblioUtils.BIOSTORE_PROJECTS
-import static ru.biosoft.biblio.BioStore.BIOSTORE_TOKEN
+import static ru.biosoft.biblio.util.BiblioUtils.BIOSTORE_PROJECTS
+import static BioStore.BIOSTORE_TOKEN
 
 
 class BiostoreLogin extends Login

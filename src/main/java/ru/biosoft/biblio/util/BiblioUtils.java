@@ -1,4 +1,4 @@
-package ru.biosoft.biblio;
+package ru.biosoft.biblio.util;
 
 
 public class BiblioUtils
