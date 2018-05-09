@@ -1,17 +1,15 @@
 package ru.biosoft.biblio.components;
 
-import com.developmentontheedge.be5.api.Component;
 import com.developmentontheedge.be5.api.Request;
 import com.developmentontheedge.be5.api.Response;
+import com.developmentontheedge.be5.api.impl.ControllerSupport;
 import com.developmentontheedge.be5.databasemodel.RecordModel;
 import com.developmentontheedge.be5.databasemodel.impl.DatabaseModel;
-import com.developmentontheedge.be5.inject.Injector;
 import com.google.common.base.Charsets;
 import de.undercouch.citeproc.CSL;
 import de.undercouch.citeproc.output.Bibliography;
 import ru.biosoft.biblio.services.citeproc.PublicationProvider;
 
-import javax.inject.Inject;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
@@ -20,13 +18,19 @@ import java.io.IOException;
  * Example url
  * /api/bibliography?type=text&publicationIDs=1,2,4,5&citationFileID=5
  */
-public class BibliographyComponent implements Component
+public class BibliographyComponent extends ControllerSupport
 {
-    @Inject private DatabaseModel database;
-    @Inject private PublicationProvider publicationProvider;
+    private final DatabaseModel database;
+    private final PublicationProvider publicationProvider;
+
+    public BibliographyComponent(DatabaseModel database, PublicationProvider publicationProvider)
+    {
+        this.database = database;
+        this.publicationProvider = publicationProvider;
+    }
 
     @Override
-    public void generate(Request req, Response res, Injector injector)
+    public void generate(Request req, Response res)
     {
         String type           = req.getNonEmpty("type");
         String publicationIDs = req.getNonEmpty("publicationIDs");

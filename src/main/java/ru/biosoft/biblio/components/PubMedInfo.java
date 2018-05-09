@@ -1,21 +1,24 @@
 package ru.biosoft.biblio.components;
 
-import com.developmentontheedge.be5.api.Component;
 import com.developmentontheedge.be5.api.Request;
 import com.developmentontheedge.be5.api.Response;
-import com.developmentontheedge.be5.inject.Injector;
+import com.developmentontheedge.be5.api.impl.ControllerSupport;
 import ru.biosoft.biblio.services.PubMedService;
 
-import javax.inject.Inject;
 import java.util.List;
 
 
-public class PubMedInfo implements Component
+public class PubMedInfo extends ControllerSupport
 {
-    @Inject private PubMedService pubMedService;
+    private final PubMedService pubMedService;
+
+    public PubMedInfo(PubMedService pubMedService)
+    {
+        this.pubMedService = pubMedService;
+    }
 
     @Override
-    public void generate(Request req, Response res, Injector injector)
+    public void generate(Request req, Response res)
     {
         String jwToken = req.getNonEmpty("jwtoken");
         String username = req.get("username");
