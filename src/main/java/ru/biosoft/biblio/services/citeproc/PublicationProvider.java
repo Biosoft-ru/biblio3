@@ -46,7 +46,7 @@ public class PublicationProvider implements ItemDataProvider
         List<CSLName> names = Arrays.stream(authors.split(", ")).map(name ->
         {
             String[] strings = name.split(" ");
-            return new CSLNameBuilder().given(strings[0]).family(strings[1]).build();
+            return new CSLNameBuilder().given(strings[1]).family(strings[0]).build();
         }).collect(Collectors.toList());
 
         return names.toArray(new CSLName[0]);
