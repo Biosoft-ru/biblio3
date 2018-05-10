@@ -6,7 +6,13 @@ import com.developmentontheedge.be5.databasemodel.impl.DatabaseModel;
 import de.undercouch.citeproc.ItemDataProvider;
 import de.undercouch.citeproc.csl.CSLItemData;
 import de.undercouch.citeproc.csl.CSLItemDataBuilder;
+import de.undercouch.citeproc.csl.CSLName;
+import de.undercouch.citeproc.csl.CSLNameBuilder;
 import de.undercouch.citeproc.csl.CSLType;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class PublicationProvider implements ItemDataProvider
@@ -29,10 +35,37 @@ public class PublicationProvider implements ItemDataProvider
                 .id(rec.getValueAsString("ID"))
                 .type(CSLType.ARTICLE_JOURNAL)
                 .title(rec.getValueAsString("title"))
-                .author("John", "Smith")
-                .issued(2013, 9, 6)
-                .containerTitle("Dummy journal")
+                .author(getAuthors(rec.getValueAsString("authors")))
+                .issued(Integer.parseInt(rec.getValueAsString("year")), mapMonth(rec.getValueAsString("month")), 1)
+                //.containerTitle("Dummy journal")
                 .build();
+    }
+
+    private CSLName[] getAuthors(String authors)
+    {
+        List<CSLName> names = Arrays.stream(authors.split(", ")).map(name ->
+        {
+            String[] strings = name.split(" ");
+            return new CSLNameBuilder().given(strings[0]).family(strings[1]).build();
+        }).collect(Collectors.toList());
+
+        return names.toArray(new CSLName[0]);
+    }
+
+    private int mapMonth(String month)
+    {
+        if("Jan".equals(month))return 1;
+        if("Feb".equals(month))return 2;
+        if("Mar".equals(month))return 3;
+        if("Apr".equals(month))return 4;
+        if("May".equals(month))return 5;
+        if("Jun".equals(month))return 6;
+        if("Jul".equals(month))return 7;
+        if("Aug".equals(month))return 8;
+        if("Sep".equals(month))return 9;
+        if("Nov".equals(month))return 10;
+        if("Apr".equals(month))return 11;
+        return 12;
     }
 
     public String[] getIds()
