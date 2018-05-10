@@ -72,6 +72,16 @@ public class BibliographyComponent implements Component
             mimeType = "text/plain";
             ext = ".txt";
         }
+        else if("asciidoc".equals(type))
+        {
+            mimeType = "text/asciidoc";
+            ext = ".adoc";
+        }
+        else if("fo".equals(type))
+        {
+            mimeType = "application/xml";
+            ext = ".xml";
+        }
 
         res.sendFile(false, "Bibliography" + ext, mimeType, Charsets.UTF_8.name(),
                 new ByteArrayInputStream(out.toString().getBytes()));

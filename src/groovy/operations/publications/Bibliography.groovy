@@ -16,7 +16,8 @@ class Bibliography extends GOperationSupport
         }
 
         dps.add("type", "Output format") {
-            TAG_LIST_ATTR = [["html","html"], ["text","text"],["rtf","rtf"]] as String[][]
+            TAG_LIST_ATTR = [["html","html"], ["text","text"], ["rtf","rtf"],
+                             ["asciidoc","asciidoc"], ["fo","fo"]] as String[][]
         }
 
         return dpsHelper.setValues(dps, presetValues)
