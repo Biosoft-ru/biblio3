@@ -28,6 +28,7 @@ citations:
       roles: Annotator
       operations:
       - Delete
+      - AdminDelete
       - Insert
       code: |-
           SELECT
@@ -47,6 +48,11 @@ citations:
       roles: Annotator
       file: citations.Insert.groovy
   - Delete:
+      type: Groovy
+      records: 2
+      roles: Annotator
+      file: citations.Delete.groovy
+  - AdminDelete:
       records: 2
       roles: Administrator
       code: com.developmentontheedge.be5.operations.SilentDeleteOperation
