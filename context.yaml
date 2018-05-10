@@ -5,7 +5,6 @@ context:
   services:
   - ru.biosoft.biblio.services.citeproc.PublicationProvider
   - ru.biosoft.biblio.services.MedlineImport
-  - ru.biosoft.biblio.services.BiblioCategoryService
   - ru.biosoft.biblio.services.PubMedService
 config:
   com.developmentontheedge.be5.api.services.impl.LogConfigurator:

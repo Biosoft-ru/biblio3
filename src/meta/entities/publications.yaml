@@ -198,10 +198,9 @@ publications:
       roles: Annotator
       file: publications.Bibliography.groovy
   - AddRemoveCategory:
-      records: 1
-      type: Groovy
+      records: 2
       roles: Annotator
-      file: publications.AddRemoveCategory.groovy
+      code: com.developmentontheedge.be5.modules.core.operations.categories.AddRemoveCategory
   - Filter:
       roles: Administrator
       layout: '{"type":"modalForm"}'
