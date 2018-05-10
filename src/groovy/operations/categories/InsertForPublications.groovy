@@ -6,7 +6,7 @@ import com.developmentontheedge.be5.operation.TransactionalOperation
 import static ru.biosoft.biblio.util.BiblioUtils.BIOSTORE_PROJECTS
 
 
-class Insert extends GOperationSupport implements TransactionalOperation
+class InsertForPublications extends GOperationSupport implements TransactionalOperation
 {
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception

@@ -30,6 +30,7 @@ citations:
       - Delete
       - AdminDelete
       - Insert
+      - AddRemoveCategory
       code: |-
           SELECT
             cit.ID AS "___ID",
@@ -56,3 +57,7 @@ citations:
       records: 2
       roles: Administrator
       code: com.developmentontheedge.be5.operations.SilentDeleteOperation
+  - AddRemoveCategory:
+      records: 2
+      roles: Administrator
+      code: com.developmentontheedge.be5.modules.core.operations.categories.AddRemoveCategory

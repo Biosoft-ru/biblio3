@@ -1,12 +1,12 @@
 categories:
   queries:
-  - Children Of Root:
+  - For publications:
       type: 1D
       roles: Annotator
       operations:
       - Delete
       - Filter
-      - Insert
+      - InsertForPublications
       code: |-
         SELECT
             c1.ID AS "Code",
@@ -40,11 +40,16 @@ categories:
             COALESCE( CONCAT( c3.name ,'->' ),'' ) ,
             COALESCE( CONCAT( c2.name ,'->' ),'' ) ,
             c1.name )
+  - All records:
+      type: 1D
+      roles: Annotator
   operations:
   - Insert:
+      roles: Annotator
+  - InsertForPublications:
       type: Groovy
       roles: Annotator
-      file: categories.Insert.groovy
+      file: categories.InsertForPublications.groovy
   - Delete:
       records: 2
       roles: Annotator

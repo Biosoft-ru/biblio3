@@ -4,7 +4,11 @@ _publication_cat_:
   order: '20'
   primaryKey: dummy
   queries:
-  - All records:
+  - Publications:
       type: static
       roles: Annotator
-      value: categories.redir?_qn_=Children+Of+Root
+      value: categories.redir?_qn_=For+publications
+  - CSL:
+      type: static
+      roles: Administrator
+      value: categories.redir?_qn_=All+records&entity=citations
