@@ -34,6 +34,9 @@ class Bibliography extends GOperationSupport
         String url = request.getBaseUrl() + "/api/bibliography?" +
                 "type=${dps.getValue("type")}&publicationIDs=${ids}&citationFileID=${attID}"
 
-        setResult(OperationResult.finished(null, [goBack(), openNewWindow(url)]))
+        setResult(OperationResult.finished("Download Will Start Shortly", [redirect(url), goBack()]))
+
+        //window.open blocked by browser usually
+        //setResult(OperationResult.finished(null, [goBack(), openNewWindow(url)]))
     }
 }
