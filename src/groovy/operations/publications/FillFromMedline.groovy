@@ -19,7 +19,5 @@ class FillFromMedline extends GOperationSupport
         {
             medlineImport.fill(getInfo().getEntityName(), records[i])
         }
-
-        setResult(OperationResult.finished())
     }
 }

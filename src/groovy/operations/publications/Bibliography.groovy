@@ -5,6 +5,8 @@ import com.developmentontheedge.be5.operation.support.GOperationSupport
 
 import java.util.stream.Collectors
 
+import static com.developmentontheedge.be5.api.FrontendActions.*
+
 
 class Bibliography extends GOperationSupport
 {
@@ -16,7 +18,8 @@ class Bibliography extends GOperationSupport
         }
 
         dps.add("type", "Output format") {
-            TAG_LIST_ATTR = [["html","html"], ["text","text"],["rtf","rtf"]] as String[][]
+            TAG_LIST_ATTR = [["html","html"], ["text","text"], ["rtf","rtf"],
+                             ["asciidoc","asciidoc"], ["fo","fo"]] as String[][]
         }
 
         return dpsHelper.setValues(dps, presetValues)
@@ -28,8 +31,12 @@ class Bibliography extends GOperationSupport
         def attID = db.one("SELECT ID FROM attachments WHERE ownerID = 'citations." + dps.getValue("citationID") + "'")
         def ids = Arrays.stream(context.records).map({x -> x.toString()}).collect(Collectors.joining(","))
 
-        setResult(OperationResult.redirect(request.getBaseUrl()+ "/api/bibliography?type=${dps.getValue("type")}" +
-                "&publicationIDs=" + ids +
-                "&citationFileID=" + attID))
+        String url = request.getBaseUrl() + "/api/bibliography?" +
+                "type=${dps.getValue("type")}&publicationIDs=${ids}&citationFileID=${attID}"
+
+        setResult(OperationResult.finished("Download Will Start Shortly", [redirect(url), goBack()]))
+
+        //window.open blocked by browser usually
+        //setResult(OperationResult.finished(null, [goBack(), openNewWindow(url)]))
     }
 }

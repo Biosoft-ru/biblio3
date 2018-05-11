@@ -32,6 +32,8 @@ public class BibliographyComponent implements Component
         String publicationIDs = req.getNonEmpty("publicationIDs");
         String citationFileID     = req.getNonEmpty("citationFileID");
 
+        boolean download      = !"no".equals(req.get("_download_"));
+
         RecordModel record = database.getEntity("attachments")
                 .get(Long.parseLong(citationFileID));
 
@@ -72,8 +74,18 @@ public class BibliographyComponent implements Component
             mimeType = "text/plain";
             ext = ".txt";
         }
+        else if("asciidoc".equals(type))
+        {
+            mimeType = "text/asciidoc";
+            ext = ".adoc";
+        }
+        else if("fo".equals(type))
+        {
+            mimeType = "application/xml";
+            ext = ".xml";
+        }
 
-        res.sendFile(false, "Bibliography" + ext, mimeType, Charsets.UTF_8.name(),
+        res.sendFile(download, "Bibliography" + ext, mimeType, Charsets.UTF_8.name(),
                 new ByteArrayInputStream(out.toString().getBytes()));
     }
 

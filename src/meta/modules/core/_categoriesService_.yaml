@@ -6,9 +6,10 @@ _categoriesService_:
   - getRootCategory:
       type: 1D_unknown
       code: |-
-        SELECT c.ID, c.name FROM categories c
-        WHERE c.entity = '<parameter:entity />' AND (c.parentID IS NULL OR c.parentID = 0)
+        SELECT ID, name FROM categories WHERE entity = '<parameter:entity />' AND (parentID IS NULL OR parentID = 0)
+        <if expr="entity==publications">
           AND name == 'Root'
+        </if>
   - getCategoryNavigation:
       type: 1D_unknown
       code: |-
@@ -23,4 +24,6 @@ _categoriesService_:
         LEFT JOIN classifications pCls ON pCls.recordID = CONCAT('projectCategory.', c1.ID)
         LEFT JOIN categories pCat ON pCat.id = pCls.categoryID
         WHERE <parameter:categoryID /> IN ( c1.ID, c2.ID, c3.ID, c4.ID, c5.ID, c6.ID, c7.ID, c8.ID ) OR (c1.parentID = <parameter:categoryID />)
+        <if expr="entity==publications">
          AND (pCat.name IN (<session:biostore_projects multiple="true"/>) OR pCat.name == 'Root')
+        </if>

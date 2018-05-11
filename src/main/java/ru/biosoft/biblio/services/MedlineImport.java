@@ -79,8 +79,10 @@ public class MedlineImport
 
         // parsing result
         String dp    = TextUtil.getField(entry, "DP  -");
-        String year  = dp.substring(0, 4);
-        String month = dp.length() > 5 ? dp.substring(5) : "";
+        String[] DP = dp.split(" ");
+        String year  = DP[0];
+        String month = DP.length > 1 ? DP[1] : "";
+        String day   = DP.length > 2 ? DP[2] : "";
 
         String pages = TextUtil.getField(entry, "PG  -");
         String pageFrom = pages;
