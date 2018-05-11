@@ -10,5 +10,5 @@ _publication_cat_:
       value: categories.redir?_qn_=For+publications
   - CSL:
       type: static
-      roles: Administrator
+      roles: Annotator
       value: categories.redir?_qn_=All+records&entity=citations
