@@ -52,12 +52,6 @@
   </dependency>
 
   <dependency>
-   <groupId>com.developmentontheedge.be5</groupId>
-   <artifactId>be5-entity-gen</artifactId>
-   <version>0.1.1-SNAPSHOT</version>
-  </dependency>
-
-  <dependency>
    <groupId>ru.biosoft</groupId>
    <artifactId>biostore-api</artifactId>
    <version>1.0.1-SNAPSHOT</version>
@@ -79,12 +73,6 @@
    <groupId>org.postgresql</groupId>
    <artifactId>postgresql</artifactId>
    <version>42.0.0</version>
-  </dependency>
-
-  <dependency>
-   <groupId>mysql</groupId>
-   <artifactId>mysql-connector-java</artifactId>
-   <version>6.0.6</version>
   </dependency>
 
   <dependency>
