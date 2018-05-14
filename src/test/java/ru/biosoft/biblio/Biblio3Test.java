@@ -10,13 +10,10 @@ import com.google.inject.util.Modules;
 public abstract class Biblio3Test extends TestUtils
 {
     private static final Injector injector = initInjector(
-            Modules.override(new ServerModule()).with(new TestProjectProviderModule()),
-            new CoreModule()
+            Modules.override(new ServerModule()).with(new SqlMockModule()),
+            new CoreModule(),
+            new BiblioModule()
     );
-
-    static {
-        initDb(injector);
-    }
 
     @Override
     public Injector getInjector()

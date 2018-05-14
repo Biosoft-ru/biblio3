@@ -20,7 +20,7 @@ class AddRemoveCategory extends GOperationSupport
 
         dps.add("categoryID") {
             TYPE = Long
-            TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories", "Children Of Root")
+            TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories", "For publications")
             value = presetValues.getOrDefault("categoryID", context.operationParams.get(CATEGORY_ID_PARAM))
         }
 
