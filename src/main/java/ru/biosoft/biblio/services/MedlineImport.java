@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.StringTokenizer;
 
 import com.developmentontheedge.be5.api.services.SqlService;
+import com.google.inject.Inject;
 import ru.biosoft.biblio.util.TextUtil;
 
 /**
@@ -18,6 +19,7 @@ public class MedlineImport
 
     private final SqlService db;
 
+    @Inject
     public MedlineImport(SqlService db)
     {
         this.db = db;

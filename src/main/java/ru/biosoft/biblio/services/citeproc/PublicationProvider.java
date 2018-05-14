@@ -3,6 +3,7 @@ package ru.biosoft.biblio.services.citeproc;
 import com.developmentontheedge.be5.api.services.SqlService;
 import com.developmentontheedge.be5.databasemodel.RecordModel;
 import com.developmentontheedge.be5.databasemodel.impl.DatabaseModel;
+import com.google.inject.Inject;
 import de.undercouch.citeproc.ItemDataProvider;
 import de.undercouch.citeproc.csl.CSLItemData;
 import de.undercouch.citeproc.csl.CSLItemDataBuilder;
@@ -14,6 +15,7 @@ public class PublicationProvider implements ItemDataProvider
     private final DatabaseModel database;
     private final SqlService db;
 
+    @Inject
     public PublicationProvider(DatabaseModel database, SqlService db)
     {
         this.database = database;

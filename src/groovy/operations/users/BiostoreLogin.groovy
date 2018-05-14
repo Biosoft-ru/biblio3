@@ -1,8 +1,8 @@
 package users
 
 import com.developmentontheedge.be5.api.helpers.UserHelper
-import com.developmentontheedge.be5.inject.Inject
-import com.developmentontheedge.be5.modules.core.api.CoreFrontendConstants
+import com.google.inject.Inject
+import com.developmentontheedge.be5.modules.core.api.CoreFrontendActions
 import com.developmentontheedge.be5.modules.core.operations.users.Login
 import com.developmentontheedge.be5.operation.OperationResult
 import com.developmentontheedge.be5.operation.OperationStatus
@@ -58,7 +58,7 @@ class BiostoreLogin extends Login
                 BioStore.loadProjectListToSession()
 
                 setResult(OperationResult.finished(null,
-                        CoreFrontendConstants.updateUserAndOpenRoute(loginService.getUserInfoModel())))
+                        CoreFrontendActions.updateUserAndOpenRoute(loginService.getUserInfoModel())))
             }
             catch (SecurityException e)
             {

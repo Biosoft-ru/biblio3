@@ -2,6 +2,7 @@ package ru.biosoft.biblio.services;
 
 import com.developmentontheedge.be5.api.services.SqlService;
 import com.developmentontheedge.be5.util.Utils;
+import com.google.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ public class BiblioCategoryService
 {
     private final SqlService db;
 
+    @Inject
     public BiblioCategoryService(SqlService db)
     {
         this.db = db;

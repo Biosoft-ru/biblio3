@@ -1,14 +1,14 @@
 package operations.publications
 
-import com.developmentontheedge.be5.test.SqlMockOperationTest
 import com.developmentontheedge.beans.json.JsonFactory
 import org.junit.Test
+import ru.biosoft.biblio.Biblio3Test
 import ru.biosoft.biblio.util.BiblioUtils
 
 import static org.junit.Assert.assertEquals
 
 
-class InsertPublicationTest extends SqlMockOperationTest
+class InsertPublicationTest extends Biblio3Test
 {
     @Test
     void generate()
