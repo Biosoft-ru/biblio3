@@ -182,6 +182,7 @@ publications:
       file: publications.DeletePublication.groovy
   - Bibliography:
       records: 2
+      layout: '{"type":"modalForm"}'
       type: Groovy
       roles: Annotator
       file: publications.Bibliography.groovy
