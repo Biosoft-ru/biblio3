@@ -1,19 +1,19 @@
 package publications
 
 import com.developmentontheedge.be5.api.FrontendConstants
+import com.google.inject.Inject
 import com.developmentontheedge.be5.model.QRec
 import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
-import com.developmentontheedge.be5.modules.core.services.impl.CategoriesHelper
 import com.developmentontheedge.be5.operation.OperationResult
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.operations.DeleteOperation
-
-import javax.inject.Inject
+import ru.biosoft.biblio.services.BiblioCategoryService
 
 
 class DeletePublication extends DeleteOperation implements TransactionalOperation
 {
-    @Inject CategoriesHelper categoriesHelper
+    @Inject BiblioCategoryService categoryService
+
     QRec projectCategoryRec
 
     @Override
@@ -44,7 +44,7 @@ class DeletePublication extends DeleteOperation implements TransactionalOperatio
     {
         for (Long id : (Long[])context.records)
         {
-            categoriesHelper.removeWithChildCategories(projectCategoryRec.getLong("ID"), "publications", id)
+            categoryService.removeWithChildCategories(projectCategoryRec.getLong("ID"), id)
             database.publication2project.removeBy([
                     projectID    : projectCategoryRec.getString("name"),
                     publicationID: id

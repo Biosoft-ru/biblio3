@@ -1,8 +1,8 @@
 package publications
 
-import com.developmentontheedge.be5.inject.Inject
 import com.developmentontheedge.be5.operation.support.GOperationSupport
 import com.developmentontheedge.be5.operation.OperationResult
+import com.google.inject.Inject
 import ru.biosoft.biblio.services.MedlineImport
 
 

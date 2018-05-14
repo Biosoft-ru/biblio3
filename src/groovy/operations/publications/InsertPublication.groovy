@@ -1,14 +1,13 @@
 package publications
 
 import com.developmentontheedge.be5.databasemodel.RecordModel
+import com.google.inject.Inject
 import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
-import com.developmentontheedge.be5.modules.core.services.impl.CategoriesHelper
 import com.developmentontheedge.be5.operation.support.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.beans.DynamicPropertySet
+import ru.biosoft.biblio.services.BiblioCategoryService
 import ru.biosoft.biblio.services.MedlineImport
-
-import javax.inject.Inject
 
 import static com.developmentontheedge.be5.api.FrontendConstants.CATEGORY_ID_PARAM
 
@@ -16,7 +15,7 @@ import static com.developmentontheedge.be5.api.FrontendConstants.CATEGORY_ID_PAR
 class InsertPublication extends GOperationSupport implements TransactionalOperation
 {
     @Inject MedlineImport medlineImport
-    @Inject CategoriesHelper categoriesHelper
+    @Inject BiblioCategoryService categoryService
 
     def projectColumns = ["status", "importance", "keyWords", "comment"]
     String projectID
@@ -69,7 +68,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
 
         dps.add("categoryID", "Category") {
             TYPE = Long
-            TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories", "For publications")
+            TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories", "Children Of Root")
             value = presetValues.getOrDefault("categoryID", context.operationParams.get(CATEGORY_ID_PARAM))
             RELOAD_ON_CHANGE = true
             GROUP_ID = 2; GROUP_NAME = "Категория"
@@ -142,7 +141,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             publicationID = publicationRecord.getPrimaryKey()
         }
 
-        categoriesHelper.addWithParentCategories(categoryID, "publications", publicationID)
+        categoryService.addWithParentCategories(categoryID, publicationID)
 
         projectInfo.add("publicationID"){TYPE = Long; value = publicationID}
         database.publication2project.add(projectInfo)
