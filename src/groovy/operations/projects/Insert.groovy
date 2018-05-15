@@ -4,7 +4,8 @@ import com.developmentontheedge.be5.operation.support.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.util.Utils
 import ru.biosoft.biblio.util.BioStore
-import ru.biosoft.biostoreapi.Permission
+
+import static ru.biosoft.biostoreapi.Project.*
 
 
 class Insert extends GOperationSupport implements TransactionalOperation
@@ -12,10 +13,10 @@ class Insert extends GOperationSupport implements TransactionalOperation
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
-        dps.add("name", "Категория")
+        dps.add("name", "Name")
         dps.add("permissions", "Permissions") {
-            TAG_LIST_ATTR = [[Permission.INFO, "Info"], [Permission.READ, "Read"], [Permission.WRITE, "Write"],
-                             [Permission.DELETE, "Delete"], [Permission.ADMIN, "Admin"], [Permission.ALL, "All"]] as String[][]
+            TAG_LIST_ATTR = [[PERMISSION_INFO, "Info"], [PERMISSION_READ, "Read"], [PERMISSION_WRITE, "Write"],
+                             [PERMISSION_DELETE, "Delete"], [PERMISSION_ADMIN, "Admin"], [PERMISSION_ALL, "All"]] as String[][]
             MULTIPLE_SELECTION_LIST = true
         }
 
