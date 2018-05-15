@@ -9,8 +9,8 @@ import com.developmentontheedge.be5.operation.OperationStatus
 import com.google.common.collect.ImmutableList
 import ru.biosoft.biblio.util.BioStore
 
-import static ru.biosoft.biblio.util.BiblioUtils.BIOSTORE_PROJECTS
-import static BioStore.BIOSTORE_TOKEN
+import static ru.biosoft.biblio.util.BioStore.BIOSTORE_PROJECTS
+import static ru.biosoft.biblio.util.BioStore.BIOSTORE_TOKEN
 
 
 class BiostoreLogin extends Login

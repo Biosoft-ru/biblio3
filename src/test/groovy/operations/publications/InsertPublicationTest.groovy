@@ -4,7 +4,7 @@ import com.developmentontheedge.beans.json.JsonFactory
 import org.junit.Before
 import org.junit.Test
 import ru.biosoft.biblio.Biblio3Test
-import ru.biosoft.biblio.util.BiblioUtils
+import ru.biosoft.biblio.util.BioStore
 
 import static org.junit.Assert.assertEquals
 
@@ -20,7 +20,7 @@ class InsertPublicationTest extends Biblio3Test
     @Test
     void generate()
     {
-        setSession(BiblioUtils.BIOSTORE_PROJECTS, Collections.singletonList("Demo"))
+        setSession(BioStore.BIOSTORE_PROJECTS, Collections.singletonList("Demo"))
 
         Object first = generateOperation("publications", "Compact view", "Insert", "").getFirst()
 

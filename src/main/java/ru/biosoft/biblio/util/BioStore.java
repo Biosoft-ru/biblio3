@@ -9,25 +9,25 @@ import ru.biosoft.biostoreapi.ProjectUser;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-import static ru.biosoft.biblio.util.BiblioUtils.BIOSTORE_PROJECTS;
 
 
 public class BioStore
 {
     private static final String BIOSTORE_SERVER_NAME = "biblio.biouml.org";
 
+    public static final String BIOSTORE_PROJECTS = "biostore_projects";
     public static final String BIOSTORE_TOKEN = "biostore-token";
 
     public static final DefaultConnectionProvider api = new DefaultConnectionProvider(BIOSTORE_SERVER_NAME);
 
     public static List<Project> getProjectList()
     {
-        return api.getProjectList((JWToken) UserInfoHolder.getSession().get(BIOSTORE_TOKEN));
+        return api.getProjectList(getToken());
     }
 
     public static List<Project> loadProjectListToSession()
     {
-        List<Project> projects = api.getProjectList((JWToken) UserInfoHolder.getSession().get(BIOSTORE_TOKEN));
+        List<Project> projects = api.getProjectList(getToken());
 
         List<String> projectNames = projects.stream().map(Project::getProjectName).collect(toList());
 
@@ -38,21 +38,26 @@ public class BioStore
 
     public static void createProjectWithPermissions(String projectName, int permission)
     {
-        api.createProjectWithPermissions((JWToken) UserInfoHolder.getSession().get(BIOSTORE_TOKEN), projectName, permission);
+        api.createProjectWithPermissions(getToken(), projectName, permission);
     }
 
     public static List<ProjectUser> getProjectUsers(String projectName)
     {
-        return api.getProjectUsers((JWToken) UserInfoHolder.getSession().get(BIOSTORE_TOKEN), projectName);
+        return api.getProjectUsers(getToken(), projectName);
     }
 
     public static void addUserToProject(String userToAdd, String projectName)
     {
-        api.addUserToProject((JWToken) UserInfoHolder.getSession().get(BIOSTORE_TOKEN), userToAdd, projectName);
+        api.addUserToProject(getToken(), userToAdd, projectName);
     }
 
     public static void changeUserRoleInProject(String projectName, String userToChange, String newRole)
     {
-        api.changeUserRoleInProject((JWToken) UserInfoHolder.getSession().get(BIOSTORE_TOKEN), projectName, userToChange, newRole);
+        api.changeUserRoleInProject(getToken(), projectName, userToChange, newRole);
+    }
+
+    private static JWToken getToken()
+    {
+        return (JWToken) UserInfoHolder.getSession().get(BIOSTORE_TOKEN);
     }
 }
