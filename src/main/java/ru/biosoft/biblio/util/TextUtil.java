@@ -21,7 +21,7 @@ public class TextUtil
      * @param delimiter if the field consists from several lines
      * the specified string will be inserted as delimiter between lines.
      */
-    public static String getField(String entry, String field, String delimiter)
+    public static String getField(String entry, String field, String delimiter, boolean firstLineOnly)
     {
         int start = entry.indexOf(field);
         if( start == -1 )
@@ -42,6 +42,8 @@ public class TextUtil
         {
             end = entry.indexOf('\n', start + field.length() );
             s   = (entry.substring(start+field.length(), end)).trim();
+
+            if(firstLineOnly)break;
 
             // append delimiter (space) between lines
             if( isFirst )
@@ -64,11 +66,15 @@ public class TextUtil
      * @param entry entry text
      * @param field field (line) name
      *
-     * @see #getField(String entry, String field, String delimiter)
+     * @see #getField(String entry, String field, String delimiter, boolean firstLineOnly)
      */
     public static String getField(String entry, String field)
     {
-        return getField(entry, field, " ");
+        return getField(entry, field, " ", false);
     }
 
+    public static String getField(String entry, String field, boolean firstLineOnly)
+    {
+        return getField(entry, field, " ", firstLineOnly);
+    }
 }

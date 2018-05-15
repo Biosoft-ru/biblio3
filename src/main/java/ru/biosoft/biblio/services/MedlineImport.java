@@ -136,7 +136,7 @@ public class MedlineImport
                         "\n volume="           + safeValue(entry, "VI  -") + "," +
                         "\n issue="            + safeValue(entry, "IP  -") + "," +
                         "\n language="         + safeValue(entry, "LA  -") + "," +
-                        "\n publicationType="  + safeValue(entry, "PT  -") + "," +
+                        "\n publicationType="  + safeValue(entry, "PT  -", true) + "," +
                         "\n abstract="         + safeValue(entry, "AB  -") + "," +
                         "\n affiliation="      + safeValue(entry, "AD  -") + "," +
 
@@ -214,7 +214,12 @@ public class MedlineImport
 
     public static String safeValue(String entry, String field)
     {
-        String value = TextUtil.getField(entry, field);
+        return safeValue(entry, field, false);
+    }
+
+    public static String safeValue(String entry, String field, boolean firstLineOnly)
+    {
+        String value = TextUtil.getField(entry, field, firstLineOnly);
 
         if( value == null || value.length() == 0 )
             return null;
