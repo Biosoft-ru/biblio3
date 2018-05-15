@@ -2,3 +2,5 @@ pages:
   ru:
     welcome.be:
       file: welcome.html
+    bibliography.be:
+      file: bibliography.html
