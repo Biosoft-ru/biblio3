@@ -58,7 +58,7 @@ class BiostoreLogin extends Login
                 BioStore.loadProjectListToSession()
 
                 setResult(OperationResult.finished(null,
-                        CoreFrontendActions.updateUserAndOpenRoute(loginService.getUserInfoModel())))
+                        CoreFrontendActions.updateUserAndOpenDefaultRoute(loginService.getUserInfoModel())))
             }
             catch (SecurityException e)
             {
