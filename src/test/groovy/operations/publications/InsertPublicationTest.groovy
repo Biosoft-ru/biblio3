@@ -1,6 +1,7 @@
 package operations.publications
 
 import com.developmentontheedge.beans.json.JsonFactory
+import org.junit.Before
 import org.junit.Test
 import ru.biosoft.biblio.Biblio3Test
 import ru.biosoft.biblio.util.BiblioUtils
@@ -10,6 +11,12 @@ import static org.junit.Assert.assertEquals
 
 class InsertPublicationTest extends Biblio3Test
 {
+    @Before
+    void setUp()
+    {
+        initUserWithRoles("Annotator")
+    }
+
     @Test
     void generate()
     {
