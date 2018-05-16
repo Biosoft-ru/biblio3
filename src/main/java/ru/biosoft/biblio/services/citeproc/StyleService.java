@@ -40,13 +40,13 @@ public class StyleService
         }
     }
 
-    public void addStyle(String name, String xml) throws Exception
+    public Long addStyle(String name, String xml, String url) throws Exception
     {
         InputStream stream = new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8));
 
         StyleService.StyleInfo info = getInfo(stream);
 
-        CSL citeproc = new CSL(new DummyProvider(), xml);
+        CSL citeproc = new CSL(new DummyProvider(), url != null ? url : xml, "en-US");
         citeproc.setOutputFormat("html");
 
         citeproc.registerCitationItems("ID-1", "ID-2", "ID-3", "ID-4", "ID-5");
@@ -69,18 +69,20 @@ public class StyleService
                 .build()
         );
 
-        //TODO info.categories
+        //TODO add info.categories
 
         database.getEntity("attachments").add(ImmutableMap.of(
                 "ownerID" , "citations." + id,
                 "name"    , name,
-                "data"    , xml,
+                "data"    , xml.getBytes(StandardCharsets.UTF_8),
                 "mimeType", "application/xml",
                 "type"    , "other"
         ));
+
+        return id;
     }
 
-    public StyleInfo getInfo(InputStream inputStream) throws Exception
+    StyleInfo getInfo(InputStream inputStream) throws Exception
     {
         StyleInfo styleInfo = new StyleInfo();
         try (StaxStreamProcessor processor = new StaxStreamProcessor(inputStream))

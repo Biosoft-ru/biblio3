@@ -54,6 +54,7 @@ citations:
           FROM citations cit
           INNER JOIN citation2user c2u ON c2u.citationID = cit.ID
           WHERE c2u.user_name = <session:current-user />
+             OR c2u.user_name = 'zotero'
   operations:
   - Insert:
       type: Groovy

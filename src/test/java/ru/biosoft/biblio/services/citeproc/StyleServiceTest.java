@@ -18,7 +18,7 @@ public class StyleServiceTest
     {
         InputStream ieee = Thread.currentThread().getContextClassLoader().getResourceAsStream("ieee.csl");
 
-        StyleService.StyleInfo info = new StyleService().getInfo(ieee);
+        StyleService.StyleInfo info = new StyleService(null).getInfo(ieee);
 
         System.out.println(info);
 
@@ -33,7 +33,7 @@ public class StyleServiceTest
     {
         InputStream ieee = Thread.currentThread().getContextClassLoader().getResourceAsStream("academic-medicine.csl");
 
-        StyleService.StyleInfo info = new StyleService().getInfo(ieee);
+        StyleService.StyleInfo info = new StyleService(null).getInfo(ieee);
 
         System.out.println(info);
 

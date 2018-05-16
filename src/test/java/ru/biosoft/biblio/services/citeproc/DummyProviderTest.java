@@ -33,4 +33,19 @@ public class DummyProviderTest
         }
     }
 
+    @Test
+    public void test2() throws Exception
+    {
+        CSL citeproc = new CSL(new DummyProvider(), "academic-medicine");
+        citeproc.setOutputFormat("html");
+
+        citeproc.registerCitationItems("ID-1", "ID-2", "ID-0");
+
+
+        Bibliography bibl = citeproc.makeBibliography();
+        for (String entry : bibl.getEntries()) {
+            System.out.println(entry);
+        }
+    }
+
 }
