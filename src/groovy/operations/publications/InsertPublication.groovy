@@ -1,13 +1,14 @@
 package publications
 
 import com.developmentontheedge.be5.databasemodel.RecordModel
-import com.google.inject.Inject
 import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
+import com.developmentontheedge.be5.modules.core.services.impl.CategoriesHelper
 import com.developmentontheedge.be5.operation.support.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.beans.DynamicPropertySet
-import ru.biosoft.biblio.services.BiblioCategoryService
 import ru.biosoft.biblio.services.MedlineImport
+
+import javax.inject.Inject
 
 import static com.developmentontheedge.be5.api.FrontendConstants.CATEGORY_ID_PARAM
 
@@ -15,7 +16,7 @@ import static com.developmentontheedge.be5.api.FrontendConstants.CATEGORY_ID_PAR
 class InsertPublication extends GOperationSupport implements TransactionalOperation
 {
     @Inject MedlineImport medlineImport
-    @Inject BiblioCategoryService categoryService
+    @Inject CategoriesHelper categoriesHelper
 
     def projectColumns = ["status", "importance", "keyWords", "comment"]
     String projectID
@@ -75,7 +76,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         }
 
         if(dps.getValue("categoryID") != null &&
-           Long.parseLong(dps.getValueAsString("categoryID")) != db.oneLong("select id from categories where name = 'Root'"))
+                Long.parseLong(dps.getValueAsString("categoryID")) != db.oneLong("select id from categories where name = 'Root'"))
         {
             projectID = helper.qRec("""SELECT cat.name FROM categories cat
                     INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', ?)
@@ -141,7 +142,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             publicationID = publicationRecord.getPrimaryKey()
         }
 
-        categoryService.addWithParentCategories(categoryID, publicationID)
+        categoriesHelper.addWithParentCategories(categoryID, "publications", publicationID)
 
         projectInfo.add("publicationID"){TYPE = Long; value = publicationID}
         database.publication2project.add(projectInfo)
