@@ -12,7 +12,7 @@ import java.util.logging.Level
 import java.util.logging.Logger
 
 
-class InsertFromZotero extends GOperationSupport implements TransactionalOperation
+class InsertFromZotero extends GOperationSupport
 {
     private static final Logger log = Logger.getLogger(InsertFromZotero.class.getName());
 
@@ -53,12 +53,14 @@ class InsertFromZotero extends GOperationSupport implements TransactionalOperati
                     def styleXml = StyleService.readStringFromURL(styleHref)
 
                     try{
-                        def id = styleService.addStyle(styleName, styleXml, styleHref)
+                        db.transaction({conn ->
+                            def id = styleService.addStyle(styleName, styleXml, styleHref)
 
-                        database.citation2user.add([
-                                citationID: id,
-                                user_name: "zotero"
-                        ])
+                            database.citation2user.add([
+                                    citationID: id,
+                                    user_name: "zotero"
+                            ])
+                        })
 
                         insertCount++
                     }catch (Exception e){

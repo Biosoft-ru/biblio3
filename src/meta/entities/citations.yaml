@@ -20,7 +20,7 @@ citations:
         type: VARCHAR(100)
         canBeNull: true
     - inline:
-        type: VARCHAR(255)
+        type: VARCHAR(2000)
     - bibliography:
         type: VARCHAR(2000)
     - updated:
