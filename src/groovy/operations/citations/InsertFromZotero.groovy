@@ -3,12 +3,14 @@ package citations
 import com.developmentontheedge.be5.model.Base64File
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.operation.support.GOperationSupport
+import ru.biosoft.biblio.util.StaxStreamProcessor
 
 import javax.json.Json
 import javax.json.JsonArray
 import javax.json.JsonObject
 import javax.json.JsonReader
 import javax.json.JsonReaderFactory
+import java.nio.file.Files
 
 
 class InsertFromZotero extends GOperationSupport implements TransactionalOperation
@@ -98,19 +100,6 @@ class InsertFromZotero extends GOperationSupport implements TransactionalOperati
 
     }
 
-    private void addStyle(String styleUrl)
-    {
-        InputStreamReader reader
-        try{
-            reader = new InputStreamReader(new URL(styleUrl).openStream())
 
-
-            //xml..
-
-        }finally{
-            if(reader != null)reader.close()
-        }
-        //println styleUrl
-    }
 
 }

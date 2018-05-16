@@ -23,6 +23,8 @@ citations:
         type: VARCHAR(255)
     - bibliography:
         type: VARCHAR(2000)
+    - updated:
+        type: TIMESTAMP
   queries:
   - '*** Selection view ***':
       type: 1D
