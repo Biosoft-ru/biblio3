@@ -2,6 +2,7 @@ package ru.biosoft.biblio.services.citeproc;
 
 
 import com.developmentontheedge.be5.databasemodel.impl.DatabaseModel;
+import com.developmentontheedge.be5.util.Utils;
 import com.google.common.collect.ImmutableMap;
 import de.undercouch.citeproc.CSL;
 import de.undercouch.citeproc.output.Bibliography;
@@ -16,7 +17,9 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 
@@ -57,17 +60,20 @@ public class StyleService
 
         Bibliography bibl = citeproc.makeBibliography();
 
-        Long id = database.<Long>getEntity("citations").add(ImmutableMap.<String, Object>builder()
-                .put("name", name)
-                .put("title", info.title)
-                .put("format", info.format)
-                .put("parent", info.parent)
-                .put("updated", info.updated)
+        //<String, Object>
 
-                .put("inline", line1 + "<br/>"+line2+"<br/>" + line3)
-                .put("bibliography", (bibl.getEntries()[0] + bibl.getEntries()[1]))
-                .build()
+        //TODO generify Utils.valueMap()
+        //TODO insert pojo
+        Map map = Utils.valueMap(
+                "name", name,
+                "title", info.title,
+                "format", info.format,
+                "parent", info.parent,
+                "updated", info.updated,
+                "inline", line1 + "<br/>" + line2 + "<br/>" + line3,
+                "bibliography", (bibl.getEntries()[0] + bibl.getEntries()[1])
         );
+        Long id = database.getEntity("citations").add(new HashMap<String, Object>(map));
 
         //TODO add info.categories
 
