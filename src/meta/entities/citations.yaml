@@ -12,10 +12,15 @@ citations:
     - name:
         type: VARCHAR(100)
     - title:
+        type: VARCHAR(255)
+        canBeNull: true
+    - format:
+        type: VARCHAR(30)
+    - parent:
         type: VARCHAR(100)
         canBeNull: true
     - inline:
-        type: VARCHAR(100)
+        type: VARCHAR(255)
     - bibliography:
         type: VARCHAR(2000)
   queries:
@@ -30,6 +35,7 @@ citations:
       - Delete
       - AdminDelete
       - Insert
+      - InsertFromZotero
       - AddRemoveCategory
       code: |-
           SELECT
@@ -37,9 +43,12 @@ citations:
             cit.name AS "Name",
             cit.title AS "Title",
             '<quick visible="false" />' AS ";Title",
+            cit.format AS "Format",
             cit.inline AS "Inline",
             cit.bibliography AS "Bibliography",
-            '<css class="bibliography-col"/>' AS ";Bibliography"
+            '<css class="bibliography-col"/>' AS ";Bibliography",
+            cit.parent AS "Parent",
+            '<quick visible="false" />' AS ";Parent"
           FROM citations cit
           INNER JOIN citation2user c2u ON c2u.citationID = cit.ID
           WHERE c2u.user_name = <session:current-user />
@@ -48,6 +57,10 @@ citations:
       type: Groovy
       roles: Annotator
       file: citations.Insert.groovy
+  - InsertFromZotero:
+      type: Groovy
+      roles: Administrator
+      file: citations.InsertFromZotero.groovy
   - Delete:
       type: Groovy
       records: 2
@@ -61,3 +74,4 @@ citations:
       records: 2
       roles: Annotator
       code: com.developmentontheedge.be5.modules.core.operations.categories.AddRemoveCategory
+

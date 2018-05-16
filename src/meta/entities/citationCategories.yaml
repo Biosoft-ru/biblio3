@@ -1,0 +1,13 @@
+citationCategories:
+  type: collection
+  displayName: Сitation сategories
+  order: '10'
+  primaryKey: ID
+  scheme:
+    columns:
+    - ID:
+        type: KEYTYPE
+        autoIncrement: true
+        primaryKey: true
+    - name:
+        type: VARCHAR(255)

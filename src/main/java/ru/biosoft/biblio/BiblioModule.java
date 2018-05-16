@@ -8,6 +8,7 @@ import ru.biosoft.biblio.components.PubMedInfo;
 import ru.biosoft.biblio.services.MedlineImport;
 import ru.biosoft.biblio.services.PubMedService;
 import ru.biosoft.biblio.services.citeproc.PublicationProvider;
+import ru.biosoft.biblio.services.citeproc.StyleService;
 
 
 public class BiblioModule extends ServletModule
@@ -24,5 +25,6 @@ public class BiblioModule extends ServletModule
         bind(PublicationProvider.class).in(Scopes.SINGLETON);
         bind(MedlineImport.class).in(Scopes.SINGLETON);
         bind(PubMedService.class).in(Scopes.SINGLETON);
+        bind(StyleService.class).in(Scopes.SINGLETON);
     }
 }

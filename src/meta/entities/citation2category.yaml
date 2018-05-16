@@ -12,11 +12,12 @@ citation2user:
     - citationID:
         type: KEYTYPE
         reference: citations
-    - user_name:
-        type: VARCHAR(100)
+    - citationCategoriesID:
+        type: KEYTYPE
+        reference: citationCategories
     indices:
-    - IDX_P2P_CITID_USERID:
+    - IDX_P2P_CITID_CATID:
         unique: true
         columns:
         - citationID
-        - user_name
+        - category

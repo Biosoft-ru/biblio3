@@ -11,6 +11,18 @@ public class DummyProvider implements ItemDataProvider
     @Override
     public CSLItemData retrieveItem(String id)
     {
+        if("ID-1".equals(id)){
+            return new CSLItemDataBuilder()
+                    .id(id)
+                    .type(CSLType.WEBPAGE)
+                    .title("citeproc-java: A Citation Style Language (CSL) processor for Java")
+                    .author("Michel", "Krämer")
+                    .issued(2016, 11, 20)
+                    .URL("http://michel-kraemer.github.io/citeproc-java/")
+                    .accessed(2018, 5, 16)
+                    .build();
+        }
+
         return new CSLItemDataBuilder()
                 .id(id)
                 .type(CSLType.ARTICLE_JOURNAL)

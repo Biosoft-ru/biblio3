@@ -1,21 +1,26 @@
 package citations
 
-import com.developmentontheedge.be5.databasemodel.RecordModel
 import com.developmentontheedge.be5.model.Base64File
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.operation.support.GOperationSupport
-import de.undercouch.citeproc.CSL
-import de.undercouch.citeproc.output.Bibliography
-import ru.biosoft.biblio.services.citeproc.DummyProvider
+
+import javax.json.Json
+import javax.json.JsonArray
+import javax.json.JsonObject
+import javax.json.JsonReader
+import javax.json.JsonReaderFactory
 
 
-class Insert extends GOperationSupport implements TransactionalOperation
+class InsertFromZotero extends GOperationSupport implements TransactionalOperation
 {
+    private final static String stylesUrl = "https://www.zotero.org/styles-files/styles.json"
+
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
-        dps.add("file", "Файл") {
-            TYPE = Base64File
+        dps.add("count", "Count") {
+            TYPE = Long
+            value = 3
         }
 
         return dpsHelper.setValues(dps, presetValues)
@@ -24,9 +29,29 @@ class Insert extends GOperationSupport implements TransactionalOperation
     @Override
     void invoke(Object parameters) throws Exception
     {
-        def file = (Base64File) dps.$file
+        Set<String> citationNames = new HashSet<>(db.scalarList("SELECT name FROM citations"))
 
-        def name = file.name.replace('.csl', '')
+        InputStreamReader reader
+        try{
+            reader = new InputStreamReader(new URL(stylesUrl).openStream())
+            JsonReader jsonReader = Json.createReader(reader)
+            def array = jsonReader.readArray()
+
+            for (int i = 0; i < Math.min(array.size(), dps.getValueAsLong("count")); i++)
+            {
+                def styleName = array.getJsonObject(i).getString("href")
+                if(!citationNames.contains(styleName))
+                {
+                    addStyle(array.getJsonObject(i).getString("href"))
+                }
+            }
+        }finally{
+            if(reader != null)reader.close()
+        }
+
+//        def file = (Base64File) dps.$file
+//
+//        def name = file.name.replace('.csl', '')
 
 
 
@@ -72,4 +97,20 @@ class Insert extends GOperationSupport implements TransactionalOperation
 //        ])
 
     }
+
+    private void addStyle(String styleUrl)
+    {
+        InputStreamReader reader
+        try{
+            reader = new InputStreamReader(new URL(styleUrl).openStream())
+
+
+            //xml..
+
+        }finally{
+            if(reader != null)reader.close()
+        }
+        //println styleUrl
+    }
+
 }
