@@ -40,7 +40,7 @@ public class StyleService
                 }
 
                 if ("link".equals(processor.getLocalName())){
-                    if("".equals(processor.getAttribute("rel"))){
+                    if("independent-parent".equals(processor.getAttribute("rel"))){
                         styleInfo.parent = processor.getAttribute("href");
                     }
                 }

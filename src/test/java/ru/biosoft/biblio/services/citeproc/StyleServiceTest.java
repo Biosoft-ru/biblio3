@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
 
@@ -27,4 +28,19 @@ public class StyleServiceTest
         assertEquals(Arrays.asList("engineering", "generic-base"), info.categories);
     }
 
+    @Test
+    public void addStyleWithParent() throws Exception
+    {
+        InputStream ieee = Thread.currentThread().getContextClassLoader().getResourceAsStream("academic-medicine.csl");
+
+        StyleService.StyleInfo info = new StyleService().getInfo(ieee);
+
+        System.out.println(info);
+
+        assertEquals("Academic Medicine", info.title);
+        assertEquals("http://www.zotero.org/styles/vancouver", info.parent);
+        assertEquals(Timestamp.from(Instant.parse("2012-01-01T00:00:00Z")), info.updated);
+        assertEquals("numeric", info.format);
+        assertEquals(Collections.singletonList("medicine"), info.categories);
+    }
 }
