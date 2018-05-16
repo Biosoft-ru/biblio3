@@ -3,6 +3,8 @@ package citations
 import com.developmentontheedge.be5.model.Base64File
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.operation.support.GOperationSupport
+import com.google.inject.Inject
+import ru.biosoft.biblio.services.citeproc.StyleService
 import ru.biosoft.biblio.util.StaxStreamProcessor
 
 import javax.json.Json
@@ -10,12 +12,15 @@ import javax.json.JsonArray
 import javax.json.JsonObject
 import javax.json.JsonReader
 import javax.json.JsonReaderFactory
+import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 
 
 class InsertFromZotero extends GOperationSupport implements TransactionalOperation
 {
     private final static String stylesUrl = "https://www.zotero.org/styles-files/styles.json"
+
+    @Inject StyleService styleService
 
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
@@ -41,10 +46,16 @@ class InsertFromZotero extends GOperationSupport implements TransactionalOperati
 
             for (int i = 0; i < Math.min(array.size(), dps.getValueAsLong("count")); i++)
             {
-                def styleName = array.getJsonObject(i).getString("href")
+                def styleName = array.getJsonObject(i).getString("title")
+                def styleHref = array.getJsonObject(i).getString("href")
                 if(!citationNames.contains(styleName))
                 {
-                    addStyle(array.getJsonObject(i).getString("href"))
+                    def styleXml = StyleService.readStringFromURL(styleHref)
+
+                    InputStream stream = new ByteArrayInputStream(styleXml.getBytes(StandardCharsets.UTF_8))
+
+                    def info = styleService.getInfo(stream)
+                    println info
                 }
             }
         }finally{
