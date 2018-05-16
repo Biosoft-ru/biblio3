@@ -1,7 +1,7 @@
 package users
 
 import com.developmentontheedge.be5.api.helpers.UserHelper
-import com.google.inject.Inject
+import javax.inject.Inject
 import com.developmentontheedge.be5.modules.core.api.CoreFrontendActions
 import com.developmentontheedge.be5.modules.core.operations.users.Login
 import com.developmentontheedge.be5.operation.OperationResult

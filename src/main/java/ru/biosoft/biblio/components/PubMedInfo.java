@@ -3,7 +3,7 @@ package ru.biosoft.biblio.components;
 import com.developmentontheedge.be5.api.Request;
 import com.developmentontheedge.be5.api.Response;
 import com.developmentontheedge.be5.api.support.ControllerSupport;
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import ru.biosoft.biblio.services.PubMedService;
 
 import java.util.List;

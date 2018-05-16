@@ -6,7 +6,7 @@ import com.developmentontheedge.be5.api.support.ControllerSupport;
 import com.developmentontheedge.be5.databasemodel.RecordModel;
 import com.developmentontheedge.be5.databasemodel.impl.DatabaseModel;
 import com.google.common.base.Charsets;
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import de.undercouch.citeproc.CSL;
 import de.undercouch.citeproc.output.Bibliography;
 import ru.biosoft.biblio.services.citeproc.PublicationProvider;

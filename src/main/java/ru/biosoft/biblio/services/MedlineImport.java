@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.StringTokenizer;
 
 import com.developmentontheedge.be5.api.services.SqlService;
-import com.google.inject.Inject;
+import javax.inject.Inject;
 import ru.biosoft.biblio.util.TextUtil;
 
 /**
