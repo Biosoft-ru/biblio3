@@ -19,7 +19,9 @@ biblio3:
   - _publication_cat_
   - attachments
   - citations
+  - citationCategories
   - citation2user
+  - citation2category
   - publications
   - publication2project
   scripts:

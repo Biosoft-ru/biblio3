@@ -1,6 +1,6 @@
-citation2user:
+citation2category:
   type: collection
-  displayName: citation2user
+  displayName: citation2category
   order: '10'
   primaryKey: ID
   scheme:
@@ -20,4 +20,4 @@ citation2user:
         unique: true
         columns:
         - citationID
-        - category
+        - citationCategoriesID
