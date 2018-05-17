@@ -1,8 +1,8 @@
 package ru.biosoft.biblio.services.citeproc;
 
 import com.developmentontheedge.be5.api.services.SqlService;
-import com.developmentontheedge.be5.databasemodel.RecordModel;
-import com.developmentontheedge.be5.databasemodel.impl.DatabaseModel;
+import com.developmentontheedge.be5.api.services.databasemodel.RecordModel;
+import com.developmentontheedge.be5.api.services.databasemodel.impl.DatabaseModel;
 import javax.inject.Inject;
 import de.undercouch.citeproc.ItemDataProvider;
 import de.undercouch.citeproc.csl.CSLItemData;

@@ -1,6 +1,6 @@
 package publications
 
-import com.developmentontheedge.be5.databasemodel.RecordModel
+import com.developmentontheedge.be5.api.services.databasemodel.RecordModel
 import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.modules.core.services.impl.CategoriesHelper
 import com.developmentontheedge.be5.operations.support.GOperationSupport
