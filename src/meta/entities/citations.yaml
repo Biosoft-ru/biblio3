@@ -39,6 +39,7 @@ citations:
       - Insert
       - InsertFromZotero
       - AddRemoveCategory
+      - Filter
       code: |-
           SELECT
             cit.ID AS "___ID",
@@ -77,4 +78,7 @@ citations:
       records: 2
       roles: Annotator
       code: com.developmentontheedge.be5.modules.core.operations.categories.AddRemoveCategory
-
+  - Filter:
+      roles: Annotator
+      layout: '{"type":"modalForm"}'
+      code: com.developmentontheedge.be5.operations.FilterOperation
