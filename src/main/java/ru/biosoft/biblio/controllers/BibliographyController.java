@@ -1,4 +1,4 @@
-package ru.biosoft.biblio.components;
+package ru.biosoft.biblio.controllers;
 
 import com.developmentontheedge.be5.api.Request;
 import com.developmentontheedge.be5.api.Response;
@@ -19,13 +19,13 @@ import java.io.IOException;
  * Example url
  * /api/bibliography?type=text&publicationIDs=1,2,4,5&citationFileID=5
  */
-public class BibliographyComponent extends ControllerSupport
+public class BibliographyController extends ControllerSupport
 {
     private final DatabaseModel database;
     private final PublicationProvider publicationProvider;
 
     @Inject
-    public BibliographyComponent(DatabaseModel database, PublicationProvider publicationProvider)
+    public BibliographyController(DatabaseModel database, PublicationProvider publicationProvider)
     {
         this.database = database;
         this.publicationProvider = publicationProvider;

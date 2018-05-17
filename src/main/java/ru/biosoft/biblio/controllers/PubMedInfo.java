@@ -1,4 +1,4 @@
-package ru.biosoft.biblio.components;
+package ru.biosoft.biblio.controllers;
 
 import com.developmentontheedge.be5.api.Request;
 import com.developmentontheedge.be5.api.Response;

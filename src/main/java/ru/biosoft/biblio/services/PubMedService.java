@@ -8,7 +8,6 @@ import com.github.benmanes.caffeine.cache.LoadingCache;
 import com.google.common.collect.ImmutableMap;
 import javax.inject.Inject;
 import ru.biosoft.biblio.util.BioStore;
-import ru.biosoft.biblio.components.PubMedInfo;
 import ru.biosoft.biostoreapi.JWToken;
 import ru.biosoft.biostoreapi.Project;
 
@@ -25,7 +24,7 @@ import static java.util.stream.Collectors.toList;
 
 public class PubMedService
 {
-    private static final Logger log = Logger.getLogger(PubMedInfo.class.getName());
+    private static final Logger log = Logger.getLogger(PubMedService.class.getName());
 
     private static final LoadingCache<JWToken, List<Project>> cache = Caffeine.newBuilder()
             .maximumSize(1_000)
