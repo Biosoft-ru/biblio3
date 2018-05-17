@@ -1,6 +1,8 @@
 package ru.biosoft.biblio.services.citeproc;
 
 
+import com.developmentontheedge.be5.api.services.databasemodel.EntityModel;
+import com.developmentontheedge.be5.api.services.databasemodel.RecordModel;
 import com.developmentontheedge.be5.api.services.databasemodel.impl.DatabaseModel;
 import com.developmentontheedge.be5.util.Utils;
 import com.google.common.collect.ImmutableMap;
@@ -19,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -64,7 +67,7 @@ public class StyleService
         );
         Long id = database.getEntity("citations").add(new HashMap<String, Object>(map));
 
-        //TODO add info.categories
+        addCategories(id, styleInfo.categories);
 
         database.getEntity("attachments").add(ImmutableMap.of(
                 "ownerID" , "citations." + id,
@@ -75,6 +78,30 @@ public class StyleService
         ));
 
         return id;
+    }
+
+    private void addCategories(Long citationID, List<String> categories)
+    {
+        EntityModel<Long> citationCategories = database.getEntity("citationCategories");
+        EntityModel<Long> citation2category = database.getEntity("citation2category");
+
+        for (String cat : categories)
+        {
+            ImmutableMap<String, Object> values = ImmutableMap.of("name", cat);
+
+            Long catID;
+            RecordModel<Long> citationCategory = citationCategories.getBy(values);
+            if(citationCategory != null){
+                catID = citationCategory.getPrimaryKey();
+            } else {
+                catID = citationCategories.add(values);
+            }
+
+            citation2category.add(ImmutableMap.of(
+                    "citationID", citationID,
+                    "citationCategoriesID", catID
+            ));
+        }
     }
 
     private void generateHtml(String xml, String url, StyleInfo styleInfo) throws IOException
