@@ -1,8 +1,7 @@
 package citations
 
 import com.developmentontheedge.be5.operation.OperationResult
-import com.developmentontheedge.be5.operation.TransactionalOperation
-import com.developmentontheedge.be5.operation.support.GOperationSupport
+import com.developmentontheedge.be5.operations.support.GOperationSupport
 import ru.biosoft.biblio.services.citeproc.StyleService
 
 import javax.inject.Inject

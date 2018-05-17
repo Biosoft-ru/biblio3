@@ -1,6 +1,6 @@
 package projects
 
-import com.developmentontheedge.be5.operation.support.GOperationSupport
+import com.developmentontheedge.be5.operations.support.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.util.Utils
 import ru.biosoft.biblio.util.BioStore

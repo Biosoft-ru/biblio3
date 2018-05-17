@@ -1,7 +1,7 @@
 package citations
 
 import com.developmentontheedge.be5.operation.TransactionalOperation
-import com.developmentontheedge.be5.operation.support.GOperationSupport
+import com.developmentontheedge.be5.operations.support.GOperationSupport
 
 
 class Delete extends GOperationSupport implements TransactionalOperation

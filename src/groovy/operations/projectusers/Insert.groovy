@@ -1,7 +1,7 @@
 package projectusers
 
 import com.developmentontheedge.be5.operation.TransactionalOperation
-import com.developmentontheedge.be5.operation.support.GOperationSupport
+import com.developmentontheedge.be5.operations.support.GOperationSupport
 import ru.biosoft.biblio.util.BioStore
 
 
