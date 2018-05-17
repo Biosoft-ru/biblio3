@@ -1,6 +1,7 @@
 package ru.biosoft.biblio.services.citeproc;
 
 import org.junit.Test;
+import ru.biosoft.biblio.model.StyleInfo;
 
 import java.io.InputStream;
 import java.sql.Timestamp;
@@ -18,7 +19,7 @@ public class StyleServiceTest
     {
         InputStream ieee = Thread.currentThread().getContextClassLoader().getResourceAsStream("ieee.csl");
 
-        StyleService.StyleInfo info = new StyleService(null).getInfo(ieee);
+        StyleInfo info = new StyleService(null).getInfo(ieee);
 
         System.out.println(info);
 
@@ -33,7 +34,7 @@ public class StyleServiceTest
     {
         InputStream ieee = Thread.currentThread().getContextClassLoader().getResourceAsStream("academic-medicine.csl");
 
-        StyleService.StyleInfo info = new StyleService(null).getInfo(ieee);
+        StyleInfo info = new StyleService(null).getInfo(ieee);
 
         System.out.println(info);
 

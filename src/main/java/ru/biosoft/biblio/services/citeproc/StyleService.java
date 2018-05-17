@@ -6,19 +6,19 @@ import com.developmentontheedge.be5.util.Utils;
 import com.google.common.collect.ImmutableMap;
 import de.undercouch.citeproc.CSL;
 import de.undercouch.citeproc.output.Bibliography;
+import ru.biosoft.biblio.model.StyleInfo;
 import ru.biosoft.biblio.util.StaxStreamProcessor;
 
 import javax.inject.Inject;
 import javax.xml.stream.events.XMLEvent;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -47,31 +47,20 @@ public class StyleService
     {
         InputStream stream = new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8));
 
-        StyleService.StyleInfo info = getInfo(stream);
+        StyleInfo styleInfo = getInfo(stream);
 
-        CSL citeproc = new CSL(new DummyProvider(), url != null ? url : xml, "en-US");
-        citeproc.setOutputFormat("html");
-
-        citeproc.registerCitationItems("ID-1", "ID-2", "ID-3", "ID-4", "ID-5");
-
-        String line1 = citeproc.makeCitation("ID-1").get(0).getText();
-        String line2 = citeproc.makeCitation("ID-1", "ID-2").get(0).getText();
-        String line3 = citeproc.makeCitation("ID-1", "ID-2", "ID-5").get(0).getText();
-
-        Bibliography bibl = citeproc.makeBibliography();
-
-        //<String, Object>
+        generateHtml(xml, url, styleInfo);
 
         //TODO generify Utils.valueMap()
         //TODO insert pojo
         Map map = Utils.valueMap(
                 "name", name,
-                "title", info.title,
-                "format", info.format,
-                "parent", info.parent,
-                "updated", info.updated,
-                "inline", line1 + "<br/>" + line2 + "<br/>" + line3,
-                "bibliography", (bibl.getEntries()[0] + bibl.getEntries()[1])
+                "title", styleInfo.title,
+                "format", styleInfo.format,
+                "parent", styleInfo.parent,
+                "updated", styleInfo.updated,
+                "inline", styleInfo.inline,
+                "bibliography", styleInfo.bibliography
         );
         Long id = database.getEntity("citations").add(new HashMap<String, Object>(map));
 
@@ -86,6 +75,23 @@ public class StyleService
         ));
 
         return id;
+    }
+
+    private void generateHtml(String xml, String url, StyleInfo styleInfo) throws IOException
+    {
+        CSL citeproc = new CSL(new DummyProvider(), url != null ? url : xml, "en-US");
+        citeproc.setOutputFormat("html");
+
+        citeproc.registerCitationItems("ID-1", "ID-2", "ID-3", "ID-4", "ID-5");
+
+        String line1 = citeproc.makeCitation("ID-1").get(0).getText();
+        String line2 = citeproc.makeCitation("ID-1", "ID-2").get(0).getText();
+        String line3 = citeproc.makeCitation("ID-1", "ID-2", "ID-5").get(0).getText();
+
+        Bibliography bibl = citeproc.makeBibliography();
+
+        styleInfo.inline = line1 + "<br/>" + line2 + "<br/>" + line3;
+        styleInfo.bibliography = (bibl.getEntries()[0] + bibl.getEntries()[1]);
     }
 
     StyleInfo getInfo(InputStream inputStream) throws Exception
@@ -129,24 +135,4 @@ public class StyleService
         return styleInfo;
     }
 
-    public class StyleInfo
-    {
-        public String title;
-        public String format;
-        public List<String> categories = new ArrayList<>();
-        public String parent;
-        public Timestamp updated;
-
-        @Override
-        public String toString()
-        {
-            return "StyleInfo{" +
-                    "title='" + title + '\'' +
-                    ", format='" + format + '\'' +
-                    ", categories=" + categories +
-                    ", parent='" + parent + '\'' +
-                    ", updated=" + updated +
-                    '}';
-        }
-    }
 }
