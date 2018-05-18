@@ -1,0 +1,38 @@
+ru:
+  entities:
+  - index:
+    - topics: page
+      entries:
+      - title: Biblio3
+      - description: Biblio3 application
+  - _homepage_:
+    - topics: displayName
+      entries:
+      - homepage: Main
+  - _welcome_:
+    - topics: displayName
+      entries:
+      - Welcome: Welcome
+  - _logout_:
+    - topics: displayName
+      entries:
+      - Logout: Logout
+  - users:
+    - topics: displayName
+      entries:
+      - Logout: Logout
+    - topics: viewName
+      entries:
+      - Login: Login
+  - publications:
+    - topics: operationName
+      entries:
+      - FillFromMedline: Update from pubmed
+    - topics: '@AllQueries'
+      entries:
+      - categoryID: Category
+      - operationType: Operation
+    - topics: AddRemoveCategory
+      entries:
+      - Add to this category and parents: Add to this category and parents
+      - Remove from this category and children: Remove from this category and children
