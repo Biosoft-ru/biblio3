@@ -106,7 +106,7 @@ public class StyleService
 
     private void generateHtml(String xml, String url, StyleInfo styleInfo) throws IOException
     {
-        CSL citeproc = new CSL(new DummyProvider(), url != null ? url : xml, "en-US");
+        CSL citeproc = new CSL(new DummyProvider(), url != null ? url : xml);
         citeproc.setOutputFormat("html");
 
         citeproc.registerCitationItems("ID-1", "ID-2", "ID-3", "ID-4", "ID-5");

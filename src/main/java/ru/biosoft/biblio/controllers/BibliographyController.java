@@ -7,6 +7,17 @@ import com.developmentontheedge.be5.api.services.databasemodel.RecordModel;
 import com.developmentontheedge.be5.api.services.databasemodel.impl.DatabaseModel;
 import com.google.common.base.Charsets;
 import javax.inject.Inject;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import java.io.StringReader;
 import de.undercouch.citeproc.CSL;
 import de.undercouch.citeproc.output.Bibliography;
 import ru.biosoft.biblio.services.citeproc.PublicationProvider;
@@ -43,11 +54,17 @@ public class BibliographyController extends ControllerSupport
         RecordModel record = database.getEntity("attachments")
                 .get(Long.parseLong(citationFileID));
 
+        String style = new String((byte[]) record.getValue("data"));
+
+        String independentParentLink = getIndependentParentLink(style);
+        if(independentParentLink != null){
+            style = independentParentLink;
+        }
 
         CSL csl;
         try
         {
-            csl = new CSL(publicationProvider, new String((byte[])record.getValue("data")));
+            csl = new CSL(publicationProvider, style);
         }
         catch (IOException e)
         {
@@ -93,6 +110,49 @@ public class BibliographyController extends ControllerSupport
 
         res.sendFile(download, "Bibliography" + ext, mimeType, Charsets.UTF_8.name(),
                 new ByteArrayInputStream(out.toString().getBytes()));
+    }
+
+    /**
+     * copy from de.undercouch.citeproc.CSL
+     *
+     * Parse a string representing a dependent parent style and
+     * get link to its independent parent style
+     * @param style the dependent style
+     * @return the link to the parent style or <code>null</code> if the link
+     * could not be found
+     */
+    private String getIndependentParentLink(String style)
+    {
+        try
+        {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            InputSource src = new InputSource(new StringReader(style));
+            Document doc = builder.parse(src);
+            NodeList links = doc.getElementsByTagName("link");
+            for (int i = 0; i < links.getLength(); ++i)
+            {
+                Node n = links.item(i);
+                Node relAttr = n.getAttributes().getNamedItem("rel");
+                if (relAttr != null)
+                {
+                    if ("independent-parent".equals(relAttr.getTextContent()))
+                    {
+                        Node hrefAttr = n.getAttributes().getNamedItem("href");
+                        if (hrefAttr != null)
+                        {
+                            return hrefAttr.getTextContent();
+                        }
+                    }
+                }
+            }
+        }
+        catch (ParserConfigurationException | IOException | SAXException e)
+        {
+            throw new RuntimeException(e);
+        }
+
+        return null;
     }
 
 }
