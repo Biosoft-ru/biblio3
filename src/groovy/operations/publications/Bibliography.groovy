@@ -35,7 +35,7 @@ class Bibliography extends GOperationSupport
         def attID = db.one("SELECT ID FROM attachments WHERE ownerID = 'citations." + dps.getValue("citationID") + "'")
         def ids = Arrays.stream(context.records).map({x -> x.toString()}).collect(Collectors.joining(","))
 
-        String url = request.getBaseUrl() + "/api/bibliography?" +
+        String url = request.getServerUrl() + "/api/bibliography?" +
                 "type=${dps.getValue("type")}&publicationIDs=${ids}&citationFileID=${attID}"
 
         def content = meta.getStaticPageContent(userInfo.getLanguage(), "bibliography.be")
