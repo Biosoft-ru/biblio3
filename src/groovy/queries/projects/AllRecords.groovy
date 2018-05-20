@@ -2,11 +2,10 @@ package projects
 
 import com.developmentontheedge.be5.api.FrontendConstants
 import com.developmentontheedge.be5.queries.support.TableBuilderSupport
-import com.developmentontheedge.be5.query.impl.TableModel
+import com.developmentontheedge.be5.query.model.CellModel
+import com.developmentontheedge.be5.query.model.TableModel
 import com.developmentontheedge.be5.util.HashUrl
 import ru.biosoft.biblio.util.BioStore
-
-import static com.developmentontheedge.be5.query.impl.TableModel.*
 
 
 class AllRecords extends TableBuilderSupport
