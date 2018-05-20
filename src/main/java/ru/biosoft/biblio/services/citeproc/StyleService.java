@@ -3,7 +3,7 @@ package ru.biosoft.biblio.services.citeproc;
 
 import com.developmentontheedge.be5.api.services.databasemodel.EntityModel;
 import com.developmentontheedge.be5.api.services.databasemodel.RecordModel;
-import com.developmentontheedge.be5.api.services.databasemodel.impl.DatabaseModel;
+import com.developmentontheedge.be5.api.services.databasemodel.DatabaseModel;
 import com.developmentontheedge.be5.util.Utils;
 import com.google.common.collect.ImmutableMap;
 import de.undercouch.citeproc.CSL;
