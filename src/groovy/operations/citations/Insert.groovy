@@ -4,6 +4,7 @@ import com.developmentontheedge.be5.api.services.databasemodel.RecordModel
 import com.developmentontheedge.be5.model.Base64File
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.operations.support.GOperationSupport
+import com.developmentontheedge.be5.util.DpsUtils
 import ru.biosoft.biblio.services.citeproc.StyleService
 
 import javax.inject.Inject
@@ -21,7 +22,7 @@ class Insert extends GOperationSupport implements TransactionalOperation
             TYPE = Base64File
         }
 
-        return dpsHelper.setValues(dps, presetValues)
+        return DpsUtils.setValues(dps, presetValues)
     }
 
     @Override

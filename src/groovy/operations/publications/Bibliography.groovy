@@ -3,6 +3,8 @@ package publications
 import com.developmentontheedge.be5.api.services.DocumentGenerator
 import com.developmentontheedge.be5.operation.OperationResult
 import com.developmentontheedge.be5.operations.support.GOperationSupport
+import com.developmentontheedge.be5.util.DpsUtils
+
 import javax.inject.Inject
 
 import java.util.stream.Collectors
@@ -26,7 +28,7 @@ class Bibliography extends GOperationSupport
                              ["asciidoc","asciidoc"], ["fo","fo"]] as String[][]
         }
 
-        return dpsHelper.setValues(dps, presetValues)
+        return DpsUtils.setValues(dps, presetValues)
     }
 
     @Override

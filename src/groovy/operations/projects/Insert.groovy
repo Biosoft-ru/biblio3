@@ -2,6 +2,7 @@ package projects
 
 import com.developmentontheedge.be5.operations.support.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
+import com.developmentontheedge.be5.util.DpsUtils
 import com.developmentontheedge.be5.util.Utils
 import ru.biosoft.biblio.util.BioStore
 
@@ -20,7 +21,7 @@ class Insert extends GOperationSupport implements TransactionalOperation
             MULTIPLE_SELECTION_LIST = true
         }
 
-        return dpsHelper.setValues(dps, presetValues)
+        return DpsUtils.setValues(dps, presetValues)
     }
 
     @Override

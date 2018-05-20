@@ -2,6 +2,7 @@ package projectusers
 
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.operations.support.GOperationSupport
+import com.developmentontheedge.be5.util.DpsUtils
 import ru.biosoft.biblio.util.BioStore
 
 
@@ -24,7 +25,7 @@ class Edit extends GOperationSupport implements TransactionalOperation
             TAG_LIST_ATTR = [["Administrator", "Administrator"], ["User", "User"] ] as String[][]
         }
 
-        return dpsHelper.setValues(dps, presetValues)
+        return DpsUtils.setValues(dps, presetValues)
     }
 
     @Override

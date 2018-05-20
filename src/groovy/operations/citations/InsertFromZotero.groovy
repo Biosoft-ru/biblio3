@@ -2,6 +2,7 @@ package citations
 
 import com.developmentontheedge.be5.operation.OperationResult
 import com.developmentontheedge.be5.operations.support.GOperationSupport
+import com.developmentontheedge.be5.util.DpsUtils
 import ru.biosoft.biblio.services.citeproc.StyleService
 
 import javax.inject.Inject
@@ -27,7 +28,7 @@ class InsertFromZotero extends GOperationSupport
             value = 3
         }
 
-        return dpsHelper.setValues(dps, presetValues)
+        return DpsUtils.setValues(dps, presetValues)
     }
 
     @Override
