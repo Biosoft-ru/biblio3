@@ -11,3 +11,8 @@ citationCategories:
         primaryKey: true
     - name:
         type: VARCHAR(255)
+  queries:
+  - '*** Selection view ***':
+      type: 1D_unknown
+      invisible: true
+      code: SELECT ID AS "Code", name AS "Name" FROM citationCategories

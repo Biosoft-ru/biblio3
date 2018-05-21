@@ -1,7 +1,7 @@
 _publication_cat_:
   type: table
   displayName: Сategories
-  order: '20'
+  order: '22'
   primaryKey: dummy
   queries:
   - Publications:

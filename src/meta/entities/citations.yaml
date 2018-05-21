@@ -27,9 +27,13 @@ citations:
         type: TIMESTAMP
   queries:
   - '*** Selection view ***':
-      type: 1D
+      type: 1D_unknown
       invisible: true
       code: SELECT ID AS "Code", name AS "Name" FROM citations
+  - formats:
+      type: 1D_unknown
+      invisible: true
+      code: SELECT DISTINCT format AS "Code", format AS "Name" FROM citations
   - All records:
       type: 1D
       roles: Annotator
@@ -47,6 +51,12 @@ citations:
             cit.title AS "Title",
             '<quick visible="false" />' AS ";Title",
             cit.format AS "Format",
+            '<sql>SELECT name
+                    FROM citationCategories cCat
+                    INNER JOIN citation2category c2c ON c2c.citationCategoriesID = cCat.ID
+                    WHERE c2c.citationID = <var:___ID refColumn="citation2category.citationID" />
+            </sql>' AS "Categories",
+            '<css class = "cit-inline-col" />' AS ";Categories",
             cit.inline AS "Inline",
             cit.bibliography AS "Bibliography",
             '<css class="bibliography-col"/>' AS ";Bibliography",
@@ -54,8 +64,11 @@ citations:
             '<quick visible="false" />' AS ";Parent"
           FROM citations cit
           INNER JOIN citation2user c2u ON c2u.citationID = cit.ID
-          WHERE c2u.user_name = <session:current-user />
-             OR c2u.user_name = 'zotero'
+          INNER JOIN citation2category c2c ON c2c.citationID = cit.ID
+          WHERE (c2u.user_name = <session:current-user /> OR c2u.user_name = 'zotero')
+            <if parameter="category">
+                AND c2c.citationCategoriesID = <parameter:category refColumn="citationCategories.ID"/>
+            </if>
   operations:
   - Insert:
       type: Groovy
@@ -79,6 +92,7 @@ citations:
       roles: Annotator
       code: com.developmentontheedge.be5.modules.core.operations.categories.AddRemoveCategory
   - Filter:
+      type: Groovy
       roles: Annotator
       layout: '{"type":"modalForm"}'
-      code: com.developmentontheedge.be5.operations.FilterOperation
+      file: citations.Filter.groovy
