@@ -18,14 +18,14 @@ class Filter extends FilterOperation implements TransactionalOperation
         def dps = dpsHelper.addDpForColumns(new GDynamicPropertySetSupport(),
                 getInfo().getEntity(), ["name", "title", "format", "parent"], context.operationParams)
 
-//        dps.edit("format"){
-//            TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("citations", "formats")
-//        }
-//
-//
-//        dps.add("category", "Category"){
-//            TAG_LIST_ATTR = helper.getTagsFromSelectionView("citationCategories")
-//        }
+        dps.edit("format"){
+            TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("citations", "formats")
+        }
+
+
+        dps.add("category", "Category"){
+            TAG_LIST_ATTR = helper.getTagsFromSelectionView("citationCategories")
+        }
 
         return filterHelper.processFilterParams(dps, presetValues, context.getOperationParams())
     }

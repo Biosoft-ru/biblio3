@@ -1,6 +1,6 @@
 package ru.biosoft.biblio.services.citeproc;
 
-import com.developmentontheedge.be5.api.services.SqlService;
+import com.developmentontheedge.be5.api.services.DbService;
 import com.developmentontheedge.be5.api.services.databasemodel.RecordModel;
 import com.developmentontheedge.be5.api.services.databasemodel.DatabaseModel;
 import javax.inject.Inject;
@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
 public class PublicationProvider implements ItemDataProvider
 {
     private final DatabaseModel database;
-    private final SqlService db;
+    private final DbService db;
 
     @Inject
-    public PublicationProvider(DatabaseModel database, SqlService db)
+    public PublicationProvider(DatabaseModel database, DbService db)
     {
         this.database = database;
         this.db = db;

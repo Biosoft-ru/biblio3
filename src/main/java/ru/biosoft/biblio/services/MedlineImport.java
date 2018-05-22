@@ -6,7 +6,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.StringTokenizer;
 
-import com.developmentontheedge.be5.api.services.SqlService;
+import com.developmentontheedge.be5.api.services.DbService;
 import javax.inject.Inject;
 import ru.biosoft.biblio.util.TextUtil;
 
@@ -17,10 +17,10 @@ public class MedlineImport
 {
     protected static String medlineQuery ="https://www.ncbi.nlm.nih.gov/pubmed/$pmid$?report=MEDLINE&mode=text";
 
-    private final SqlService db;
+    private final DbService db;
 
     @Inject
-    public MedlineImport(SqlService db)
+    public MedlineImport(DbService db)
     {
         this.db = db;
     }
