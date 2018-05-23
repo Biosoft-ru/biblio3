@@ -3,8 +3,8 @@ package ru.biosoft.biblio.controllers;
 import com.developmentontheedge.be5.api.Request;
 import com.developmentontheedge.be5.api.Response;
 import com.developmentontheedge.be5.api.support.ControllerSupport;
-import com.developmentontheedge.be5.api.services.databasemodel.RecordModel;
-import com.developmentontheedge.be5.api.services.databasemodel.DatabaseModel;
+import com.developmentontheedge.be5.databasemodel.RecordModel;
+import com.developmentontheedge.be5.databasemodel.DatabaseModel;
 import com.google.common.base.Charsets;
 import javax.inject.Inject;
 
