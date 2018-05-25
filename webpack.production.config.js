@@ -5,7 +5,6 @@ const env  = require('yargs').argv.env; // use --env with webpack 2
 const loaders = require('./webpack.common').loaders;
 const externals = require('./webpack.common').externals;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackPathAssetsFix = require('html-webpack-plugin-assets-fix');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -74,7 +73,6 @@ let config = {
         js: ['bundle.js'],
       }
     }),
-    new HtmlWebpackPathAssetsFix(),
     new webpack.optimize.CommonsChunkPlugin({
       name: "commons",
       // (the commons chunk name)
