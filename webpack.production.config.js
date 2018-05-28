@@ -30,7 +30,7 @@ let config = {
     be5: ['babel-polyfill', './src/frontend/scripts/be5.js']
   },
   output: {
-    publicPath: './',
+    publicPath: '/',
     path: path.join(__dirname, outPath),
     filename: fileName,
     chunkFilename : 'static/app-[name]-[id].js',
@@ -55,7 +55,6 @@ let config = {
     new OptimizeCssAssetsPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      fixAssets: true,
       template: './src/frontend/template.html',
       chunks: ['commons', 'app'],
       files: {
@@ -65,7 +64,6 @@ let config = {
     }),
     new HtmlWebpackPlugin({
       filename: 'be5/index.html',
-      fixAssets: true,
       template: './src/frontend/template.html',
       chunks: ['commons', 'be5'],
       files: {
