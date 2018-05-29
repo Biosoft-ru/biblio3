@@ -3,8 +3,8 @@ package publications
 import com.developmentontheedge.be5.base.FrontendConstants
 import com.developmentontheedge.be5.databasemodel.RecordModel
 import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
-import com.developmentontheedge.be5.operation.OperationResult
-import com.developmentontheedge.be5.operation.TransactionalOperation
+import com.developmentontheedge.be5.operation.model.OperationResult
+import com.developmentontheedge.be5.operation.model.TransactionalOperation
 
 
 class EditPublication extends InsertPublication implements TransactionalOperation

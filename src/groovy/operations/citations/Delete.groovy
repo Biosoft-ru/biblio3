@@ -1,6 +1,6 @@
 package citations
 
-import com.developmentontheedge.be5.operation.TransactionalOperation
+import com.developmentontheedge.be5.operation.model.TransactionalOperation
 import com.developmentontheedge.be5.operations.support.GOperationSupport
 
 
