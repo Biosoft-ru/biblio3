@@ -1,6 +1,6 @@
 package projects
 
-import com.developmentontheedge.be5.api.FrontendConstants
+import com.developmentontheedge.be5.base.FrontendConstants
 import com.developmentontheedge.be5.queries.support.TableBuilderSupport
 import com.developmentontheedge.be5.query.model.CellModel
 import com.developmentontheedge.be5.query.model.TableModel

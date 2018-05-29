@@ -1,6 +1,6 @@
 package publications
 
-import com.developmentontheedge.be5.api.FrontendConstants
+import com.developmentontheedge.be5.base.FrontendConstants
 import com.developmentontheedge.be5.model.QRec
 import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.modules.core.services.impl.CategoriesHelper

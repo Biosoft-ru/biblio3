@@ -1,6 +1,6 @@
 package publications
 
-import com.developmentontheedge.be5.api.FrontendConstants
+import com.developmentontheedge.be5.base.FrontendConstants
 import com.developmentontheedge.be5.databasemodel.RecordModel
 import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.operation.OperationResult

@@ -11,7 +11,7 @@ import ru.biosoft.biblio.services.MedlineImport
 
 import javax.inject.Inject
 
-import static com.developmentontheedge.be5.api.FrontendConstants.CATEGORY_ID_PARAM
+import static com.developmentontheedge.be5.base.FrontendConstants.CATEGORY_ID_PARAM
 
 
 class InsertPublication extends GOperationSupport implements TransactionalOperation
