@@ -1,6 +1,6 @@
 package users
 
-import com.developmentontheedge.be5.api.helpers.UserHelper
+import com.developmentontheedge.be5.server.helpers.UserHelper
 import com.developmentontheedge.be5.modules.core.api.CoreFrontendActions
 import com.developmentontheedge.be5.modules.core.operations.users.Login
 import com.developmentontheedge.be5.operation.model.OperationResult

@@ -2,7 +2,7 @@ package ru.biosoft.biblio.controllers;
 
 import com.developmentontheedge.be5.web.Request;
 import com.developmentontheedge.be5.web.Response;
-import com.developmentontheedge.be5.api.support.ControllerSupport;
+import com.developmentontheedge.be5.server.support.ControllerSupport;
 import com.developmentontheedge.be5.databasemodel.RecordModel;
 import com.developmentontheedge.be5.databasemodel.DatabaseModel;
 import com.google.common.base.Charsets;
