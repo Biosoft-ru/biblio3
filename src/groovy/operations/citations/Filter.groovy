@@ -1,7 +1,7 @@
 package citations
 
 import com.developmentontheedge.be5.server.helpers.FilterHelper
-import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
+import com.developmentontheedge.be5.databasemodel.model.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.operation.model.TransactionalOperation
 import com.developmentontheedge.be5.server.operations.FilterOperation
 
