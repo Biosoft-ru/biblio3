@@ -5,11 +5,11 @@ const env  = require('yargs').argv.env; // use --env with webpack 2
 const loaders = require('./webpack.common').loaders;
 const externals = require('./webpack.common').externals;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackPathAssetsFix = require('html-webpack-plugin-assets-fix');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 loaders.push({
   test: /\.scss$/,
@@ -31,7 +31,7 @@ let config = {
     be5: ['babel-polyfill', './src/frontend/scripts/be5.js']
   },
   output: {
-    publicPath: './',
+    publicPath: '/',
     path: path.join(__dirname, outPath),
     filename: fileName,
     chunkFilename : 'static/app-[name]-[id].js',
@@ -72,7 +72,6 @@ let config = {
         js: ['bundle.js'],
       }
     }),
-    new HtmlWebpackPathAssetsFix(),
     new webpack.optimize.CommonsChunkPlugin({
       name: "commons",
       // (the commons chunk name)
