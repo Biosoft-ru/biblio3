@@ -9,6 +9,8 @@ biblio3:
       - _categoriesService_
       - users
       - categories
+  - system:
+      entities: []
   application:
   - _welcome_
   - _pubmed_
