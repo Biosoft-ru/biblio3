@@ -5,7 +5,7 @@ import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.modules.core.services.impl.CategoriesHelper
 import com.developmentontheedge.be5.operations.support.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
-import com.developmentontheedge.be5.util.DpsUtils
+import com.developmentontheedge.be5.base.util.DpsUtils
 import com.developmentontheedge.beans.DynamicPropertySet
 import ru.biosoft.biblio.services.MedlineImport
 

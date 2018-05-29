@@ -4,7 +4,7 @@ import com.developmentontheedge.be5.databasemodel.RecordModel
 import com.developmentontheedge.be5.model.Base64File
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.operations.support.GOperationSupport
-import com.developmentontheedge.be5.util.DpsUtils
+import com.developmentontheedge.be5.base.util.DpsUtils
 import ru.biosoft.biblio.services.citeproc.StyleService
 
 import javax.inject.Inject

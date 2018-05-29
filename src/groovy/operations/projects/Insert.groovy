@@ -2,8 +2,8 @@ package projects
 
 import com.developmentontheedge.be5.operations.support.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
-import com.developmentontheedge.be5.util.DpsUtils
-import com.developmentontheedge.be5.util.Utils
+import com.developmentontheedge.be5.base.util.DpsUtils
+import com.developmentontheedge.be5.base.util.Utils
 import ru.biosoft.biblio.util.BioStore
 
 import static ru.biosoft.biostoreapi.Project.*
