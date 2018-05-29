@@ -3,6 +3,7 @@ package ru.biosoft.biblio;
 import com.google.inject.Scopes;
 import com.google.inject.servlet.ServletModule;
 
+import de.undercouch.citeproc.script.ScriptRunnerFactory;
 import ru.biosoft.biblio.controllers.BibliographyController;
 import ru.biosoft.biblio.controllers.PubMedInfo;
 import ru.biosoft.biblio.services.MedlineImport;
@@ -26,5 +27,7 @@ public class BiblioModule extends ServletModule
         bind(MedlineImport.class).in(Scopes.SINGLETON);
         bind(PubMedService.class).in(Scopes.SINGLETON);
         bind(StyleService.class).in(Scopes.SINGLETON);
+
+        ScriptRunnerFactory.setRunnerType(ScriptRunnerFactory.RunnerType.JRE);
     }
 }
