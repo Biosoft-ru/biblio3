@@ -3,14 +3,23 @@ package ru.biosoft.biblio.services.citeproc;
 import de.undercouch.citeproc.CSL;
 import de.undercouch.citeproc.output.Bibliography;
 import de.undercouch.citeproc.output.Citation;
+import de.undercouch.citeproc.script.ScriptRunnerFactory;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+
 public class DummyProviderTest
 {
+    @BeforeClass
+    public static void setUp() throws Exception
+    {
+        ScriptRunnerFactory.setRunnerType(ScriptRunnerFactory.RunnerType.JRE);
+    }
+
     @Test
     public void test() throws Exception
     {
