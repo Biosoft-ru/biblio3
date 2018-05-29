@@ -2,6 +2,7 @@
 <html th:lang="${lang}" lang="en">
 <head>
     <meta charset="utf-8">
+    <base th:href="${requestUrl}" href="/">
     <title th:text="${title}">React App</title>
     <meta name="description" th:attr="content=${description}"  content="" />
 
@@ -28,5 +29,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/ru.js"></script>
+
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      var serverUrlWithContext = /*[[${serverUrlWithContext}]]*/ '/';
+      /*]]>*/
+    </script>
 </body>
 </html>

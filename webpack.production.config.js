@@ -30,7 +30,7 @@ let config = {
     be5: ['babel-polyfill', './src/frontend/scripts/be5.js']
   },
   output: {
-    publicPath: '/',
+    publicPath: './',
     path: path.join(__dirname, outPath),
     filename: fileName,
     chunkFilename : 'static/app-[name]-[id].js',
