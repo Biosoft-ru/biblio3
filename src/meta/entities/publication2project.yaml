@@ -52,12 +52,12 @@ publication2project:
   operations:
   - Insert:
       roles: Administrator
-      code: com.developmentontheedge.be5.operations.SilentInsertOperation
+      code: com.developmentontheedge.be5.server.operations.SilentInsertOperation
   - Edit:
       records: 1
       roles: Administrator
-      code: com.developmentontheedge.be5.operations.SilentEditOperation
+      code: com.developmentontheedge.be5.server.operations.SilentEditOperation
   - Delete:
       records: 2
       roles: Administrator
-      code: com.developmentontheedge.be5.operations.SilentDeleteOperation
+      code: com.developmentontheedge.be5.server.operations.SilentDeleteOperation

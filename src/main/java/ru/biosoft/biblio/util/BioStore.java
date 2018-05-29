@@ -1,6 +1,6 @@
 package ru.biosoft.biblio.util;
 
-import com.developmentontheedge.be5.servlet.UserInfoHolder;
+import com.developmentontheedge.be5.server.servlet.UserInfoHolder;
 import ru.biosoft.biostoreapi.DefaultConnectionProvider;
 import ru.biosoft.biostoreapi.JWToken;
 import ru.biosoft.biostoreapi.Project;

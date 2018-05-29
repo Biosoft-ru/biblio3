@@ -1,7 +1,7 @@
 package attachments
 
 import com.developmentontheedge.be5.model.Base64File
-import com.developmentontheedge.be5.operations.support.GOperationSupport
+import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 
 
 class AddFile extends GOperationSupport

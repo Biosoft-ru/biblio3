@@ -1,6 +1,6 @@
 package categories
 
-import com.developmentontheedge.be5.operations.support.GOperationSupport
+import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 import com.developmentontheedge.be5.operation.model.TransactionalOperation
 
 import static ru.biosoft.biblio.util.BioStore.BIOSTORE_PROJECTS

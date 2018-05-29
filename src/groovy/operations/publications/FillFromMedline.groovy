@@ -1,6 +1,6 @@
 package publications
 
-import com.developmentontheedge.be5.operations.support.GOperationSupport
+import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 
 import javax.inject.Inject
 import ru.biosoft.biblio.services.MedlineImport

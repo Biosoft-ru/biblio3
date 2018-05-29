@@ -6,7 +6,7 @@ import com.developmentontheedge.be5.model.beans.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.modules.core.services.impl.CategoriesHelper
 import com.developmentontheedge.be5.operation.model.OperationResult
 import com.developmentontheedge.be5.operation.model.TransactionalOperation
-import com.developmentontheedge.be5.operations.DeleteOperation
+import com.developmentontheedge.be5.server.operations.DeleteOperation
 
 import javax.inject.Inject
 

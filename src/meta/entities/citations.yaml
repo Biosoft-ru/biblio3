@@ -86,7 +86,7 @@ citations:
   - AdminDelete:
       records: 2
       roles: Administrator
-      code: com.developmentontheedge.be5.operations.SilentDeleteOperation
+      code: com.developmentontheedge.be5.server.operations.SilentDeleteOperation
   - AddRemoveCategory:
       records: 2
       roles: Annotator

@@ -53,4 +53,4 @@ categories:
   - Delete:
       records: 2
       roles: Annotator
-      code: com.developmentontheedge.be5.operations.SilentDeleteOperation
+      code: com.developmentontheedge.be5.server.operations.SilentDeleteOperation

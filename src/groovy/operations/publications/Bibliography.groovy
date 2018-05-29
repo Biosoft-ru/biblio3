@@ -2,7 +2,7 @@ package publications
 
 import com.developmentontheedge.be5.api.services.DocumentGenerator
 import com.developmentontheedge.be5.operation.model.OperationResult
-import com.developmentontheedge.be5.operations.support.GOperationSupport
+import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 import com.developmentontheedge.be5.base.util.DpsUtils
 
 import javax.inject.Inject
