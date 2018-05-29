@@ -1,6 +1,6 @@
 package attachments
 
-import com.developmentontheedge.be5.model.Base64File
+import com.developmentontheedge.be5.server.model.Base64File
 import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 
 
