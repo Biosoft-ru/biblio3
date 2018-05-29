@@ -1,4 +1,4 @@
-ru:
+en:
   entities:
   - index:
     - topics: page
@@ -24,6 +24,10 @@ ru:
     - topics: viewName
       entries:
       - Login: Login
+    - topics: '@AllQueries'
+      entries:
+      - user_name: Login
+      - user_pass: Password
   - publications:
     - topics: operationName
       entries:

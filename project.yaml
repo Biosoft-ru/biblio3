@@ -1,6 +1,6 @@
 biblio3:
   features: logging
-  l10n: ru
+  l10n: en
   projectFileStructure: {}
   modules:
   - core:

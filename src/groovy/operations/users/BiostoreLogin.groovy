@@ -1,13 +1,13 @@
 package users
 
 import com.developmentontheedge.be5.api.helpers.UserHelper
-import javax.inject.Inject
 import com.developmentontheedge.be5.modules.core.api.CoreFrontendActions
 import com.developmentontheedge.be5.modules.core.operations.users.Login
 import com.developmentontheedge.be5.operation.OperationResult
 import com.developmentontheedge.be5.operation.OperationStatus
 import com.google.common.collect.ImmutableList
 import ru.biosoft.biblio.util.BioStore
+import javax.inject.Inject
 
 import static ru.biosoft.biblio.util.BioStore.BIOSTORE_PROJECTS
 import static ru.biosoft.biblio.util.BioStore.BIOSTORE_TOKEN
@@ -53,7 +53,7 @@ class BiostoreLogin extends Login
 
                 def roles = ImmutableList.of("Annotator")
 
-                userHelper.saveUser(user_name, roles, roles, meta.getLocale(null), request.getRemoteAddr(), session)
+                userHelper.saveUser(user_name, roles, roles, meta.getLocale(Locale.US), request.getRemoteAddr(), session)
 
                 BioStore.loadProjectListToSession()
 
