@@ -1,6 +1,6 @@
 package ru.biosoft.biblio.services.citeproc;
 
-import com.developmentontheedge.be5.api.services.DbService;
+import com.developmentontheedge.be5.database.DbService;
 import com.developmentontheedge.be5.databasemodel.RecordModel;
 import com.developmentontheedge.be5.databasemodel.DatabaseModel;
 import javax.inject.Inject;

@@ -6,7 +6,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.StringTokenizer;
 
-import com.developmentontheedge.be5.api.services.DbService;
+import com.developmentontheedge.be5.database.DbService;
 import javax.inject.Inject;
 import ru.biosoft.biblio.util.TextUtil;
 
