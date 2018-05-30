@@ -28,7 +28,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         //todo create new operation after error
         dps = new GDynamicPropertySetSupport()
 
-        dps.add("inputType", "Ввод") {
+        dps.add("inputType", "Input type" ) {
             TAG_LIST_ATTR = [["PubMed","PubMed"],["manually","Вручную"]] as String[][]
             RELOAD_ON_CHANGE = true
             CSS_CLASSES   = "col-lg-4"
@@ -73,7 +73,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories", "For publications")
             value = presetValues.getOrDefault("categoryID", context.operationParams.get(CATEGORY_ID_PARAM))
             RELOAD_ON_CHANGE = true
-            GROUP_ID = 2; GROUP_NAME = "Категория"
+            GROUP_ID = 2; GROUP_NAME = "Category"
         }
 
         if(dps.getValue("categoryID") != null &&
@@ -90,7 +90,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             dps.edit("keyWords") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
 
             for (def columnName : projectColumns) {
-                dps.edit(columnName) { GROUP_ID = 1; GROUP_NAME = "Поля для проекта " + projectID }
+                dps.edit(columnName) { GROUP_ID = 1; GROUP_NAME = "Project columns " + projectID }
             }
         }
 
