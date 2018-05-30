@@ -56,10 +56,10 @@ citations:
                     INNER JOIN citation2category c2c ON c2c.citationCategoriesID = cCat.ID
                     WHERE c2c.citationID = <var:___ID refColumn="citation2category.citationID" />
             </sql>' AS "Categories",
-            '<css class = "cit-inline-col" />' AS ";Categories",
             cit.inline AS "Inline",
+            '<css class = "cit__inline-col" />' AS ";Inline",
             cit.bibliography AS "Bibliography",
-            '<css class="bibliography-col"/>' AS ";Bibliography",
+            '<css class="cit__bibliography-col"/>' AS ";Bibliography",
             cit.parent AS "Parent",
             '<quick visible="false" />' AS ";Parent"
           FROM citations cit

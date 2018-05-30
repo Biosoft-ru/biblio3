@@ -27,10 +27,10 @@
   margin-bottom: 5px;
 }
 
-.cit-inline-col{
+.cit__inline-col{
   min-width: 190px;
 }
 
-.bibliography-col{
+.cit__bibliography-col{
   min-width: 780px;
 }
