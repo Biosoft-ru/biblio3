@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
- <groupId>test</groupId>
+ <groupId>ru.biosoft</groupId>
  <artifactId>biblio3</artifactId>
  <version>0.0.1</version>
  <packaging>${packaging.type}</packaging>
@@ -19,6 +19,7 @@
   <deployServerName>tomcat7</deployServerName>
   <deployServerUrl>http://localhost:8080/manager/text</deployServerUrl>
   <packaging.type>jar</packaging.type>
+  <logging.file>logging.console.properties</logging.file>
  </properties>
 
  <!--<repositories>-->
@@ -37,6 +38,7 @@
    <id>war</id>
    <properties>
     <packaging.type>war</packaging.type>
+    <logging.file>logging.file.properties</logging.file>
    </properties>
    <build>
     <finalName>${project.artifactId}</finalName>
@@ -104,6 +106,7 @@
      <exclude>src/main/**/*.*</exclude>
      <exclude>target/**/*.*</exclude>
      <exclude>target-frontend/**/*.*</exclude>
+     <exclude>*.properties</exclude>
     </excludes>
    </resource>
   </resources>
@@ -162,6 +165,25 @@
       <version>42.0.0</version>
      </dependency>
     </dependencies>
+   </plugin>
+
+   <plugin>
+    <groupId>com.coderplus.maven.plugins</groupId>
+    <artifactId>copy-rename-maven-plugin</artifactId>
+    <version>1.0.1</version>
+    <executions>
+     <execution>
+      <id>add-log-file</id>
+      <phase>compile</phase>
+      <goals>
+       <goal>copy</goal>
+      </goals>
+      <configuration>
+       <sourceFile>${basedir}/${logging.file}</sourceFile>
+       <destinationFile>${project.build.outputDirectory}/logging.properties</destinationFile>
+      </configuration>
+     </execution>
+    </executions>
    </plugin>
 
    <plugin>
