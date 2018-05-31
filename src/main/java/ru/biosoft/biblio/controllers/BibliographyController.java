@@ -1,29 +1,28 @@
 package ru.biosoft.biblio.controllers;
 
+import com.developmentontheedge.be5.databasemodel.DatabaseModel;
+import com.developmentontheedge.be5.databasemodel.RecordModel;
+import com.developmentontheedge.be5.server.support.ControllerSupport;
+import com.developmentontheedge.be5.server.util.ResponseUtils;
 import com.developmentontheedge.be5.web.Request;
 import com.developmentontheedge.be5.web.Response;
-import com.developmentontheedge.be5.server.support.ControllerSupport;
-import com.developmentontheedge.be5.databasemodel.RecordModel;
-import com.developmentontheedge.be5.databasemodel.DatabaseModel;
 import com.google.common.base.Charsets;
-import javax.inject.Inject;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
+import de.undercouch.citeproc.CSL;
+import de.undercouch.citeproc.output.Bibliography;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import java.io.StringReader;
-import de.undercouch.citeproc.CSL;
-import de.undercouch.citeproc.output.Bibliography;
 import ru.biosoft.biblio.services.citeproc.PublicationProvider;
 
+import javax.inject.Inject;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.StringReader;
 
 
 /**
@@ -108,7 +107,7 @@ public class BibliographyController extends ControllerSupport
             ext = ".xml";
         }
 
-        res.sendFile(download, "Bibliography" + ext, mimeType, Charsets.UTF_8.name(),
+        ResponseUtils.sendFile(res, download, "Bibliography" + ext, mimeType, Charsets.UTF_8.name(),
                 new ByteArrayInputStream(out.toString().getBytes()));
     }
 
