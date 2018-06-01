@@ -2,7 +2,7 @@ package ru.biosoft.biblio.controllers;
 
 import com.developmentontheedge.be5.databasemodel.DatabaseModel;
 import com.developmentontheedge.be5.databasemodel.RecordModel;
-import com.developmentontheedge.be5.server.support.ControllerSupport;
+import com.developmentontheedge.be5.server.support.ApiControllerSupport;
 import com.developmentontheedge.be5.server.util.ResponseUtils;
 import com.developmentontheedge.be5.web.Request;
 import com.developmentontheedge.be5.web.Response;
@@ -29,7 +29,7 @@ import java.io.StringReader;
  * Example url
  * /api/bibliography?type=text&publicationIDs=1,2,4,5&citationFileID=5
  */
-public class BibliographyController extends ControllerSupport
+public class BibliographyController extends ApiControllerSupport
 {
     private final DatabaseModel database;
     private final PublicationProvider publicationProvider;
@@ -42,7 +42,7 @@ public class BibliographyController extends ControllerSupport
     }
 
     @Override
-    public void generate(Request req, Response res)
+    public void generate(Request req, Response res, String requestSubUrl)
     {
         String type           = req.getNonEmpty("type");
         String publicationIDs = req.getNonEmpty("publicationIDs");
