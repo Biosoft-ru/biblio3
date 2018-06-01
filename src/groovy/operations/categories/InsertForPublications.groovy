@@ -34,7 +34,7 @@ class InsertForPublications extends GOperationSupport implements TransactionalOp
         long parentID = Long.parseLong(dps.getValueAsString("parentID"))
         String name = dps.getValueAsString("name")
 
-        if(database.categories.count([name: name]) > 0)
+        if(database.categories.count([parentID: parentID, name: name]) > 0)
         {
             validator.setError(dps.getProperty("name"), "already exists")
             return
