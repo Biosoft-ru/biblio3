@@ -28,11 +28,11 @@ public class PubMedInfo extends ApiControllerSupport
 
         try
         {
-            res.sendAsRawJson(TypedResponse.data(pubMedService.getData(jwToken, username, PMIDs)));
+            res.sendAsJson(TypedResponse.data(pubMedService.getData(jwToken, username, PMIDs)));
         }
         catch (SecurityException e)
         {
-            res.sendAsRawJson(TypedResponse.error(e.getMessage()));
+            res.sendAsJson(TypedResponse.error(e.getMessage()));
         }
     }
 
