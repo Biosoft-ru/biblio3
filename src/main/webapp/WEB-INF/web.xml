@@ -12,10 +12,6 @@
  </session-config>
 
  <listener>
-  <listener-class>com.developmentontheedge.be5.server.servlet.AuthenticationPropagationListener</listener-class>
- </listener>
-
- <listener>
   <listener-class>ru.biosoft.biblio.BiblioServletConfig</listener-class>
  </listener>
 

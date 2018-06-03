@@ -20,7 +20,7 @@ class InsertPublicationTest extends Biblio3Test
     @Test
     void generate()
     {
-        setSession(BioStore.BIOSTORE_PROJECTS, Collections.singletonList("Demo"))
+        session.set(BioStore.BIOSTORE_PROJECTS, Collections.singletonList("Demo"))
 
         Object first = generateOperation("publications", "Compact view", "Insert", "").getFirst()
 
