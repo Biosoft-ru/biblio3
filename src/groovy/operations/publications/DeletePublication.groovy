@@ -2,7 +2,7 @@ package publications
 
 import com.developmentontheedge.be5.base.FrontendConstants
 import com.developmentontheedge.be5.query.model.beans.QRec
-import com.developmentontheedge.be5.server.model.beans.GDynamicPropertySetSupport
+import com.developmentontheedge.be5.base.model.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.modules.core.services.impl.CategoriesHelper
 import com.developmentontheedge.be5.operation.model.OperationResult
 import com.developmentontheedge.be5.operation.model.TransactionalOperation
