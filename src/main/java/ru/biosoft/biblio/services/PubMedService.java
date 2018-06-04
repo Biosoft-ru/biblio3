@@ -1,6 +1,6 @@
 package ru.biosoft.biblio.services;
 
-import com.developmentontheedge.be5.server.helpers.QueryHelper;
+import com.developmentontheedge.be5.query.services.QueriesService;
 import com.developmentontheedge.be5.base.services.Be5Caches;
 import com.developmentontheedge.beans.DynamicPropertySet;
 import com.github.benmanes.caffeine.cache.Caffeine;
@@ -33,10 +33,10 @@ public class PubMedService
             .recordStats()
             .build(BioStore.api::getProjectList);
 
-    private final QueryHelper operationHelper;
+    private final QueriesService operationHelper;
 
     @Inject
-    public PubMedService(Be5Caches be5Caches, QueryHelper operationHelper)
+    public PubMedService(Be5Caches be5Caches, QueriesService operationHelper)
     {
         this.operationHelper = operationHelper;
 

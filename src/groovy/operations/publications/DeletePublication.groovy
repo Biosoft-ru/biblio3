@@ -1,7 +1,7 @@
 package publications
 
 import com.developmentontheedge.be5.base.FrontendConstants
-import com.developmentontheedge.be5.server.model.beans.QRec
+import com.developmentontheedge.be5.query.model.beans.QRec
 import com.developmentontheedge.be5.server.model.beans.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.modules.core.services.impl.CategoriesHelper
 import com.developmentontheedge.be5.operation.model.OperationResult
@@ -25,7 +25,7 @@ class DeletePublication extends DeleteOperation implements TransactionalOperatio
         def cat = context.getOperationParams().get(FrontendConstants.CATEGORY_ID_PARAM)
 
         if(cat != null) {
-            projectCategoryRec = helper.qRec("""SELECT cat.ID, cat.name FROM categories cat
+            projectCategoryRec = queries.qRec("""SELECT cat.ID, cat.name FROM categories cat
                     INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', ?)
                       AND cat.ID = pcls.categoryID""", cat)
         }

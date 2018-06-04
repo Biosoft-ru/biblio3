@@ -70,7 +70,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
 
         dps.add("categoryID", "Category") {
             TYPE = Long
-            TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("categories", "For publications")
+            TAG_LIST_ATTR = queries.getTagsFromCustomSelectionView("categories", "For publications")
             value = presetValues.getOrDefault("categoryID", context.operationParams.get(CATEGORY_ID_PARAM))
             RELOAD_ON_CHANGE = true
             GROUP_ID = 2; GROUP_NAME = "Category"
@@ -79,7 +79,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         if(dps.getValue("categoryID") != null &&
                 Long.parseLong(dps.getValueAsString("categoryID")) != db.oneLong("select id from categories where name = 'Root'"))
         {
-            projectID = helper.qRec("""SELECT cat.name FROM categories cat
+            projectID = queries.qRec("""SELECT cat.name FROM categories cat
                     INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', ?)
                       AND cat.ID = pcls.categoryID""", Long.parseLong(dps.getValueAsString("categoryID"))).getString("name")
 

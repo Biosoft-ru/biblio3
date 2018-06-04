@@ -4,7 +4,6 @@ import com.developmentontheedge.be5.server.services.DocumentGenerator
 import com.developmentontheedge.be5.operation.model.OperationResult
 import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 import com.developmentontheedge.be5.base.util.DpsUtils
-import groovy.transform.TypeChecked
 
 import javax.inject.Inject
 
@@ -21,7 +20,7 @@ class Bibliography extends GOperationSupport
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
         dps.add("citationID", "Style") {
-            TAG_LIST_ATTR = helper.getTagsFromSelectionView("citations")
+            TAG_LIST_ATTR = queries.getTagsFromSelectionView("citations")
         }
 
         dps.add("type", "Output format") {

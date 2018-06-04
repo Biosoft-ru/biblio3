@@ -22,7 +22,7 @@ class InsertForPublications extends GOperationSupport implements TransactionalOp
         //todo add long type
         dps.edit("parentID") {
             CAN_BE_NULL = false
-            TAG_LIST_ATTR = helper.getTagsFromSelectionView("categories", [entity: "publications"])
+            TAG_LIST_ATTR = queries.getTagsFromSelectionView("categories", [entity: "publications"])
         }
 
         return dps

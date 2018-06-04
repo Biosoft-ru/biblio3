@@ -19,12 +19,12 @@ class Filter extends FilterOperation implements TransactionalOperation
                 getInfo().getEntity(), ["name", "title", "format", "parent"], context.operationParams)
 
         dps.edit("format"){
-            TAG_LIST_ATTR = helper.getTagsFromCustomSelectionView("citations", "formats")
+            TAG_LIST_ATTR = queries.getTagsFromCustomSelectionView("citations", "formats")
         }
 
 
         dps.add("category", "Category"){
-            TAG_LIST_ATTR = helper.getTagsFromSelectionView("citationCategories")
+            TAG_LIST_ATTR = queries.getTagsFromSelectionView("citationCategories")
         }
 
         return filterHelper.processFilterParams(dps, presetValues, context.getOperationParams())
