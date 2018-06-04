@@ -2,8 +2,10 @@ package attachments
 
 import com.developmentontheedge.be5.server.model.Base64File
 import com.developmentontheedge.be5.server.operations.support.GOperationSupport
+import groovy.transform.TypeChecked
 
 
+@TypeChecked
 class AddFile extends GOperationSupport
 {
     @Override
@@ -27,12 +29,12 @@ class AddFile extends GOperationSupport
     @Override
     void invoke(Object parameters) throws Exception
     {
-        def file = (Base64File) dps.$file
+        def file = (Base64File) dps.getValue("file")
 
         //name          : dps.$name != null ? dps.$name : file.name,
-        database.attachments.add([
-                publicationID : dps.$publicationID,
-                public        : dps.$public,
+        database["attachments"].add([
+                publicationID : dps.getValue("publicationID"),
+                public        : dps.getValue("public"),
                 name          : file.name,
                 data          : file.data,
                 mimeType      : file.mimeTypes

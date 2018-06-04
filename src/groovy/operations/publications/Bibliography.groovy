@@ -4,6 +4,7 @@ import com.developmentontheedge.be5.server.services.DocumentGenerator
 import com.developmentontheedge.be5.operation.model.OperationResult
 import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 import com.developmentontheedge.be5.base.util.DpsUtils
+import groovy.transform.TypeChecked
 
 import javax.inject.Inject
 

@@ -6,6 +6,7 @@ import com.developmentontheedge.be5.modules.core.operations.users.Login
 import com.developmentontheedge.be5.operation.model.OperationResult
 import com.developmentontheedge.be5.operation.model.OperationStatus
 import com.google.common.collect.ImmutableList
+import groovy.transform.TypeChecked
 import ru.biosoft.biblio.util.BioStore
 import javax.inject.Inject
 
@@ -13,9 +14,11 @@ import static ru.biosoft.biblio.util.BioStore.BIOSTORE_PROJECTS
 import static ru.biosoft.biblio.util.BioStore.BIOSTORE_TOKEN
 
 
+@TypeChecked
 class BiostoreLogin extends Login
 {
     @Inject UserHelper userHelper
+    @Inject BioStore bioStore
 
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
@@ -53,9 +56,9 @@ class BiostoreLogin extends Login
 
                 def roles = ImmutableList.of("Annotator")
 
-                userHelper.saveUser(user_name, roles, roles, meta.getLocale(Locale.US), request.getRemoteAddr(), session)
+                userHelper.saveUser(user_name, roles, roles, meta.getLocale(Locale.US), request.getRemoteAddr())
 
-                BioStore.loadProjectListToSession()
+                bioStore.loadProjectListToSession()
 
                 setResult(OperationResult.finished(null,
                         CoreFrontendActions.updateUserAndOpenDefaultRoute(loginService.getUserInfoModel())))

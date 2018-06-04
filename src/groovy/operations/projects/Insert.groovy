@@ -4,13 +4,19 @@ import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 import com.developmentontheedge.be5.operation.model.TransactionalOperation
 import com.developmentontheedge.be5.base.util.DpsUtils
 import com.developmentontheedge.be5.base.util.Utils
+import groovy.transform.TypeChecked
 import ru.biosoft.biblio.util.BioStore
+
+import javax.inject.Inject
 
 import static ru.biosoft.biostoreapi.Project.*
 
 
+@TypeChecked
 class Insert extends GOperationSupport implements TransactionalOperation
 {
+    @Inject BioStore bioStore
+
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
@@ -30,25 +36,25 @@ class Insert extends GOperationSupport implements TransactionalOperation
         String name = dps.getValueAsString("name")
         int permission = getPermission((Integer[]) Utils.changeTypes((String[])dps.getValue("permissions"), Integer.class))
 
-        if(database.categories.count([name: name]) > 0)
+        if(database["categories"].count([name: name]) > 0)
         {
             validator.setError(dps.getProperty("name"), "already exists")
             return
         }
 
-        BioStore.createProjectWithPermissions(name, permission)
+        bioStore.createProjectWithPermissions(name, permission)
 
-        BioStore.loadProjectListToSession()
+        bioStore.loadProjectListToSession()
 
-        long parentID = (Long)database.categories.getBy([name: "Root"]).getValue("ID")
+        long parentID = (Long)database["categories"].getBy([name: "Root"]).getValue("ID")
 
-        def ID = database.categories.add([
+        def ID = database["categories"].add([
                 entity: 'publications',
                 name: name,
                 parentID: parentID
         ])
 
-        database.classifications.add([
+        database["classifications"].add([
                 recordID  : "projectCategory." + ID,
                 categoryID: ID
         ])

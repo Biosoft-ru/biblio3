@@ -7,10 +7,12 @@ import com.developmentontheedge.be5.modules.core.services.impl.CategoriesHelper
 import com.developmentontheedge.be5.operation.model.OperationResult
 import com.developmentontheedge.be5.operation.model.TransactionalOperation
 import com.developmentontheedge.be5.server.operations.DeleteOperation
+import groovy.transform.TypeChecked
 
 import javax.inject.Inject
 
 
+@TypeChecked
 class DeletePublication extends DeleteOperation implements TransactionalOperation
 {
     @Inject CategoriesHelper categoriesHelper
@@ -45,7 +47,7 @@ class DeletePublication extends DeleteOperation implements TransactionalOperatio
         for (Long id : (Long[])context.records)
         {
             categoriesHelper.removeWithChildCategories(projectCategoryRec.getLong("ID"), "publications", id)
-            database.publication2project.removeBy([
+            database["publication2project"].removeBy([
                     projectID    : projectCategoryRec.getString("name"),
                     publicationID: id
             ])

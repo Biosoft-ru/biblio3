@@ -5,17 +5,22 @@ import com.developmentontheedge.be5.server.queries.support.TableBuilderSupport
 import com.developmentontheedge.be5.query.model.CellModel
 import com.developmentontheedge.be5.query.model.TableModel
 import com.developmentontheedge.be5.base.util.HashUrl
+import groovy.transform.TypeChecked
 import ru.biosoft.biblio.util.BioStore
 
+import javax.inject.Inject
 
+@TypeChecked
 class AllRecords extends TableBuilderSupport
 {
+    @Inject BioStore bioStore
+
     @Override
     TableModel getTableModel()
     {
         addColumns("Name", "Permissions")
 
-        def projects = BioStore.getProjectList()
+        def projects = bioStore.getProjectList()
 
         for (def project : projects)
         {
