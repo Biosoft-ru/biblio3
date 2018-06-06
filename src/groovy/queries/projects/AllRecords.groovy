@@ -26,7 +26,7 @@ class AllRecords extends TableBuilderSupport
         {
             List<CellModel> cells = new ArrayList<CellModel>()
 
-            cells.add(new CellModel(project.projectName).add("link", "url",
+            cells.add(new CellModel(project.projectName).option("link", "url",
                     new HashUrl(FrontendConstants.TABLE_ACTION, "_project_users_", "All records")
                             .named("projectName", project.projectName).toString()))
 
