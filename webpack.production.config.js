@@ -20,9 +20,11 @@ loaders.push({
 const outPath = 'target-frontend';
 
 let fileName = 'static/[name]-[hash].js';
+let templateName = 'template-dev.html';
 
 if (env.min) {
   fileName = 'static/[name]-[hash].min.js';
+  templateName = 'template.html';
 }
 
 let config = {
@@ -56,7 +58,7 @@ let config = {
     new OptimizeCssAssetsPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: './src/frontend/template.html',
+      template: './src/frontend/' + templateName,
       chunks: ['commons', 'app'],
       files: {
         css: ['style.css'],
@@ -65,7 +67,7 @@ let config = {
     }),
     new HtmlWebpackPlugin({
       filename: 'be5/index.html',
-      template: './src/frontend/template.html',
+      template: './src/frontend/' + templateName,
       chunks: ['commons', 'be5'],
       files: {
         css: ['style.css'],
