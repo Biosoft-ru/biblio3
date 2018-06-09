@@ -1,13 +1,13 @@
 package projectusers
 
+import com.developmentontheedge.be5.base.util.DpsUtils
+import com.developmentontheedge.be5.operation.model.OperationResult
 import com.developmentontheedge.be5.operation.model.TransactionalOperation
 import com.developmentontheedge.be5.server.operations.support.GOperationSupport
-import com.developmentontheedge.be5.base.util.DpsUtils
 import groovy.transform.TypeChecked
 import ru.biosoft.biblio.util.BioStore
 
 import javax.inject.Inject
-
 
 @TypeChecked
 class Edit extends GOperationSupport implements TransactionalOperation
@@ -37,10 +37,14 @@ class Edit extends GOperationSupport implements TransactionalOperation
     @Override
     void invoke(Object parameters) throws Exception
     {
-        bioStore.changeUserRoleInProject(
-                dps.getValueAsString("projectName"),
-                dps.getValueAsString("email"),
-                dps.getValueAsString("newRole"))
+        try{
+            bioStore.changeUserRoleInProject(
+                    dps.getValueAsString("projectName"),
+                    dps.getValueAsString("email"),
+                    dps.getValueAsString("newRole"))
+        }catch (SecurityException e){
+            setResult(OperationResult.error(e.getMessage(), e))
+        }
     }
 
 }

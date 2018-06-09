@@ -1,5 +1,6 @@
 package projects
 
+import com.developmentontheedge.be5.operation.model.OperationResult
 import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 import com.developmentontheedge.be5.operation.model.TransactionalOperation
 import com.developmentontheedge.be5.base.util.DpsUtils
@@ -42,9 +43,12 @@ class Insert extends GOperationSupport implements TransactionalOperation
             return
         }
 
-        bioStore.createProjectWithPermissions(name, permission)
-
-        bioStore.loadProjectListToSession()
+        try{
+            bioStore.createProjectWithPermissions(name, permission)
+            bioStore.loadProjectListToSession()
+        }catch (SecurityException e){
+            setResult(OperationResult.error(e.getMessage(), e))
+        }
 
         long parentID = (Long)database["categories"].getBy([name: "Root"]).getValue("ID")
 

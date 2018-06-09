@@ -1,5 +1,6 @@
 package projectusers
 
+import com.developmentontheedge.be5.operation.model.OperationResult
 import com.developmentontheedge.be5.operation.model.TransactionalOperation
 import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 import com.developmentontheedge.be5.base.util.DpsUtils
@@ -29,7 +30,11 @@ class Insert extends GOperationSupport implements TransactionalOperation
     @Override
     void invoke(Object parameters) throws Exception
     {
-        bioStore.addUserToProject(dps.getValueAsString("email"), dps.getValueAsString("projectName"))
+        try{
+            bioStore.addUserToProject(dps.getValueAsString("email"), dps.getValueAsString("projectName"))
+        }catch (SecurityException e){
+            setResult(OperationResult.error(e.getMessage(), e))
+        }
     }
 
 }
