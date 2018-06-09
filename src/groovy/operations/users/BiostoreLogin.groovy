@@ -65,7 +65,7 @@ class BiostoreLogin extends Login
             }
             catch (SecurityException e)
             {
-                setResult(OperationResult.error(e))
+                setResult(OperationResult.error(e.getMessage(), e))
             }
         }
         else
