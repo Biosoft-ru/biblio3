@@ -2,7 +2,7 @@ package ru.biosoft.biblio.controllers;
 
 import com.developmentontheedge.be5.web.Request;
 import com.developmentontheedge.be5.web.Response;
-import com.developmentontheedge.be5.web.support.ApiControllerSupport;
+import com.developmentontheedge.be5.server.servlet.support.ApiControllerSupport;
 import ru.biosoft.biblio.services.PubMedService;
 
 import javax.inject.Inject;
