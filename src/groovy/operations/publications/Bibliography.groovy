@@ -45,7 +45,7 @@ class Bibliography extends GOperationSupport
                 .replace("DOWNLOAD_URL", url + "&_download_=yes")
 
         setResult(OperationResult.finished(null, updateDocument(
-                documentGenerator.getStaticPage("Bibliography", content, null)
+                documentGenerator.createStaticPage("Bibliography", content, null)
         )))
     }
 }
