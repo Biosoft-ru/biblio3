@@ -17,21 +17,21 @@ class Edit extends GOperationSupport implements TransactionalOperation
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
-        dps.add("projectName", "projectName") {
+        params.add("projectName", "projectName") {
             READ_ONLY = true
             value = (String)context.getOperationParams().get("projectName")
         }
 
-        dps.add("email", "Email") {
+        params.add("email", "Email") {
             READ_ONLY = true
             value = context.record
         }
 
-        dps.add("newRole", "Role") {
+        params.add("newRole", "Role") {
             TAG_LIST_ATTR = [["Administrator", "Administrator"], ["User", "User"] ] as String[][]
         }
 
-        return DpsUtils.setValues(dps, presetValues)
+        return DpsUtils.setValues(params, presetValues)
     }
 
     @Override
@@ -39,9 +39,9 @@ class Edit extends GOperationSupport implements TransactionalOperation
     {
         try{
             bioStore.changeUserRoleInProject(
-                    dps.getValueAsString("projectName"),
-                    dps.getValueAsString("email"),
-                    dps.getValueAsString("newRole"))
+                    params.getValueAsString("projectName"),
+                    params.getValueAsString("email"),
+                    params.getValueAsString("newRole"))
         }catch (SecurityException e){
             setResult(OperationResult.error(e.getMessage(), e))
         }

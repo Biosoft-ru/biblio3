@@ -21,25 +21,25 @@ class Insert extends GOperationSupport implements TransactionalOperation
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
-        dps.add("name", "Name")
-        dps.add("permissions", "Permissions") {
+        params.add("name", "Name")
+        params.add("permissions", "Permissions") {
             TAG_LIST_ATTR = [[PERMISSION_INFO, "Info"], [PERMISSION_READ, "Read"], [PERMISSION_WRITE, "Write"],
                              [PERMISSION_DELETE, "Delete"], [PERMISSION_ADMIN, "Admin"], [PERMISSION_ALL, "All"]] as String[][]
             MULTIPLE_SELECTION_LIST = true
         }
 
-        return DpsUtils.setValues(dps, presetValues)
+        return DpsUtils.setValues(params, presetValues)
     }
 
     @Override
     void invoke(Object parameters) throws Exception
     {
-        String name = dps.getValueAsString("name")
-        int permission = getPermission((Integer[]) Utils.changeTypes((String[])dps.getValue("permissions"), Integer.class))
+        String name = params.getValueAsString("name")
+        int permission = getPermission((Integer[]) Utils.changeTypes((String[])params.getValue("permissions"), Integer.class))
 
         if(database["categories"].count([name: name]) > 0)
         {
-            validator.setError(dps.getProperty("name"), "already exists")
+            validator.setError(params.getProperty("name"), "already exists")
             return
         }
 

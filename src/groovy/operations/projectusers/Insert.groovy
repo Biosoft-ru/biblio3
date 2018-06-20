@@ -18,20 +18,20 @@ class Insert extends GOperationSupport implements TransactionalOperation
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
-        dps.add("projectName", "projectName") {
+        params.add("projectName", "projectName") {
             READ_ONLY = true
             value = (String)context.getOperationParams().get("projectName")
         }
-        dps.add("email", "Email")
+        params.add("email", "Email")
 
-        return DpsUtils.setValues(dps, presetValues)
+        return DpsUtils.setValues(params, presetValues)
     }
 
     @Override
     void invoke(Object parameters) throws Exception
     {
         try{
-            bioStore.addUserToProject(dps.getValueAsString("email"), dps.getValueAsString("projectName"))
+            bioStore.addUserToProject(params.getValueAsString("email"), params.getValueAsString("projectName"))
         }catch (SecurityException e){
             setResult(OperationResult.error(e.getMessage(), e))
         }

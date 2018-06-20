@@ -23,12 +23,12 @@ class InsertFromZotero extends GOperationSupport
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
-        dps.add("count", "Count") {
+        params.add("count", "Count") {
             TYPE = Long
             value = 3
         }
 
-        return DpsUtils.setValues(dps, presetValues)
+        return DpsUtils.setValues(params, presetValues)
     }
 
     @Override
@@ -44,7 +44,7 @@ class InsertFromZotero extends GOperationSupport
             JsonReader jsonReader = Json.createReader(reader)
             def array = jsonReader.readArray()
 
-            for (int i = 0; i < Math.min(array.size(), dps.getValueAsLong("count")); i++)
+            for (int i = 0; i < Math.min(array.size(), params.getValueAsLong("count")); i++)
             {
                 def styleName = array.getJsonObject(i).getString("title")
                 def styleHref = array.getJsonObject(i).getString("href")

@@ -25,29 +25,29 @@ class BiostoreLogin extends Login
     {
         super.getParameters(presetValues)
 
-        dps.edit("user_name") {CAN_BE_NULL = true}
-        dps.edit("user_pass") {CAN_BE_NULL = true}
+        params.edit("user_name") {CAN_BE_NULL = true}
+        params.edit("user_pass") {CAN_BE_NULL = true}
 
-        return dps
+        return params
     }
 
     @Override
     void invoke(Object parameters) throws Exception
     {
-        if(dps.getValueAsString("user_name") != null)
+        if(params.getValueAsString("user_name") != null)
         {
-            if(dps.getValueAsString("user_pass") == null)
+            if(params.getValueAsString("user_pass") == null)
             {
-                validator.setError(dps.getProperty("user_pass"), "Пароль не может быть пустым")
+                validator.setError(params.getProperty("user_pass"), "Пароль не может быть пустым")
                 return
             }
             super.invoke(parameters)
         }
 
-        if(getStatus() == OperationStatus.ERROR || dps.getValueAsString("user_name") == null)
+        if(getStatus() == OperationStatus.ERROR || params.getValueAsString("user_name") == null)
         {
-            def user_name = dps.getValueAsString("user_name") == null ? "" : dps.getValueAsString("user_name")
-            def user_pass = dps.getValueAsString("user_pass") == null ? "" : dps.getValueAsString("user_pass")
+            def user_name = params.getValueAsString("user_name") == null ? "" : params.getValueAsString("user_name")
+            def user_pass = params.getValueAsString("user_pass") == null ? "" : params.getValueAsString("user_pass")
 
             try
             {

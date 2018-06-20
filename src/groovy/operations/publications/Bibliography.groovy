@@ -19,26 +19,26 @@ class Bibliography extends GOperationSupport
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
-        dps.add("citationID", "Style") {
+        params.add("citationID", "Style") {
             TAG_LIST_ATTR = queries.getTagsFromSelectionView("citations")
         }
 
-        dps.add("type", "Output format") {
+        params.add("type", "Output format") {
             TAG_LIST_ATTR = [["html","html"], ["text","text"], ["rtf","rtf"],
                              ["asciidoc","asciidoc"], ["fo","fo"]] as String[][]
         }
 
-        return DpsUtils.setValues(dps, presetValues)
+        return DpsUtils.setValues(params, presetValues)
     }
 
     @Override
     void invoke(Object parameters) throws Exception
     {
-        def attID = db.one("SELECT ID FROM attachments WHERE ownerID = 'citations." + dps.getValue("citationID") + "'")
+        def attID = db.one("SELECT ID FROM attachments WHERE ownerID = 'citations." + params.getValue("citationID") + "'")
         def ids = Arrays.stream(context.records).map({x -> x.toString()}).collect(Collectors.joining(","))
 
         String url = request.getServerUrl() + "/api/bibliography?" +
-                "type=${dps.getValue("type")}&publicationIDs=${ids}&citationFileID=${attID}"
+                "type=${params.getValue("type")}&publicationIDs=${ids}&citationFileID=${attID}"
 
         def content = meta.getStaticPageContent(userInfo.getLanguage(), "bibliography.be")
                 .replace("OPEN_URL", url + "&_download_=no")

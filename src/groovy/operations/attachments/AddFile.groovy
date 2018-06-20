@@ -11,30 +11,30 @@ class AddFile extends GOperationSupport
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
-        dpsHelper.addDpForColumns(dps, getInfo().getEntity(),
+        dpsHelper.addDpForColumns(params, getInfo().getEntity(),
                 ["publicationID", "public"], context.operationParams, presetValues)
 
-        dps.add("file", "Файл") {
+        params.add("file", "Файл") {
             TYPE = Base64File
         }
 
-//        dps.edit("name", "Название"){
+//        params.edit("name", "Название"){
 //            CAN_BE_NULL = true
 //            MESSAGE = "Если не заполнено берётся имя файла"
 //        }
 
-        return dps
+        return params
     }
 
     @Override
     void invoke(Object parameters) throws Exception
     {
-        def file = (Base64File) dps.getValue("file")
+        def file = (Base64File) params.getValue("file")
 
-        //name          : dps.$name != null ? dps.$name : file.name,
+        //name          : params.$name != null ? params.$name : file.name,
         database["attachments"].add([
-                publicationID : dps.getValue("publicationID"),
-                public        : dps.getValue("public"),
+                publicationID : params.getValue("publicationID"),
+                public        : params.getValue("public"),
                 name          : file.name,
                 data          : file.data,
                 mimeType      : file.mimeTypes

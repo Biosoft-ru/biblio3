@@ -43,31 +43,31 @@ class EditPublication extends InsertPublication implements TransactionalOperatio
                 inputType: presetValues.getOrDefault("inputType", publicationRec.getValue("PMID") != null ? "PubMed" : "manually")
         ]
 
-        dps = (GDynamicPropertySetSupport)super.getParameters(presets)
+        params = (GDynamicPropertySetSupport)super.getParameters(presets)
 
-        dps.edit("inputType")  { READ_ONLY = true }
-        dps.edit("categoryID") { READ_ONLY = true }
+        params.edit("inputType")  { READ_ONLY = true }
+        params.edit("categoryID") { READ_ONLY = true }
 
-        return dps
+        return params
     }
 
     @Override
     void invoke(Object parameters) throws Exception
     {
-        if(dps.getProperty("PMID") != null && dps.getValue("PMID") != publicationRec.getValue("PMID")
-                && pmidExistInProject((Long)dps.getValue("PMID"), projectID))
+        if(params.getProperty("PMID") != null && params.getValue("PMID") != publicationRec.getValue("PMID")
+                && pmidExistInProject((Long)params.getValue("PMID"), projectID))
         {
-            validator.setError(dps.getProperty("PMID"), "Публикация с заданным PMID уже есть в категории " + projectID)
+            validator.setError(params.getProperty("PMID"), "Публикация с заданным PMID уже есть в категории " + projectID)
             return
         }
 
-        dps.remove("inputType")
-        dps.remove("categoryID")
+        params.remove("inputType")
+        params.remove("categoryID")
 
-        def projectInfo = extractProjectInfo(dps)
+        def projectInfo = extractProjectInfo(params)
         projectInfo.add("publicationID"){TYPE = Long; value = context.records[0]}
 
-        database.publications.set(context.record, dps)
+        database.publications.set(context.record, params)
 
         if(publication2projectRecord == null){
             database.publication2project.add(projectInfo)

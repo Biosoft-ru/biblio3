@@ -26,20 +26,20 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
         //todo create new operation after error
-        dps = new GDynamicPropertySetSupport()
+        params = new GDynamicPropertySetSupport()
 
-        dps.add("inputType", "Input type" ) {
+        params.add("inputType", "Input type" ) {
             TAG_LIST_ATTR = [["PubMed","PubMed"],["manually","Вручную"]] as String[][]
             RELOAD_ON_CHANGE = true
             CSS_CLASSES   = "col-lg-4"
             value         = presetValues.getOrDefault("inputType", "PubMed")
         }
 
-        if(dps.getValueAsString("inputType") == "PubMed")
+        if(params.getValueAsString("inputType") == "PubMed")
         {
-            dpsHelper.addDpForColumns(dps, getInfo().getEntity(), ["PMID"], context.getOperationParams())
+            dpsHelper.addDpForColumns(params, getInfo().getEntity(), ["PMID"], context.getOperationParams())
 
-            dps.edit("PMID") {
+            params.edit("PMID") {
                 CAN_BE_NULL = false
                 RELOAD_ON_CHANGE = true
                 value = presetValues.get("PMID")
@@ -47,28 +47,28 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         }
         else
         {
-            dpsHelper.addDpExcludeColumns(dps, getInfo().getEntity(), ["ID"], context.getOperationParams())
+            dpsHelper.addDpExcludeColumns(params, getInfo().getEntity(), ["ID"], context.getOperationParams())
 
-            dps.edit("PMID") { HIDDEN = true }
+            params.edit("PMID") { HIDDEN = true }
 
-            dps.edit("authors") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
-            dps.edit("title") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
+            params.edit("authors") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
+            params.edit("title") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
 
-            dps.edit("year") { CSS_CLASSES = "col-lg-3" }
-            dps.edit("month") { CSS_CLASSES = "col-lg-3" }
-            dps.edit("volume") { CSS_CLASSES = "col-lg-3" }
-            dps.edit("issue") { CSS_CLASSES = "col-lg-3" }
-            dps.edit("pageFrom") { CSS_CLASSES = "col-lg-3" }
-            dps.edit("pageTo") { CSS_CLASSES = "col-lg-3" }
-            dps.edit("language") { CSS_CLASSES = "col-lg-3" }
-            dps.edit("publicationType") { CSS_CLASSES = "col-lg-3" }
+            params.edit("year") { CSS_CLASSES = "col-lg-3" }
+            params.edit("month") { CSS_CLASSES = "col-lg-3" }
+            params.edit("volume") { CSS_CLASSES = "col-lg-3" }
+            params.edit("issue") { CSS_CLASSES = "col-lg-3" }
+            params.edit("pageFrom") { CSS_CLASSES = "col-lg-3" }
+            params.edit("pageTo") { CSS_CLASSES = "col-lg-3" }
+            params.edit("language") { CSS_CLASSES = "col-lg-3" }
+            params.edit("publicationType") { CSS_CLASSES = "col-lg-3" }
 
-            dps.edit("ref") { CSS_CLASSES = "col-lg-4" }
-            dps.edit("PMCID") { CSS_CLASSES = "col-lg-4" }
-            dps.moveTo("PMCID",3)
+            params.edit("ref") { CSS_CLASSES = "col-lg-4" }
+            params.edit("PMCID") { CSS_CLASSES = "col-lg-4" }
+            params.moveTo("PMCID",3)
         }
 
-        dps.add("categoryID", "Category") {
+        params.add("categoryID", "Category") {
             TYPE = Long
             TAG_LIST_ATTR = queries.getTagsFromCustomSelectionView("categories", "For publications")
             value = presetValues.getOrDefault("categoryID", context.operationParams.get(CATEGORY_ID_PARAM))
@@ -76,51 +76,51 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
             GROUP_ID = 2; GROUP_NAME = "Category"
         }
 
-        if(dps.getValue("categoryID") != null &&
-                Long.parseLong(dps.getValueAsString("categoryID")) != db.oneLong("select id from categories where name = 'Root'"))
+        if(params.getValue("categoryID") != null &&
+                Long.parseLong(params.getValueAsString("categoryID")) != db.oneLong("select id from categories where name = 'Root'"))
         {
             projectID = queries.qRec("""SELECT cat.name FROM categories cat
                     INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', ?)
-                      AND cat.ID = pcls.categoryID""", Long.parseLong(dps.getValueAsString("categoryID"))).getString("name")
+                      AND cat.ID = pcls.categoryID""", Long.parseLong(params.getValueAsString("categoryID"))).getString("name")
 
-            dpsHelper.addDpForColumns(dps, meta.getEntity("publication2project"), projectColumns, context.getOperationParams())
+            dpsHelper.addDpForColumns(params, meta.getEntity("publication2project"), projectColumns, context.getOperationParams())
 
-            dps.edit("status") { CSS_CLASSES = "col-lg-6" }
-            dps.edit("importance") { CSS_CLASSES = "col-lg-6" }
-            dps.edit("keyWords") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
+            params.edit("status") { CSS_CLASSES = "col-lg-6" }
+            params.edit("importance") { CSS_CLASSES = "col-lg-6" }
+            params.edit("keyWords") { EXTRA_ATTRS = [["inputType", "textArea"], ["rows", "1"]] as String[][] }
 
             for (def columnName : projectColumns) {
-                dps.edit(columnName) { GROUP_ID = 1; GROUP_NAME = "Project columns " + projectID }
+                params.edit(columnName) { GROUP_ID = 1; GROUP_NAME = "Project columns " + projectID }
             }
         }
 
-        if(context.records.length == 0 && dps.getValue("PMID") != null)
+        if(context.records.length == 0 && params.getValue("PMID") != null)
         {
             //TODO add methods for validation with ignore Exception isValid(), rename isError to getStatus()
             try {
-                validator.checkErrorAndCast(dps.getProperty("PMID"))
+                validator.checkErrorAndCast(params.getProperty("PMID"))
             } catch (IllegalArgumentException ignore) {
             }
 
-            if(!validator.isError(dps.getProperty("PMID")) && projectID != null &&
-                    pmidExistInProject((Long)dps.getValue("PMID"), projectID))
+            if(!validator.isError(params.getProperty("PMID")) && projectID != null &&
+                    pmidExistInProject((Long)params.getValue("PMID"), projectID))
             {
-                validator.setError(dps.getProperty("PMID"), "Публикация с заданным PMID уже есть в категории " + projectID)
+                validator.setError(params.getProperty("PMID"), "Публикация с заданным PMID уже есть в категории " + projectID)
             }
         }
 
-        return DpsUtils.setValues(dps, presetValues)
+        return DpsUtils.setValues(params, presetValues)
     }
 
     @Override
     void invoke(Object parameters) throws Exception
     {
-        Long PMID = (Long)dps.getValue("PMID")
+        Long PMID = (Long)params.getValue("PMID")
 
-        String inputType = dps.remove("inputType")
-        Long categoryID = (Long)dps.remove("categoryID")
+        String inputType = params.remove("inputType")
+        Long categoryID = (Long)params.remove("categoryID")
 
-        def projectInfo = extractProjectInfo(dps)
+        def projectInfo = extractProjectInfo(params)
 
         RecordModel<Long> publicationRecord
         if(PMID != null)publicationRecord = database.publications.getBy([PMID: PMID])
@@ -128,7 +128,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         Long publicationID
         if(publicationRecord == null)
         {
-            publicationID = database.publications.add(dps)
+            publicationID = database.publications.add(params)
 
             if(inputType == "PubMed")
             {

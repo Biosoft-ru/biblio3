@@ -18,17 +18,17 @@ class Insert extends GOperationSupport implements TransactionalOperation
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
         //only for not Dependent
-        dps.add("file", "Файл") {
+        params.add("file", "Файл") {
             TYPE = Base64File
         }
 
-        return DpsUtils.setValues(dps, presetValues)
+        return DpsUtils.setValues(params, presetValues)
     }
 
     @Override
     void invoke(Object parameters) throws Exception
     {
-        def file = (Base64File) dps.$file
+        def file = (Base64File) params.$file
 
         def name = file.name.replace('.csl', '')
 

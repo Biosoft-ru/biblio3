@@ -11,32 +11,32 @@ class InsertForPublications extends GOperationSupport implements TransactionalOp
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
-        dpsHelper.addDpForColumnsWithoutTags(dps, getInfo().getEntity(),
+        dpsHelper.addDpForColumnsWithoutTags(params, getInfo().getEntity(),
                 ["name", "parentID", "description"], presetValues)
 
-        dps.add("entity") {
+        params.add("entity") {
             HIDDEN = true
             value = "publications"
         }
 
         //todo add long type
-        dps.edit("parentID") {
+        params.edit("parentID") {
             CAN_BE_NULL = false
             TAG_LIST_ATTR = queries.getTagsFromSelectionView("categories", [entity: "publications"])
         }
 
-        return dps
+        return params
     }
 
     @Override
     void invoke(Object parameters) throws Exception
     {
-        long parentID = Long.parseLong(dps.getValueAsString("parentID"))
-        String name = dps.getValueAsString("name")
+        long parentID = Long.parseLong(params.getValueAsString("parentID"))
+        String name = params.getValueAsString("name")
 
         if(database.categories.count([parentID: parentID, name: name]) > 0)
         {
-            validator.setError(dps.getProperty("name"), "already exists")
+            validator.setError(params.getProperty("name"), "already exists")
             return
         }
 
@@ -47,12 +47,12 @@ class InsertForPublications extends GOperationSupport implements TransactionalOp
             def projects = (List<String>)session.get(BIOSTORE_PROJECTS)
             if(!projects.contains(name))
             {
-                validator.setError(dps.getProperty("name"), "root category must be in " + projects.toString())
+                validator.setError(params.getProperty("name"), "root category must be in " + projects.toString())
                 return
             }
         }
 
-        def ID = database.categories.add(dps)
+        def ID = database.categories.add(params)
 
         if(isProjectCategory)
         {
