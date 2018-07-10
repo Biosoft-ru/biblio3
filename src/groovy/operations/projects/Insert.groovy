@@ -37,7 +37,7 @@ class Insert extends GOperationSupport implements TransactionalOperation
         String name = params.getValueAsString("name")
         int permission = getPermission((Integer[]) Utils.changeTypes((String[])params.getValue("permissions"), Integer.class))
 
-        if(database["categories"].count([name: name]) > 0)
+        if(database["categories"].count([parentID: null, name: name]) > 0)
         {
             validator.setError(params.getProperty("name"), "already exists")
             return
