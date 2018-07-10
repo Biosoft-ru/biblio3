@@ -37,7 +37,9 @@ class Insert extends GOperationSupport implements TransactionalOperation
         String name = params.getValueAsString("name")
         int permission = getPermission((Integer[]) Utils.changeTypes((String[])params.getValue("permissions"), Integer.class))
 
-        if(database["categories"].count([parentID: null, name: name]) > 0)
+        long parentID = (Long)database["categories"].getBy([name: "Root"]).getValue("ID")
+
+        if(database["categories"].count([parentID: parentID, name: name]) > 0)
         {
             validator.setError(params.getProperty("name"), "already exists")
             return
@@ -49,8 +51,6 @@ class Insert extends GOperationSupport implements TransactionalOperation
         }catch (SecurityException e){
             setResult(OperationResult.error(e.getMessage(), e))
         }
-
-        long parentID = (Long)database["categories"].getBy([name: "Root"]).getValue("ID")
 
         def ID = database["categories"].add([
                 entity: 'publications',
