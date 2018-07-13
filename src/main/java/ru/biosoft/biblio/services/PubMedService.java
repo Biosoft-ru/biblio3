@@ -1,5 +1,6 @@
 package ru.biosoft.biblio.services;
 
+import com.developmentontheedge.be5.query.model.beans.QRec;
 import com.developmentontheedge.be5.query.services.QueriesService;
 import com.developmentontheedge.be5.base.services.Be5Caches;
 import com.developmentontheedge.beans.DynamicPropertySet;
@@ -63,15 +64,15 @@ public class PubMedService
         List<String> projectNames = projects.stream().map(Project::getProjectName).collect(toList());
 
         Map<Long, PublicationProject> publicationProjects = new HashMap<>();
-        List<DynamicPropertySet> list = operationHelper.readAsRecordsFromQuery(
+        List<QRec> list = operationHelper.readAsRecordsFromQuery(
                 "publications", "PubMedInfo Data", ImmutableMap.of(
                         "projects", projectNames,
                         "PMIDs", PMIDs
                 ));
 
-        for (DynamicPropertySet dps : list)
+        for (QRec dps : list)
         {
-            Long pmid = dps.getValueAsLong("PMID");
+            Long pmid = dps.getLong("PMID");
             PublicationProject publicationProject;
 
             if(publicationProjects.containsKey(pmid))
@@ -80,17 +81,17 @@ public class PubMedService
             }
             else
             {
-                publicationProject = new PublicationProject(dps.getValueAsLong("publicationID"), new ArrayList<>());
+                publicationProject = new PublicationProject(dps.getLong("publicationID"), new ArrayList<>());
                 publicationProjects.put(pmid, publicationProject);
             }
 
             publicationProject.projects.add(new ProjectModel(
-                    dps.getValueAsLong("categoryID"),
-                    dps.getValueAsString("projectName"),
-                    dps.getValueAsString("status"),
+                    dps.getLong("categoryID"),
+                    dps.getString("projectName"),
+                    dps.getString("status"),
                     (int)dps.getValue("importance"),
-                    dps.getValueAsString("keyWords"),
-                    dps.getValueAsString("comment")
+                    dps.getString("keyWords"),
+                    dps.getString("comment")
             ));
         }
 
