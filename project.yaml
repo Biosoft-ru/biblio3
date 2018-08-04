@@ -1,5 +1,6 @@
 biblio3:
-  features: logging
+  features:
+  - documentCategories
   l10n: en
   projectFileStructure: {}
   modules:
