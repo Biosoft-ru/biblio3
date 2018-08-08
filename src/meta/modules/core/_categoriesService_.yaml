@@ -27,3 +27,4 @@ _categoriesService_:
         <if expr="entity==publications">
          AND (pCat.name IN (<session:biostore_projects multiple="true"/>) OR pCat.name == 'Root')
         </if>
+        ORDER BY c1.parentId, c1.name
