@@ -96,13 +96,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
 
         if(context.records.length == 0 && params.getValue("PMID") != null)
         {
-            //TODO add methods for validation with ignore Exception isValid(), rename isError to getStatus()
-            try {
-                validator.checkErrorAndCast(params.getProperty("PMID"))
-            } catch (IllegalArgumentException ignore) {
-            }
-
-            if(!validator.isError(params.getProperty("PMID")) && projectID != null &&
+            if(validator.validate(params.getProperty("PMID")) && projectID != null &&
                     pmidExistInProject((Long)params.getValue("PMID"), projectID))
             {
                 validator.setError(params.getProperty("PMID"), "Публикация с заданным PMID уже есть в категории " + projectID)
