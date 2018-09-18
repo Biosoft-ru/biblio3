@@ -1,19 +1,17 @@
 package ru.biosoft.biblio.services;
 
+import com.developmentontheedge.be5.base.services.Be5Caches;
 import com.developmentontheedge.be5.query.model.beans.QRec;
 import com.developmentontheedge.be5.query.services.QueriesService;
-import com.developmentontheedge.be5.base.services.Be5Caches;
-import com.developmentontheedge.beans.DynamicPropertySet;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import com.google.common.collect.ImmutableMap;
-import javax.inject.Inject;
 import ru.biosoft.biblio.util.BioStore;
 import ru.biosoft.biostoreapi.JWToken;
 import ru.biosoft.biostoreapi.Project;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,15 +44,15 @@ public class PubMedService
 
     public Map<Long, PublicationProject> getData(String jwtoken, String username, List<String> PMIDs)
     {
-        long start = new Date().getTime();
+        long start = System.currentTimeMillis();
         List<Project> projects = cache.get(new JWToken(username, jwtoken));
-        long time1 = new Date().getTime() - start;
+        long time1 = System.currentTimeMillis() - start;
 
-        long start2 = new Date().getTime();
+        long start2 = System.currentTimeMillis();
 
         Map<Long, PublicationProject> data = getData(projects, PMIDs);
 
-        log.fine("PubMedInfo - " + time1 + ", " + (new Date().getTime() - start2));
+        log.fine("PubMedInfo - " + time1 + ", " + (System.currentTimeMillis() - start2));
 
         return data;
     }
