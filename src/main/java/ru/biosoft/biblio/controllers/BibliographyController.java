@@ -2,7 +2,7 @@ package ru.biosoft.biblio.controllers;
 
 import com.developmentontheedge.be5.databasemodel.DatabaseModel;
 import com.developmentontheedge.be5.databasemodel.RecordModel;
-import com.developmentontheedge.be5.server.util.ResponseUtils;
+import com.developmentontheedge.be5.server.util.RequestUtils;
 import com.developmentontheedge.be5.web.Request;
 import com.developmentontheedge.be5.web.Response;
 import com.developmentontheedge.be5.server.servlet.support.ApiControllerSupport;
@@ -107,7 +107,7 @@ public class BibliographyController extends ApiControllerSupport
             ext = ".xml";
         }
 
-        ResponseUtils.sendFile(res, download, "Bibliography" + ext, mimeType, Charsets.UTF_8.name(),
+        RequestUtils.sendFile(res, download, "Bibliography" + ext, mimeType, Charsets.UTF_8.name(),
                 new ByteArrayInputStream(out.toString().getBytes()));
     }
 
