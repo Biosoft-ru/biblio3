@@ -3,7 +3,7 @@ package projects
 import com.developmentontheedge.be5.operation.model.OperationResult
 import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 import com.developmentontheedge.be5.operation.model.TransactionalOperation
-import com.developmentontheedge.be5.base.util.DpsUtils
+import com.developmentontheedge.be5.databasemodel.util.DpsUtils
 import com.developmentontheedge.be5.base.util.Utils
 import groovy.transform.TypeChecked
 import ru.biosoft.biblio.util.BioStore

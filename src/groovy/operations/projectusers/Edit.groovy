@@ -1,6 +1,6 @@
 package projectusers
 
-import com.developmentontheedge.be5.base.util.DpsUtils
+import com.developmentontheedge.be5.databasemodel.util.DpsUtils
 import com.developmentontheedge.be5.operation.model.OperationResult
 import com.developmentontheedge.be5.operation.model.TransactionalOperation
 import com.developmentontheedge.be5.server.operations.support.GOperationSupport
