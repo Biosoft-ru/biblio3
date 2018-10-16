@@ -24,7 +24,7 @@ citations:
     - bibliography:
         type: VARCHAR(2000)
     - updated:
-        type: TIMESTAMP
+        type: DATETIME
   queries:
   - '*** Selection view ***':
       type: 1D_unknown

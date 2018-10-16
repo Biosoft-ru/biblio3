@@ -51,10 +51,10 @@ attachments:
         type: VARCHAR(100)
         canBeNull: true
     - creationDate___:
-        type: TIMESTAMP
+        type: DATETIME
         canBeNull: true
     - modificationDate___:
-        type: TIMESTAMP
+        type: DATETIME
         canBeNull: true
     indices:
     - IDX_ATT_OWNER_ID:
