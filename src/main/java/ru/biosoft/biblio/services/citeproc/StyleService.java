@@ -1,15 +1,14 @@
 package ru.biosoft.biblio.services.citeproc;
 
-
+import com.developmentontheedge.be5.base.util.StAXStreamProcessor;
+import com.developmentontheedge.be5.base.util.Utils;
+import com.developmentontheedge.be5.databasemodel.DatabaseModel;
 import com.developmentontheedge.be5.databasemodel.EntityModel;
 import com.developmentontheedge.be5.databasemodel.RecordModel;
-import com.developmentontheedge.be5.databasemodel.DatabaseModel;
-import com.developmentontheedge.be5.base.util.Utils;
 import com.google.common.collect.ImmutableMap;
 import de.undercouch.citeproc.CSL;
 import de.undercouch.citeproc.output.Bibliography;
 import ru.biosoft.biblio.model.StyleInfo;
-import ru.biosoft.biblio.util.StaxStreamProcessor;
 
 import javax.inject.Inject;
 import javax.xml.stream.events.XMLEvent;
@@ -124,7 +123,7 @@ public class StyleService
     StyleInfo getInfo(InputStream inputStream) throws Exception
     {
         StyleInfo styleInfo = new StyleInfo();
-        try (StaxStreamProcessor processor = new StaxStreamProcessor(inputStream))
+        try (StAXStreamProcessor processor = new StAXStreamProcessor(inputStream))
         {
             while (processor.doUntilInParent(XMLEvent.START_ELEMENT, "info"))
             {
