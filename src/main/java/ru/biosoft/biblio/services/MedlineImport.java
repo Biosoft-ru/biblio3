@@ -197,7 +197,7 @@ public class MedlineImport
         {
             try
             {
-                if( db.oneLong("SELECT COUNT(1) FROM publications p WHERE p.ref= ?", ref) == 0 )
+                if( db.countFrom("SELECT COUNT(1) FROM publications p WHERE p.ref= ?", ref) == 0 )
                 {
                     return ref;
                 }
