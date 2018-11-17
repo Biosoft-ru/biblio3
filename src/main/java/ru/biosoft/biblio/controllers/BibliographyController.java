@@ -23,6 +23,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -53,7 +54,7 @@ public class BibliographyController extends ApiControllerSupport
         RecordModel record = database.getEntity("attachments")
                 .get(Long.parseLong(citationFileID));
 
-        String style = new String((byte[]) record.getValue("data"));
+        String style = new String((byte[]) record.getValue("data"), StandardCharsets.UTF_8);
 
         String independentParentLink = getIndependentParentLink(style);
         if(independentParentLink != null){

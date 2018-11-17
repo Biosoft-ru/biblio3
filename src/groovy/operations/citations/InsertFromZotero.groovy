@@ -8,6 +8,7 @@ import ru.biosoft.biblio.services.citeproc.StyleService
 import javax.inject.Inject
 import javax.json.Json
 import javax.json.JsonReader
+import java.nio.charset.StandardCharsets
 import java.util.logging.Level
 import java.util.logging.Logger
 
@@ -40,7 +41,7 @@ class InsertFromZotero extends GOperationSupport
         int errorCount = 0
         InputStreamReader reader
         try{
-            reader = new InputStreamReader(new URL(stylesUrl).openStream())
+            reader = new InputStreamReader(new URL(stylesUrl).openStream(), StandardCharsets.UTF_8)
             JsonReader jsonReader = Json.createReader(reader)
             def array = jsonReader.readArray()
 

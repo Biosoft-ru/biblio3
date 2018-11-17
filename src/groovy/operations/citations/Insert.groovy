@@ -8,6 +8,7 @@ import com.developmentontheedge.be5.databasemodel.util.DpsUtils
 import ru.biosoft.biblio.services.citeproc.StyleService
 
 import javax.inject.Inject
+import java.nio.charset.StandardCharsets
 
 
 class Insert extends GOperationSupport implements TransactionalOperation
@@ -36,7 +37,7 @@ class Insert extends GOperationSupport implements TransactionalOperation
 
         Long id
         if (rec == null){
-            id = styleService.addStyle(name, new String(file.data), null)
+            id = styleService.addStyle(name, new String(file.data, StandardCharsets.UTF_8), null)
         }else{
             id = rec.getPrimaryKey()
         }
