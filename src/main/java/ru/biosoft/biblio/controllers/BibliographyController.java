@@ -53,6 +53,10 @@ public class BibliographyController extends ApiControllerSupport
 
         RecordModel record = database.getEntity("attachments")
                 .get(Long.parseLong(citationFileID));
+        if (record == null)
+        {
+            throw new RuntimeException("File not found.");
+        }
 
         String style = new String((byte[]) record.getValue("data"), StandardCharsets.UTF_8);
 
