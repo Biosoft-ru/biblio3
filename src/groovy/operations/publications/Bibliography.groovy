@@ -1,21 +1,12 @@
 package publications
 
-import com.developmentontheedge.be5.server.services.DocumentGenerator
-import com.developmentontheedge.be5.operation.model.OperationResult
-import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 import com.developmentontheedge.be5.databasemodel.util.DpsUtils
-
-import javax.inject.Inject
+import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 
 import java.util.stream.Collectors
 
-import static com.developmentontheedge.be5.server.FrontendActions.*
-
-
 class Bibliography extends GOperationSupport
 {
-    @Inject DocumentGenerator documentGenerator
-
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
@@ -44,8 +35,6 @@ class Bibliography extends GOperationSupport
                 .replace("OPEN_URL", url + "&_download_=no")
                 .replace("DOWNLOAD_URL", url + "&_download_=yes")
 
-        setResult(OperationResult.finished(null, updateDocument(
-                documentGenerator.createStaticPage("Bibliography", content, null)
-        )))
+        setResultFinished(content)
     }
 }
