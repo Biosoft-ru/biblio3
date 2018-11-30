@@ -1,7 +1,7 @@
 package users
 
+import com.developmentontheedge.be5.server.FrontendActions
 import com.developmentontheedge.be5.server.helpers.UserHelper
-import com.developmentontheedge.be5.modules.core.api.CoreFrontendActions
 import com.developmentontheedge.be5.modules.core.operations.users.Login
 import com.developmentontheedge.be5.operation.model.OperationResult
 import com.developmentontheedge.be5.operation.model.OperationStatus
@@ -61,7 +61,7 @@ class BiostoreLogin extends Login
                 bioStore.loadProjectListToSession()
 
                 setResult(OperationResult.finished(null,
-                        CoreFrontendActions.updateUserAndOpenDefaultRoute(loginService.getUserInfoModel())))
+                        FrontendActions.updateUserAndOpenDefaultRoute(loginService.getUserInfoModel())))
             }
             catch (SecurityException e)
             {
