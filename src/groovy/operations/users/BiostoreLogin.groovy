@@ -5,6 +5,7 @@ import com.developmentontheedge.be5.server.helpers.UserHelper
 import com.developmentontheedge.be5.modules.core.operations.users.Login
 import com.developmentontheedge.be5.operation.model.OperationResult
 import com.developmentontheedge.be5.operation.model.OperationStatus
+import com.developmentontheedge.be5.server.services.UserInfoModelService
 import com.google.common.collect.ImmutableList
 import groovy.transform.TypeChecked
 import ru.biosoft.biblio.util.BioStore
@@ -18,6 +19,7 @@ import static ru.biosoft.biblio.util.BioStore.BIOSTORE_TOKEN
 class BiostoreLogin extends Login
 {
     @Inject UserHelper userHelper
+    @Inject UserInfoModelService userInfoModelService
     @Inject BioStore bioStore
 
     @Override
@@ -61,7 +63,7 @@ class BiostoreLogin extends Login
                 bioStore.loadProjectListToSession()
 
                 setResult(OperationResult.finished(null,
-                        FrontendActions.updateUserAndOpenDefaultRoute(loginService.getUserInfoModel())))
+                        FrontendActions.updateUserAndOpenDefaultRoute(userInfoModelService.getUserInfoModel())))
             }
             catch (SecurityException e)
             {
