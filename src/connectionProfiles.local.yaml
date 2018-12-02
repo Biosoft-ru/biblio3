@@ -1,7 +1,7 @@
 connectionProfiles:
   profiles:
     test_h2:
-      connectionUrl: jdbc:h2:~/biblio3
+      connectionUrl: jdbc:h2:~/biblio3;AUTO_SERVER=TRUE
       username: sa
       password: ''
     uuinnk_local:
