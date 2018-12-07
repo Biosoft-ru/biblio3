@@ -1,23 +1,28 @@
 "use strict";
 const webpack = require('webpack');
 const path = require('path');
-const env  = require('yargs').argv.env; // use --env with webpack 2
+const env = require('yargs').argv.env; // use --env with webpack 2
 const loaders = require('./webpack.common').loaders;
 const externals = require('./webpack.common').externals;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const FileManagerPlugin = require('filemanager-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
 loaders.push({
   test: /\.scss$/,
-  loader: ExtractTextPlugin.extract({fallback: 'style-loader', use : 'css-loader?sourceMap&localIdentName=[local]___[hash:base64:5]!sass-loader?outputStyle=expanded'}),
+  loader: ExtractTextPlugin.extract({
+    fallback: 'style-loader',
+    use: 'css-loader?sourceMap&localIdentName=[local]___[hash:base64:5]!sass-loader?outputStyle=expanded'
+  }),
   exclude: ['node_modules']
 });
 
-const outPath = 'target-frontend';
+const baseOutPath = 'src/main/webapp/';
+const outPath = baseOutPath + 'WEB-INF/templates';
 
 let fileName = 'static/[name]-[hash].js';
 let templateName = 'template-dev.html';
@@ -36,8 +41,8 @@ let config = {
     publicPath: '/',
     path: path.join(__dirname, outPath),
     filename: fileName,
-    chunkFilename : 'static/app-[name]-[id].js',
-    library:  '[name]'
+    chunkFilename: 'static/app-[name]-[id].js',
+    library: '[name]'
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -88,6 +93,10 @@ let config = {
       // (Only use these entries)
     }),
     new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en|ru/),
+    new FileManagerPlugin({
+      onStart: {delete: [baseOutPath + 'static', baseOutPath + 'WEB-INF/templates/']},
+      onEnd: {move: [{source: baseOutPath + 'WEB-INF/templates/static', destination: baseOutPath + 'static'}],}
+    })
   ],
   externals: externals,
 };
