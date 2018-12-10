@@ -16,7 +16,7 @@ class Filter extends FilterOperation implements TransactionalOperation
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
         def dps = dpsHelper.addDpForColumns(new GDynamicPropertySetSupport(),
-                getInfo().getEntity(), ["name", "title", "format", "parent"], context.operationParams)
+                getInfo().getEntity(), ["name", "title", "format", "parent"], context.params)
 
         dps.edit("format"){
             TAG_LIST_ATTR = queries.getTagsFromCustomSelectionView("citations", "formats")
@@ -27,7 +27,7 @@ class Filter extends FilterOperation implements TransactionalOperation
             TAG_LIST_ATTR = queries.getTagsFromSelectionView("citationCategories")
         }
 
-        return filterHelper.processFilterParams(dps, presetValues, context.getOperationParams())
+        return filterHelper.processFilterParams(dps, presetValues, context.getParams())
     }
 
 }

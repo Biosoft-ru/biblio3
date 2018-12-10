@@ -22,7 +22,7 @@ class DeletePublication extends DeleteOperation implements TransactionalOperatio
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
         def dps = new GDynamicPropertySetSupport()
-        def cat = context.getOperationParams().get(FrontendConstants.CATEGORY_ID_PARAM)
+        def cat = context.getParams().get(FrontendConstants.CATEGORY_ID_PARAM)
 
         if(cat != null) {
             projectCategoryRec = queries.qRec("""SELECT cat.ID, cat.name FROM categories cat

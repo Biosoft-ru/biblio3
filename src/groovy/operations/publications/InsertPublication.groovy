@@ -37,7 +37,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
 
         if(params.getValueAsString("inputType") == "PubMed")
         {
-            dpsHelper.addDpForColumns(params, getInfo().getEntity(), ["PMID"], context.getOperationParams())
+            dpsHelper.addDpForColumns(params, getInfo().getEntity(), ["PMID"], context.getParams())
 
             params.edit("PMID") {
                 CAN_BE_NULL = false
@@ -47,7 +47,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         }
         else
         {
-            dpsHelper.addDpExcludeColumns(params, getInfo().getEntity(), ["ID"], context.getOperationParams())
+            dpsHelper.addDpExcludeColumns(params, getInfo().getEntity(), ["ID"], context.getParams())
 
             params.edit("PMID") { HIDDEN = true }
 
@@ -71,7 +71,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         params.add("categoryID", "Category") {
             TYPE = Long
             TAG_LIST_ATTR = queries.getTagsFromCustomSelectionView("categories", "For publications")
-            value = presetValues.getOrDefault("categoryID", context.operationParams.get(CATEGORY_ID_PARAM))
+            value = presetValues.getOrDefault("categoryID", context.params.get(CATEGORY_ID_PARAM))
             RELOAD_ON_CHANGE = true
             GROUP_ID = 2; GROUP_NAME = "Category"
         }
@@ -83,7 +83,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
                     INNER JOIN classifications pcls ON pcls.recordID = CONCAT('projectCategory.', ?)
                       AND cat.ID = pcls.categoryID""", Long.parseLong(params.getValueAsString("categoryID"))).getString("name")
 
-            dpsHelper.addDpForColumns(params, meta.getEntity("publication2project"), projectColumns, context.getOperationParams())
+            dpsHelper.addDpForColumns(params, meta.getEntity("publication2project"), projectColumns, context.getParams())
 
             params.edit("status") { CSS_CLASSES = "col-lg-6" }
             params.edit("importance") { CSS_CLASSES = "col-lg-6" }
@@ -142,7 +142,7 @@ class InsertPublication extends GOperationSupport implements TransactionalOperat
         projectInfo.add("publicationID"){TYPE = Long; value = publicationID}
         database.publication2project.add(projectInfo)
 
-        addRedirectParams(context.operationParams)
+        addRedirectParams(context.params)
         removeRedirectParam("pmid")
     }
 

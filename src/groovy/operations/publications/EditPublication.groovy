@@ -16,7 +16,7 @@ class EditPublication extends InsertPublication implements TransactionalOperatio
     @Override
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
-        String cat = context.getOperationParams().get(FrontendConstants.CATEGORY_ID_PARAM)
+        String cat = context.getParams().get(FrontendConstants.CATEGORY_ID_PARAM)
 
         if(cat != null) {
             def rec = queries.qRec("""SELECT cat.name FROM categories cat

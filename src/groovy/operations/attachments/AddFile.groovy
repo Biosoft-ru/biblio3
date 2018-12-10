@@ -12,7 +12,7 @@ class AddFile extends GOperationSupport
     Object getParameters(Map<String, Object> presetValues) throws Exception
     {
         dpsHelper.addDpForColumns(params, getInfo().getEntity(),
-                ["publicationID", "public"], context.operationParams, presetValues)
+                ["publicationID", "public"], context.params, presetValues)
 
         params.add("file", "Файл") {
             TYPE = Base64File

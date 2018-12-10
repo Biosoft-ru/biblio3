@@ -20,7 +20,7 @@ class Insert extends GOperationSupport implements TransactionalOperation
     {
         params.add("projectName", "projectName") {
             READ_ONLY = true
-            value = (String)context.getOperationParams().get("projectName")
+            value = (String)context.getParams().get("projectName")
         }
         params.add("email", "Email")
 
