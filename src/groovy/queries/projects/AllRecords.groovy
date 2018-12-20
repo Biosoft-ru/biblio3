@@ -1,22 +1,22 @@
 package projects
 
 import com.developmentontheedge.be5.base.FrontendConstants
-import com.developmentontheedge.be5.server.queries.support.TableBuilderSupport
-import com.developmentontheedge.be5.query.model.CellModel
-import com.developmentontheedge.be5.query.model.TableModel
 import com.developmentontheedge.be5.base.util.HashUrl
+import com.developmentontheedge.be5.query.model.CellModel
+import com.developmentontheedge.be5.server.queries.support.DpsTableBuilderSupport
+import com.developmentontheedge.beans.DynamicPropertySet
 import groovy.transform.TypeChecked
 import ru.biosoft.biblio.util.BioStore
 
 import javax.inject.Inject
 
 @TypeChecked
-class AllRecords extends TableBuilderSupport
+class AllRecords extends DpsTableBuilderSupport
 {
     @Inject BioStore bioStore
 
     @Override
-    TableModel getTableModel()
+    List<DynamicPropertySet> getTableModel()
     {
         addColumns("Name", "Permissions")
 
@@ -24,17 +24,15 @@ class AllRecords extends TableBuilderSupport
 
         for (def project : projects)
         {
-            List<CellModel> cells = new ArrayList<CellModel>()
-
-            cells.add(new CellModel(project.projectName).option("link", "url",
+            def cell1 = new CellModel(project.projectName).option("link", "url",
                     new HashUrl(FrontendConstants.TABLE_ACTION, "_project_users_", "All records")
-                            .named("projectName", project.projectName).toString()))
+                            .named("projectName", project.projectName).toString())
 
-            cells.add(new CellModel(project.getPermissionsStr()))
+            def cell2 = new CellModel(project.getPermissionsStr())
 
-            addRow(cells)
+            addRow(cells(cell1, cell2))
         }
 
-        return table(columns, rows)
+        return table()
     }
 }

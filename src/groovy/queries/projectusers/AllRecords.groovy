@@ -1,20 +1,19 @@
 package projectusers
 
-import com.developmentontheedge.be5.server.queries.support.TableBuilderSupport
-import com.developmentontheedge.be5.query.model.TableModel
+import com.developmentontheedge.be5.server.queries.support.DpsTableBuilderSupport
+import com.developmentontheedge.beans.DynamicPropertySet
 import groovy.transform.TypeChecked
 import ru.biosoft.biblio.util.BioStore
 
 import javax.inject.Inject
 
-
 @TypeChecked
-class AllRecords extends TableBuilderSupport
+class AllRecords extends DpsTableBuilderSupport
 {
     @Inject BioStore bioStore
 
     @Override
-    TableModel getTableModel()
+    List<DynamicPropertySet> getTableModel()
     {
         addColumns("User", "Role")
 
@@ -25,6 +24,6 @@ class AllRecords extends TableBuilderSupport
             addRow(projectUser.user, cells(projectUser.user, projectUser.role))
         }
 
-        return table(columns, rows, true)
+        return table(true)
     }
 }
