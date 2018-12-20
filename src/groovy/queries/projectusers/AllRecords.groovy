@@ -1,6 +1,6 @@
 package projectusers
 
-import com.developmentontheedge.be5.server.queries.support.QueryBuilderSupport
+import com.developmentontheedge.be5.server.queries.support.QueryExecutorSupport
 import com.developmentontheedge.beans.DynamicPropertySet
 import groovy.transform.TypeChecked
 import ru.biosoft.biblio.util.BioStore
@@ -8,7 +8,7 @@ import ru.biosoft.biblio.util.BioStore
 import javax.inject.Inject
 
 @TypeChecked
-class AllRecords extends QueryBuilderSupport
+class AllRecords extends QueryExecutorSupport
 {
     @Inject BioStore bioStore
 
