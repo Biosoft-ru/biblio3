@@ -3,7 +3,7 @@ package projects
 import com.developmentontheedge.be5.base.FrontendConstants
 import com.developmentontheedge.be5.base.util.HashUrl
 import com.developmentontheedge.be5.query.model.CellModel
-import com.developmentontheedge.be5.server.queries.support.DpsTableBuilderSupport
+import com.developmentontheedge.be5.server.queries.support.QueryBuilderSupport
 import com.developmentontheedge.beans.DynamicPropertySet
 import groovy.transform.TypeChecked
 import ru.biosoft.biblio.util.BioStore
@@ -11,12 +11,12 @@ import ru.biosoft.biblio.util.BioStore
 import javax.inject.Inject
 
 @TypeChecked
-class AllRecords extends DpsTableBuilderSupport
+class AllRecords extends QueryBuilderSupport
 {
     @Inject BioStore bioStore
 
     @Override
-    List<DynamicPropertySet> getTableModel()
+    List<DynamicPropertySet> execute()
     {
         addColumns("Name", "Permissions")
 
