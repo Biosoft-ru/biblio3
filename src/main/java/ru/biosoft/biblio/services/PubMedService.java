@@ -62,7 +62,7 @@ public class PubMedService
         List<String> projectNames = projects.stream().map(Project::getProjectName).collect(toList());
 
         Map<Long, PublicationProject> publicationProjects = new HashMap<>();
-        List<QRec> list = operationHelper.readAsRecordsFromQuery(
+        List<QRec> list = operationHelper.query(
                 "publications", "PubMedInfo Data", ImmutableMap.of(
                         "projects", projectNames,
                         "PMIDs", PMIDs
