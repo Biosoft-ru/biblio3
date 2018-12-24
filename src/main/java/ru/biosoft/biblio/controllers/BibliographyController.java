@@ -2,11 +2,10 @@ package ru.biosoft.biblio.controllers;
 
 import com.developmentontheedge.be5.databasemodel.DatabaseModel;
 import com.developmentontheedge.be5.databasemodel.RecordModel;
+import com.developmentontheedge.be5.server.servlet.support.ApiControllerSupport;
 import com.developmentontheedge.be5.server.util.RequestUtils;
 import com.developmentontheedge.be5.web.Request;
 import com.developmentontheedge.be5.web.Response;
-import com.developmentontheedge.be5.server.servlet.support.ApiControllerSupport;
-import com.google.common.base.Charsets;
 import de.undercouch.citeproc.CSL;
 import de.undercouch.citeproc.output.Bibliography;
 import org.w3c.dom.Document;
@@ -23,7 +22,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringReader;
-import java.nio.charset.StandardCharsets;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 
 /**
@@ -58,7 +58,7 @@ public class BibliographyController extends ApiControllerSupport
             throw new RuntimeException("File not found.");
         }
 
-        String style = new String((byte[]) record.getValue("data"), StandardCharsets.UTF_8);
+        String style = new String((byte[]) record.getValue("data"), UTF_8);
 
         String independentParentLink = getIndependentParentLink(style);
         if(independentParentLink != null){
@@ -112,8 +112,8 @@ public class BibliographyController extends ApiControllerSupport
             ext = ".xml";
         }
 
-        RequestUtils.sendFile(res, download, "Bibliography" + ext, mimeType, Charsets.UTF_8.name(),
-                new ByteArrayInputStream(out.toString().getBytes()));
+        RequestUtils.sendFile(res, download, "Bibliography" + ext, mimeType, UTF_8.name(),
+                new ByteArrayInputStream(out.toString().getBytes(UTF_8)));
     }
 
     /**
