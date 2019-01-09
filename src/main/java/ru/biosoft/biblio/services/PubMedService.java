@@ -1,6 +1,6 @@
 package ru.biosoft.biblio.services;
 
-import com.developmentontheedge.be5.base.services.Be5Caches;
+import com.developmentontheedge.be5.base.cache.Be5Caches;
 import com.developmentontheedge.be5.query.model.beans.QRec;
 import com.developmentontheedge.be5.query.services.QueriesService;
 import com.github.benmanes.caffeine.cache.Caffeine;
