@@ -1,7 +1,7 @@
 package projectusers
 
-import com.developmentontheedge.be5.operation.model.OperationResult
-import com.developmentontheedge.be5.operation.model.TransactionalOperation
+import com.developmentontheedge.be5.operation.OperationResult
+import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 import com.developmentontheedge.be5.databasemodel.util.DpsUtils
 import groovy.transform.TypeChecked
