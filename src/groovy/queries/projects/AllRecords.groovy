@@ -3,8 +3,8 @@ package projects
 import com.developmentontheedge.be5.base.FrontendConstants
 import com.developmentontheedge.be5.base.util.HashUrl
 import com.developmentontheedge.be5.query.model.CellModel
+import com.developmentontheedge.be5.query.model.beans.QRec
 import com.developmentontheedge.be5.server.queries.support.QueryExecutorSupport
-import com.developmentontheedge.beans.DynamicPropertySet
 import groovy.transform.TypeChecked
 import ru.biosoft.biblio.util.BioStore
 
@@ -16,7 +16,7 @@ class AllRecords extends QueryExecutorSupport
     @Inject BioStore bioStore
 
     @Override
-    List<DynamicPropertySet> execute()
+    List<QRec> execute()
     {
         addColumns("Name", "Permissions")
 
