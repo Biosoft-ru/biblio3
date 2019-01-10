@@ -8,7 +8,7 @@
  <display-name>biblio3</display-name>
 
  <session-config>
-  <session-timeout>1440</session-timeout>
+  <session-timeout>43200</session-timeout>
  </session-config>
 
  <listener>
