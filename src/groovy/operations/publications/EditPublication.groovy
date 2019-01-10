@@ -1,8 +1,8 @@
 package publications
 
-import com.developmentontheedge.be5.base.FrontendConstants
+import com.developmentontheedge.be5.FrontendConstants
 import com.developmentontheedge.be5.databasemodel.RecordModel
-import com.developmentontheedge.be5.base.model.GDynamicPropertySetSupport
+import com.developmentontheedge.be5.model.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.operation.OperationResult
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import groovy.transform.TypeChecked

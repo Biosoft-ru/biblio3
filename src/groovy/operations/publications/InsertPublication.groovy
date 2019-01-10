@@ -1,7 +1,7 @@
 package publications
 
 import com.developmentontheedge.be5.databasemodel.RecordModel
-import com.developmentontheedge.be5.base.model.GDynamicPropertySetSupport
+import com.developmentontheedge.be5.model.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.modules.core.services.impl.CategoriesHelper
 import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
@@ -11,7 +11,7 @@ import ru.biosoft.biblio.services.MedlineImport
 
 import javax.inject.Inject
 
-import static com.developmentontheedge.be5.base.FrontendConstants.CATEGORY_ID_PARAM
+import static com.developmentontheedge.be5.FrontendConstants.CATEGORY_ID_PARAM
 
 
 class InsertPublication extends GOperationSupport implements TransactionalOperation

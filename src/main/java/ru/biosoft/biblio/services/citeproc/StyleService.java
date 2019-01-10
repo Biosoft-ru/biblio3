@@ -1,7 +1,7 @@
 package ru.biosoft.biblio.services.citeproc;
 
-import com.developmentontheedge.be5.base.util.StAXStreamProcessor;
-import com.developmentontheedge.be5.base.util.Utils;
+import com.developmentontheedge.be5.util.StAXStreamProcessor;
+import com.developmentontheedge.be5.util.Utils;
 import com.developmentontheedge.be5.databasemodel.DatabaseModel;
 import com.developmentontheedge.be5.databasemodel.EntityModel;
 import com.developmentontheedge.be5.databasemodel.RecordModel;

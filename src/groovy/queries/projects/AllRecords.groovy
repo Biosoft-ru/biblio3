@@ -1,7 +1,7 @@
 package projects
 
-import com.developmentontheedge.be5.base.FrontendConstants
-import com.developmentontheedge.be5.base.util.HashUrl
+import com.developmentontheedge.be5.FrontendConstants
+import com.developmentontheedge.be5.util.HashUrl
 import com.developmentontheedge.be5.query.model.CellModel
 import com.developmentontheedge.be5.query.model.beans.QRec
 import com.developmentontheedge.be5.server.queries.support.QueryExecutorSupport

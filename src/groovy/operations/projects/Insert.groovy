@@ -4,7 +4,7 @@ import com.developmentontheedge.be5.operation.OperationResult
 import com.developmentontheedge.be5.server.operations.support.GOperationSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.databasemodel.util.DpsUtils
-import com.developmentontheedge.be5.base.util.Utils
+import com.developmentontheedge.be5.util.Utils
 import groovy.transform.TypeChecked
 import ru.biosoft.biblio.util.BioStore
 
