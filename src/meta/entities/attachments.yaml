@@ -43,7 +43,6 @@ attachments:
     - importID:
         type: KEYTYPE
         canBeNull: true
-        reference: import.id
     - whoInserted___:
         type: VARCHAR(100)
         canBeNull: true
@@ -68,7 +67,6 @@ attachments:
       type: 1D
       roles: [Administrator]
       operations:
-      - Add File
       - Delete
       code: |-
         SELECT
