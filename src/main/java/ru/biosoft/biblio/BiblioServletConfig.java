@@ -2,7 +2,7 @@ package ru.biosoft.biblio;
 
 import com.developmentontheedge.be5.modules.core.CoreModule;
 import com.developmentontheedge.be5.modules.core.CoreServletModule;
-import com.developmentontheedge.be5.server.ScopedServerModule;
+import com.developmentontheedge.be5.web.WebModule;
 import com.developmentontheedge.be5.server.servlet.Be5ServletListener;
 import com.developmentontheedge.be5.server.servlet.TemplateModule;
 import com.google.inject.Guice;
@@ -17,7 +17,7 @@ public class BiblioServletConfig extends Be5ServletListener
         return Guice.createInjector(getStage(),
                 new CoreModule(),
                 new CoreServletModule(),
-                new ScopedServerModule(),
+                new WebModule(),
                 new TemplateModule(),
                 new BiblioModule()
         );
