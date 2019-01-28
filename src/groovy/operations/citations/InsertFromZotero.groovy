@@ -54,7 +54,7 @@ class InsertFromZotero extends GOperationSupport
                     def styleXml = StyleService.readStringFromURL(styleHref)
 
                     try{
-                        db.transaction({conn ->
+                        db.useTransaction({ conn ->
                             def id = styleService.addStyle(styleName, styleXml, styleHref)
 
                             database.citation2user.add([
