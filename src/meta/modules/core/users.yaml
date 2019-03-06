@@ -6,4 +6,4 @@ users:
   - Login:
       roles: Guest
       type: Groovy
-      file: users.BiostoreLogin.groovy
+      file: users.BiblioLogin.groovy

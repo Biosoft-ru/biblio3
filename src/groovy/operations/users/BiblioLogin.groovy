@@ -16,7 +16,7 @@ import static ru.biosoft.biblio.util.BioStore.BIOSTORE_TOKEN
 
 
 @TypeChecked
-class BiostoreLogin extends Login
+class BiblioLogin extends Login
 {
     @Inject UserHelper userHelper
     @Inject UserInfoModelService userInfoModelService
@@ -58,7 +58,8 @@ class BiostoreLogin extends Login
 
                 def roles = ImmutableList.of("Annotator")
 
-                userHelper.saveUser(user_name, roles, roles, meta.getLocale(Locale.US), request.getRemoteAddr())
+                userHelper.saveUser(user_name, roles, roles,
+                        meta.getLocale(Locale.US), request.getRemoteAddr(), false)
 
                 bioStore.loadProjectListToSession()
 
