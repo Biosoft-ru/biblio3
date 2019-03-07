@@ -1,6 +1,6 @@
 package citations
 
-import com.developmentontheedge.be5.server.helpers.FilterHelper
+import com.developmentontheedge.be5.server.services.FilterHelper
 import com.developmentontheedge.be5.groovy.GDynamicPropertySetSupport
 import com.developmentontheedge.be5.operation.TransactionalOperation
 import com.developmentontheedge.be5.server.operations.FilterOperation

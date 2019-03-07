@@ -1,7 +1,7 @@
 package users
 
 import com.developmentontheedge.be5.server.FrontendActions
-import com.developmentontheedge.be5.server.helpers.UserHelper
+import com.developmentontheedge.be5.server.services.users.UserHelper
 import com.developmentontheedge.be5.modules.core.operations.users.Login
 import com.developmentontheedge.be5.operation.OperationResult
 import com.developmentontheedge.be5.operation.OperationStatus
