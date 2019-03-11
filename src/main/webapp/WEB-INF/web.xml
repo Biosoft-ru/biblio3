@@ -15,7 +15,7 @@
   <listener-class>ru.biosoft.biblio.BiblioServletConfig</listener-class>
  </listener>
  <listener>
-  <listener-class>com.developmentontheedge.be5.server.servlet.AuthenticationPropagationListener</listener-class>
+  <listener-class>com.developmentontheedge.be5.server.authentication.AuthenticationPropagationListener</listener-class>
  </listener>
 
  <filter>
