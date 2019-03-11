@@ -5,7 +5,7 @@ import com.developmentontheedge.be5.server.services.users.UserService
 import com.developmentontheedge.be5.modules.core.operations.users.Login
 import com.developmentontheedge.be5.operation.OperationResult
 import com.developmentontheedge.be5.operation.OperationStatus
-import com.developmentontheedge.be5.server.services.UserInfoModelService
+import com.developmentontheedge.be5.server.services.users.UserInfoModelService
 import com.google.common.collect.ImmutableList
 import groovy.transform.TypeChecked
 import ru.biosoft.biblio.util.BioStore
