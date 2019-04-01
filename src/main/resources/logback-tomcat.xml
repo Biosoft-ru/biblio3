@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
   <property name="LOG_DIR" value="${catalina.base}/logs" />
-  <property name="APP_NAME" value="testBe5app" />
+  <property name="APP_NAME" value="biblio3" />
 
   <appender name="FILE-AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>${LOG_DIR}/${APP_NAME}.log</file>
