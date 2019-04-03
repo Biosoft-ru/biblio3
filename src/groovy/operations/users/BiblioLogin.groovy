@@ -59,7 +59,7 @@ class BiblioLogin extends Login
                 def roles = ImmutableList.of("Annotator")
 
                 userHelper.saveUser(user_name, roles, roles,
-                        meta.getLocale(Locale.US), request.getRemoteAddr(), false)
+                        meta.getLocale(Locale.US), request.getRemoteAddr())
 
                 bioStore.loadProjectListToSession()
 
